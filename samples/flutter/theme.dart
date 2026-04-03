@@ -1,3 +1,10 @@
+/// F1.1 — Theme & Design Tokens
+///
+/// Canonical color, spacing, and typography tokens for the Baseline
+/// design system (dark theme only).
+///
+/// Path: lib/config/theme.dart
+
 import 'package:flutter/material.dart';
 
 // ── F1.1 — COLOR PALETTE ────────────────────────────────────

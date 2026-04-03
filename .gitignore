@@ -23,6 +23,9 @@ node_modules/
 .vscode/
 *.iml
 
+# Lock files
+*.lock
+
 # OS
 .DS_Store
 Thumbs.db
