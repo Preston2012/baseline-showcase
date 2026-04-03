@@ -1,0 +1,8 @@
+# Force linguist to count sample code in language statistics
+samples/flutter/*.dart linguist-vendored=false
+samples/edge-functions/*.ts linguist-vendored=false
+samples/sql/*.sql linguist-vendored=false
+samples/config/*.dart linguist-vendored=false
+
+# Don't count mermaid diagrams as code
+ARCHITECTURE.mermaid linguist-documentation=true
