@@ -1,7 +1,7 @@
 # Baseline - Political Intelligence Platform
 
 > Multi-provider AI analysis of public figures' statements with consensus scoring.
-> Built by one person orchestrating AI agents. Google Play approved (closed testing).
+> Solo-built. Google Play approved (closed testing).
 
 [![Live Site](https://img.shields.io/badge/Live-baseline.marketing-blue)](https://baseline.marketing)
 [![Google Play](https://img.shields.io/badge/Google%20Play-Approved-green)]()
@@ -126,11 +126,13 @@ Supabase (PostgreSQL 17 + Row Level Security)
 | `revenuecat-webhook` | Handles subscription lifecycle events |
 | `manage-account` | User account management |
 | `annotations` | User annotation system for statements |
-## How It Was Built
+## Why These Architectural Choices
 
-Baseline was built by a single developer orchestrating multiple AI coding assistants (Claude, GPT-4, Gemini, Grok) through a structured methodology documented in 390+ institutional knowledge rules. This methodology produces engineer-quality output at founder speed across 500+ build sessions.
-
-The approach treats AI models as specialized team members: Claude for architecture and code structure, GPT-4 for creative problem-solving, Gemini for data analysis patterns, and Grok for real-time data considerations. A triple-audit reconciliation process ensures quality across all outputs.
+- **Multi-provider over single-model:** Single AI models hallucinate, carry political bias, and degrade silently. Running 4 providers independently and reconciling via consensus eliminates single-model failure modes.
+- **Edge Functions over traditional server:** Global low-latency, scales to zero, no server management. 22 functions deployed globally via Deno.
+- **RLS over app-layer auth:** Row Level Security pushes access control into the database. Every query is filtered at the PostgreSQL level — no auth bugs from missed middleware.
+- **Cost tracking as a first-class feature:** Every AI API call logs to `cost_log` with token counts and estimated cost. 11,200+ entries enable per-provider ROI analysis and budget alerts.
+- **Source hashing for dedup:** Prevents wasted AI spend by detecting duplicate statements at ingestion time before they hit the analysis pipeline.
 
 ## Project Structure
 
@@ -150,20 +152,20 @@ baseline/
   test/                         # Test suites
 ```
 
-## App Access
+## Reliability & Observability
 
-Baseline is currently in **Google Play closed testing**. Live app access is available upon request for hiring managers and technical reviewers.
-
-**Request access:** [Droiddna2013@gmail.com](mailto:Droiddna2013@gmail.com)
-**Product overview:** [baseline.marketing/built](https://baseline.marketing/built)
+- **Pipeline events:** 38,600+ events logged across ingestion, analysis, and consensus stages. Every failure is captured with context for debugging.
+- **Cost observability:** Per-provider, per-figure cost tracking across 11,200+ API calls. Budget alerts prevent runaway spend.
+- **Graceful degradation:** Non-critical services (xAI, RevenueCat, Make.com webhooks) fail silently without blocking core analysis flow. Kill switch halts the pipeline instantly if needed.
+- **Audit trail:** Every AI analysis has a mirrored audit record. Full provenance from raw ingestion through consensus scoring.
 
 ---
 
-## Full Codebase Access
+## App Access & Full Codebase
 
-This is a curated showcase of Baseline's architecture and code quality. The full production codebase (28 screens, 22 Edge Functions, 100K+ lines) is available via private repo access for hiring purposes.
+Baseline is in **Google Play closed testing**. This showcase repo demonstrates architecture and code quality — the full production codebase (28 screens, 22 Edge Functions, 100K+ lines) is available via private repo access.
 
-**Contact:** Droiddna2013@gmail.com
+**Request access:** [Droiddna2013@gmail.com](mailto:Droiddna2013@gmail.com)
 **Portfolio:** [baseline.marketing/built](https://baseline.marketing/built)
 **LinkedIn:** [Preston Winters](https://linkedin.com/in/prestonwinters)
 **GitHub:** [Preston2012/baseline-showcase](https://github.com/Preston2012/baseline-showcase)
