@@ -155,7 +155,7 @@ baseline/
 Baseline is currently in **Google Play closed testing**. Live app access is available upon request for hiring managers and technical reviewers.
 
 **Request access:** [Droiddna2013@gmail.com](mailto:Droiddna2013@gmail.com)
-**Product overview:** [baseline.marketing](https://baseline.marketing)
+**Product overview:** [baseline.marketing/built](https://baseline.marketing/built)
 
 ---
 
@@ -164,5 +164,6 @@ Baseline is currently in **Google Play closed testing**. Live app access is avai
 This is a curated showcase of Baseline's architecture and code quality. The full production codebase (28 screens, 22 Edge Functions, 100K+ lines) is available via private repo access for hiring purposes.
 
 **Contact:** Droiddna2013@gmail.com
-**Portfolio:** [baseline.marketing](https://baseline.marketing)
+**Portfolio:** [baseline.marketing/built](https://baseline.marketing/built)
 **LinkedIn:** [Preston Winters](https://linkedin.com/in/prestonwinters)
+**GitHub:** [Preston2012/baseline-showcase](https://github.com/Preston2012/baseline-showcase)
