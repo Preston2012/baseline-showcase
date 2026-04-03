@@ -1,8 +1,0 @@
-# Force linguist to detect sample code in language statistics
-# (linguist excludes samples/ dirs by default as "vendored")
-samples/**/*.dart linguist-detectable
-samples/**/*.ts linguist-detectable
-samples/**/*.sql linguist-detectable
-
-# Mermaid diagram is documentation, not code
-*.mermaid linguist-documentation
