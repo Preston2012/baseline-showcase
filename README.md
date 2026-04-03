@@ -150,9 +150,12 @@ baseline/
   test/                         # Test suites
 ```
 
-## Screenshots
+## App Access
 
-*Screenshots coming soon*
+Baseline is currently in **Google Play closed testing**. Live app access is available upon request for hiring managers and technical reviewers.
+
+**Request access:** [Droiddna2013@gmail.com](mailto:Droiddna2013@gmail.com)
+**Product overview:** [baseline.marketing](https://baseline.marketing)
 
 ---
 
@@ -162,4 +165,4 @@ This is a curated showcase of Baseline's architecture and code quality. The full
 
 **Contact:** Droiddna2013@gmail.com
 **Portfolio:** [baseline.marketing](https://baseline.marketing)
-**LinkedIn:** [Preston Winters](https://linkedin.com/in/preston-winters-30a0b5102)
+**LinkedIn:** [Preston Winters](https://linkedin.com/in/prestonwinters)
