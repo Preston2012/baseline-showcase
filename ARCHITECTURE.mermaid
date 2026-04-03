@@ -1,0 +1,71 @@
+graph TB
+    subgraph Client["Flutter Mobile App (28 screens)"]
+        Feed[Statement Feed]
+        Profile[Figure Profiles]
+        Bills[Legislative Tracker]
+        Trends[Trends Dashboard]
+        Settings[Account & Settings]
+    end
+
+    subgraph Supabase["Supabase (PostgreSQL 17 + RLS)"]
+        DB[(30 Tables)]
+        Auth[Auth & RLS]
+        RT[Realtime]
+    end
+
+    subgraph EdgeFunctions["22 Edge Functions (Deno/TypeScript)"]
+        subgraph Ingestion["Ingestion Pipeline"]
+            MIT[manual-ingest-trigger]
+            GF[get-feed]
+            BB[backfill-baseline]
+        end
+
+        subgraph Analysis["Multi-Provider AI Analysis"]
+            AS[analyze-statement]
+            CC[compute-consensus]
+            GE[generate-embedding]
+            GBS[get-baseline-score]
+        end
+
+        subgraph Legislative["Legislative Tracking"]
+            SBV[sync-bill-versions]
+            IBV[ingest-bill-version]
+            CBM[compute-bill-mutation]
+            SB[summarize-bill]
+        end
+
+        subgraph API["Data API Layer"]
+            GS[get-statement]
+            GFP[get-figure-profile]
+            GNS[get-narrative-sync]
+            GT[get-trends]
+            GV[get-votes]
+        end
+    end
+
+    subgraph AIProviders["4 AI Providers (Independent Analysis)"]
+        Claude[Anthropic Claude]
+        GPT[OpenAI GPT-4]
+        Gemini[Google Gemini]
+        Grok[xAI Grok]
+    end
+
+    subgraph External["External Services"]
+        Congress[Congress.gov API]
+        RC[RevenueCat]
+        Make[Make.com Workflows]
+    end
+
+    Client --> Supabase
+    Supabase --> EdgeFunctions
+    AS --> AIProviders
+    AIProviders --> CC
+    SBV --> Congress
+    RC --> Supabase
+    Make --> EdgeFunctions
+
+    style Client fill:#1E1E2E,stroke:#6C63FF,color:#fff
+    style Supabase fill:#1a3a2a,stroke:#3ECF8E,color:#fff
+    style EdgeFunctions fill:#1a2a3a,stroke:#38bdf8,color:#fff
+    style AIProviders fill:#2a1a3a,stroke:#a78bfa,color:#fff
+    style External fill:#2a2a1a,stroke:#fbbf24,color:#fff

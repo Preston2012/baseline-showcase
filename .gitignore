@@ -1,0 +1,35 @@
+# Environment
+.env
+.env.local
+.env.production
+.env.staging
+
+# Flutter
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+
+# Supabase
+supabase/.temp/
+supabase/.branches/
+
+# Node
+node_modules/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Credentials
+*.keystore
+*.jks
+key.properties
+google-services.json
+GoogleService-Info.plist
