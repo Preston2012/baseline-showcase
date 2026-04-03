@@ -1,3 +1,7 @@
+// Baseline Widget: Consensus Badge - 37 visual treatments, custom painter
+// Displays consensus scores. Scoring ALGORITHM lives in Edge Functions, not here.
+// github.com/Preston2012/baseline-showcase
+
 /// F2.1 : W1: Consensus Badge (Ring Gauge) : LOCKED
 ///
 /// Precision ring gauge showing lens (AI model) convergence.
