@@ -1,5 +1,5 @@
 -- ========================================================================
--- MIGRATION: Public Read Views (Baseline V1.4) — A9A V1.0.2
+-- MIGRATION: Public Read Views (Baseline V1.4)  - A9A V1.0.2
 -- File: migrations/create_public_read_views.sql
 -- Creates read-only views for the serving layer. No embeddings, no raw LLM
 -- responses, no internal audit fields exposed.
@@ -16,7 +16,7 @@
 -- M2: v_feed_ranked joins figures for figure_name
 -- M3: topics exposed in v_statements_public and v_feed_ranked
 --
--- FIXES APPLIED (V1.0.1 → V1.0.2 — A1 V8.0 reconciliation):
+-- FIXES APPLIED (V1.0.1 → V1.0.2  - A1 V8.0 reconciliation):
 -- FIX1: s.source_type removed (column does not exist in A1 V8.0)
 -- FIX2: s.source_timestamp → s.timestamp (A1 V8.0 column name)
 -- FIX3: a.created_at → a.analyzed_at (A1 V8.0 column name)
@@ -27,7 +27,7 @@
 -- Without this, a view owned by a privileged role can bypass RLS.
 --
 -- Safety:
--- CREATE OR REPLACE VIEW — idempotent
+-- CREATE OR REPLACE VIEW  - idempotent
 -- No table modifications
 -- No data writes
 -- ========================================================================
@@ -170,6 +170,6 @@ GRANT SELECT ON v_statement_analysis TO anon, authenticated;
 GRANT SELECT ON v_statement_consensus TO anon, authenticated;
 GRANT SELECT ON v_feed_ranked TO anon, authenticated;
 -- ========================================================================
--- END A9A — V1.0.2
+-- END A9A  - V1.0.2
 -- ========================================================================
 

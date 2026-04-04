@@ -1,9 +1,9 @@
 -- ========================================================================
--- BASELINE V1.4 — SUPABASE SCHEMA (CANONICAL)
--- A1 — V8.0
+-- BASELINE V1.4  - SUPABASE SCHEMA (CANONICAL)
+-- A1  - V8.0
 --
 -- CHANGES FROM V7.8 (audit reconciliation):
--- B1: Removed statement immutability trigger — A12A owns canonical trigger
+-- B1: Removed statement immutability trigger  - A12A owns canonical trigger
 -- (trg_statements_immutable with NEW := OLD pattern)
 -- B2: cost_log.operation enum extended (CONSENSUS, BACKFILL + error variants)
 -- B3: get_receipt() changed to SECURITY INVOKER (RLS handles filtering)
@@ -16,7 +16,7 @@
 --
 -- POST-AUDIT FIX (from Grok reconciliation):
 -- Annotations RLS: split FOR ALL into SELECT/INSERT/UPDATE (no DELETE policy)
--- Prevents hard DELETE — enforces soft-delete-only for authenticated users
+-- Prevents hard DELETE  - enforces soft-delete-only for authenticated users
 --
 -- CROSS-ARTIFACT PATCHES REQUIRED AFTER DEPLOY:
 -- A9A: Views must alias statements.timestamp (not source_timestamp)
@@ -147,7 +147,7 @@ gemini_version TEXT NOT NULL,
 prompt_version TEXT NOT NULL,
 language TEXT NOT NULL DEFAULT 'EN' CHECK (language = 'EN'),
 -- Topic tags extracted by Gemini (1-3 from fixed UPPER_SNAKE enum)
--- Zero additional AI cost — same extraction call
+-- Zero additional AI cost  - same extraction call
 topics TEXT[] CHECK (are_valid_topics(topics)),
 embedding vector(1536),
 baseline_delta NUMERIC(5,2) CHECK (baseline_delta >= 0 AND baseline_delta <= 100),
@@ -232,7 +232,7 @@ END $$;
 -- Plus: source_last_checked is always mutable.
 -- NOTE: topics is pinned by NEW := OLD (immutable after INSERT).
 -- Topics must be set at INSERT time via Gemini extraction (A14A).
--- Pre-A14A statements will have topics = NULL (acceptable — not filterable by topic).
+-- Pre-A14A statements will have topics = NULL (acceptable  - not filterable by topic).
 --
 -- A12A is the SINGLE SOURCE OF TRUTH for statement immutability.
 -- Do NOT add immutability triggers here.
@@ -449,7 +449,7 @@ AFTER UPDATE OF is_revoked ON statements
 FOR EACH ROW
 EXECUTE FUNCTION adjust_source_hash_on_revocation();
 -- ========================================================================
--- COST TRACKING (LOGGING ONLY — ENFORCEMENT DEFERRED)
+-- COST TRACKING (LOGGING ONLY  - ENFORCEMENT DEFERRED)
 -- ========================================================================
 -- V8.0 FIX (B2): Extended operation enum to include CONSENSUS, BACKFILL,
 -- and error variants referenced by A10A and A7C.
@@ -487,10 +487,10 @@ BEFORE UPDATE OR DELETE ON cost_log
 FOR EACH ROW
 EXECUTE FUNCTION prevent_immutable_mutation();
 -- ========================================================================
--- VOTES TABLE (Vote Tracking — Congress votes, no AI cost)
+-- VOTES TABLE (Vote Tracking  - Congress votes, no AI cost)
 -- ========================================================================
 -- Public record data, batch ingested from congress.gov
--- No AI processing — just structured public data
+-- No AI processing  - just structured public data
 -- ========================================================================
 CREATE TABLE IF NOT EXISTS votes (
 vote_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -515,7 +515,7 @@ BEFORE UPDATE OR DELETE ON votes
 FOR EACH ROW
 EXECUTE FUNCTION prevent_immutable_mutation();
 -- ========================================================================
--- ANNOTATIONS TABLE (Private user notes — no AI cost)
+-- ANNOTATIONS TABLE (Private user notes  - no AI cost)
 -- ========================================================================
 -- User-only notes on statements.
 -- RLS ensures users only see their own annotations.
@@ -556,7 +556,7 @@ BEFORE UPDATE ON annotations
 FOR EACH ROW
 EXECUTE FUNCTION update_annotation_timestamp();
 -- ========================================================================
--- FEATURE FLAGS TABLE (Feature toggles — no AI cost)
+-- FEATURE FLAGS TABLE (Feature toggles  - no AI cost)
 -- ========================================================================
 -- Simple key-value for feature toggles.
 -- Service-role write, public read (frontend needs to check flags).
@@ -646,7 +646,7 @@ $$;
 REVOKE ALL ON FUNCTION is_statement_visible(UUID) FROM PUBLIC;
 GRANT EXECUTE ON FUNCTION is_statement_visible(UUID) TO anon, authenticated;
 -- ========================================================================
--- RLS POLICIES — Public reads
+-- RLS POLICIES  - Public reads
 -- ========================================================================
 DROP POLICY IF EXISTS figures_public_read ON figures;
 CREATE POLICY figures_public_read ON figures
@@ -704,7 +704,7 @@ USING (is_figure_active(figure_id));
 CREATE POLICY votes_service_write ON votes
 FOR ALL TO service_role USING (true) WITH CHECK (true);
 -- annotations: user sees only their own active (not soft-deleted), authenticated only
--- V8.0 FIX: Split policies — no DELETE policy enforces soft-delete-only
+-- V8.0 FIX: Split policies  - no DELETE policy enforces soft-delete-only
 DROP POLICY IF EXISTS annotations_user_only ON annotations;
 DROP POLICY IF EXISTS annotations_user_select ON annotations;
 DROP POLICY IF EXISTS annotations_user_insert ON annotations;
@@ -910,7 +910,7 @@ END IF;
 END;
 $$;
 -- ========================================================================
--- THE RECEIPT™ — Find nearest historical match
+-- THE RECEIPT™  - Find nearest historical match
 -- ========================================================================
 -- V8.0 FIX (B3): Changed to SECURITY INVOKER. RLS policies on statements
 -- already enforce is_active + is_revoked + language checks, so this function
@@ -1312,7 +1312,7 @@ $$;
 -- FRAMING RADAR™ VIEW
 -- ========================================================================
 -- Aggregates framing patterns per figure over time.
--- Zero AI cost — pure SQL aggregation on existing data.
+-- Zero AI cost  - pure SQL aggregation on existing data.
 -- A15A adds a more flexible rolling-window version.
 -- ========================================================================
 CREATE OR REPLACE VIEW framing_radar AS
@@ -1332,7 +1332,7 @@ GROUP BY f.figure_id, f.name, a.framing, date_trunc('month', s.timestamp);
 -- WAR ROOM™ VIEW
 -- ========================================================================
 -- Surfaces model disagreement explicitly.
--- Zero AI cost — queries existing analyses table.
+-- Zero AI cost  - queries existing analyses table.
 -- ========================================================================
 CREATE OR REPLACE VIEW war_room AS
 SELECT
@@ -1393,7 +1393,7 @@ REVOKE ALL ON FUNCTION activate_figure(TEXT) FROM PUBLIC;
 REVOKE ALL ON FUNCTION acquire_embedding_lock(UUID) FROM PUBLIC;
 REVOKE ALL ON FUNCTION release_embedding_lock(UUID) FROM PUBLIC;
 REVOKE ALL ON FUNCTION update_source_last_checked(UUID) FROM PUBLIC;
--- get_receipt is PUBLIC (SECURITY INVOKER — RLS filters automatically)
+-- get_receipt is PUBLIC (SECURITY INVOKER  - RLS filters automatically)
 GRANT EXECUTE ON FUNCTION get_receipt(UUID, INTEGER) TO anon, authenticated;
 -- Topic validation helpers (used by CHECK constraints)
 GRANT EXECUTE ON FUNCTION is_valid_topic(TEXT) TO anon, authenticated, service_role;
@@ -1419,6 +1419,6 @@ GRANT EXECUTE ON FUNCTION acquire_embedding_lock(UUID) TO service_role;
 GRANT EXECUTE ON FUNCTION release_embedding_lock(UUID) TO service_role;
 GRANT EXECUTE ON FUNCTION update_source_last_checked(UUID) TO service_role;
 -- ========================================================================
--- END A1 — V8.0
+-- END A1  - V8.0
 -- ========================================================================
 

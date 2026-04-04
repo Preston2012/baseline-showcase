@@ -1,4 +1,4 @@
-/// F1.1 — Theme & Design Tokens
+/// F1.1 - Theme & Design Tokens
 ///
 /// Canonical color, spacing, and typography tokens for the Baseline
 /// design system (dark theme only).
@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 
-// ── F1.1 — COLOR PALETTE ────────────────────────────────────
+// ── F1.1 -- COLOR PALETTE ────────────────────────────────────
 
 /// Canonical color tokens for the Baseline design system.
 /// Dark-theme only. Every color in the app traces back here.
@@ -70,7 +70,7 @@ class BaselineColors {
   static const Color white = Color(0xFFFFFFFF);
 }
 
-// ── F1.2 — SPACING SCALE ────────────────────────────────────
+// ── F1.2 -- SPACING SCALE ────────────────────────────────────
 
 /// 9-step spacing scale used by every layout token.
 class BaselineSpacing {
@@ -87,7 +87,7 @@ class BaselineSpacing {
   static const double xxxl = 48;
 }
 
-// ── F1.3 — TYPOGRAPHY ───────────────────────────────────────
+// ── F1.3 -- TYPOGRAPHY ───────────────────────────────────────
 
 /// Typography tokens. Poppins for UI, JetBrains Mono for data.
 class BaselineTypography {
@@ -226,7 +226,7 @@ class BaselineTypography {
   );
 }
 
-// ── F1.8 — INSETS ───────────────────────────────────────────
+// ── F1.8 -- INSETS ───────────────────────────────────────────
 
 class BaselineInsets {
   BaselineInsets._();
@@ -303,7 +303,7 @@ class BaselineInsets {
   static const EdgeInsets none = EdgeInsets.zero;
 }
 
-// ── F1.9 — ANIMATION CONSTANTS ──────────────────────────────
+// ── F1.9 -- ANIMATION CONSTANTS ──────────────────────────────
 
 class BaselineAnimation {
   BaselineAnimation._();
@@ -466,7 +466,7 @@ class BaselineBorder {
   static const BorderSide none = BorderSide.none;
 }
 
-// ── F1.4 — CARD STYLE ──────────────────────────────────────
+// ── F1.4 -- CARD STYLE ──────────────────────────────────────
 
 class BaselineCardStyle {
   BaselineCardStyle._();
@@ -505,7 +505,7 @@ class BaselineCardStyle {
   );
 }
 
-// ── F1.5 — BUTTON STYLES ───────────────────────────────────
+// ── F1.5 -- BUTTON STYLES ───────────────────────────────────
 
 class BaselineButtonStyle {
   BaselineButtonStyle._();
@@ -543,7 +543,7 @@ class BaselineButtonStyle {
   );
 }
 
-// ── F1.6 — TAB BAR CONSTANTS ───────────────────────────────
+// ── F1.6 -- TAB BAR CONSTANTS ───────────────────────────────
 
 class BaselineTabBar {
   BaselineTabBar._();
@@ -554,7 +554,7 @@ class BaselineTabBar {
   static const Color frostedFallback = Color(0xF0081017);
 }
 
-// ── F1.7 — TOUCH TARGET ENFORCEMENT ────────────────────────
+// ── F1.7 -- TOUCH TARGET ENFORCEMENT ────────────────────────
 
 class BaselineTouchTarget {
   BaselineTouchTarget._();
@@ -572,7 +572,7 @@ class BaselineCorners {
   static const double md = 12.0;
 }
 
-// ── EXTENSIONS — Color Manipulation ─────────────────────────
+// ── EXTENSIONS -- Color Manipulation ─────────────────────────
 
 extension BaselineColorExtension on Color {
   /// Returns a copy of this color with the given [opacity] (0.0–1.0).

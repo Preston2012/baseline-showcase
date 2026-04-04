@@ -1,4 +1,4 @@
-/// F5.1 — GoRouter Config + App Widget
+/// F5.1 - GoRouter Config + App Widget
 ///
 /// Production router replacing F0.6 scaffold. Defines the route tree,
 /// tab shell configuration, and the root MaterialApp.
@@ -35,17 +35,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-// 3. Project — config
+// 3. Project - config
 import 'package:baseline_app/config/constants.dart';
 import 'package:baseline_app/config/routes.dart';
 import 'package:baseline_app/config/route_transitions.dart';
 
-// 3b. Project — guards
+// 3b. Project - guards
 import 'package:baseline_app/providers/auth_provider.dart';
 import 'package:baseline_app/providers/onboarding_provider.dart';
 import 'package:baseline_app/config/theme.dart';
 
-// 4. Project — screens
+// 4. Project - screens
 import 'package:baseline_app/screens/auth_screen.dart';
 import 'package:baseline_app/screens/crossfire_screen.dart';
 import 'package:baseline_app/screens/features_guide_screen.dart';
@@ -74,17 +74,17 @@ import 'package:baseline_app/screens/today_feed.dart';
 import 'package:baseline_app/screens/trends_screen.dart';
 import 'package:baseline_app/screens/vote_record.dart';
 
-// 5. Project — widgets
+// 5. Project - widgets
 import 'package:baseline_app/widgets/tab_shell.dart';
 
 // ═══════════════════════════════════════════
 // NAVIGATION KEYS
 // ═══════════════════════════════════════════
 
-/// Root navigator — owns full-screen routes and drill-downs above tabs.
+/// Root navigator - owns full-screen routes and drill-downs above tabs.
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
-/// Per-tab navigator keys — preserve tab state independently.
+/// Per-tab navigator keys - preserve tab state independently.
 final _todayNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'today');
 final _figuresNavigatorKey =
@@ -110,7 +110,7 @@ final router = GoRouter(
     final location = state.uri.path;
 
     // F5.4: Onboarding completion check.
-    // If onboarding isn't complete, redirect to resume point —
+    // If onboarding isn't complete, redirect to resume point,
     // unless already on an onboarding or splash route.
     if (!OnboardingGuard.isComplete) {
       final isOnboardingRoute = location.startsWith('/onboarding');
@@ -259,7 +259,7 @@ final router = GoRouter(
     ),
 
     // ┌─────────────────────────────────────┐
-    // │ DEEP LINKS — Redirects              │
+    // │ DEEP LINKS -- Redirects              │
     // └─────────────────────────────────────┘
 
     // 150.24: /s/:id -> /statement/:id
@@ -396,7 +396,7 @@ final router = GoRouter(
       },
     ),
 
-    // The Receipt — circuit trace (analysis screen)
+    // The Receipt - circuit trace (analysis screen)
     GoRoute(
       path: AppRoutes.receipt,
       parentNavigatorKey: _rootNavigatorKey,
@@ -410,7 +410,7 @@ final router = GoRouter(
       },
     ),
 
-    // Framing Radar — circuit trace (analysis screen)
+    // Framing Radar - circuit trace (analysis screen)
     GoRoute(
       path: AppRoutes.framingRadar,
       parentNavigatorKey: _rootNavigatorKey,
@@ -424,7 +424,7 @@ final router = GoRouter(
       },
     ),
 
-    // The Lens Lab — circuit trace (analysis screen)
+    // The Lens Lab - circuit trace (analysis screen)
     GoRoute(
       path: AppRoutes.lensLab,
       parentNavigatorKey: _rootNavigatorKey,
@@ -477,7 +477,7 @@ final router = GoRouter(
       ),
     ),
 
-    // Crossfire (no pair — shows latest pairs)
+    // Crossfire (no pair - shows latest pairs)
     GoRoute(
       path: AppRoutes.crossfire,
       parentNavigatorKey: _rootNavigatorKey,

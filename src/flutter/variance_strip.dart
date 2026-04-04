@@ -1,8 +1,8 @@
-/// A-4 — Split Microscope™ Variance Strip
+/// A-4 - Split Microscope™ Variance Strip
 ///
 /// Chromatic aberration microscopy for model variance.
 /// Three analytical wavelengths (GP · CL · GR) through the
-/// same specimen — where they converge the signal is sharp,
+/// same specimen: where they converge the signal is sharp,
 /// where they diverge you see prismatic splitting.
 ///
 /// Eyepiece reticle · specimen grid · wavelength emission
@@ -44,9 +44,9 @@ const double _kVigOp = 0.04;
 const double _kGridSp = 20.0, _kGridSt = 0.3, _kGridOp = 0.012;
 const double _kGridLabelFont = 4.0, _kGridLabelOp = 0.02;
 // Three wavelengths.
-const Color _kGPHue = BaselineColors.spectralTeal; // Pure teal — λ₁
-const Color _kCLHue = BaselineColors.spectralCyan; // Cyan shift — λ₂
-const Color _kGRHue = BaselineColors.spectralGreen; // Green shift — λ₃
+const Color _kGPHue = BaselineColors.spectralTeal; // Pure teal - λ₁
+const Color _kCLHue = BaselineColors.spectralCyan; // Cyan shift - λ₂
+const Color _kGRHue = BaselineColors.spectralGreen; // Green shift - λ₃
 const List<Color> _kHues = [_kGPHue, _kCLHue, _kGRHue];
 const List<double> _kHueOps = [0.55, 0.45, 0.35];
 // Header.
@@ -599,7 +599,7 @@ color: BaselineColors.teal.atOpacity(
 }
 //
 // ═══════════════════════════════════════════════════════════
-// SPECIMEN AXIS PAINTER (per metric row — the core)
+// SPECIMEN AXIS PAINTER (per metric row - the core)
 //
 // ═══════════════════════════════════════════════════════════
 class _SpecimenAxisPainter extends CustomPainter {

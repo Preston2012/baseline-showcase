@@ -3,10 +3,10 @@
 /// Represents the consensus object from v_statement_consensus (A9A).
 /// Computed by A7B after 2+ model analyses complete.
 ///
-/// May be null in the A9C response — statements with < 2 analyses
+/// May be null in the A9C response: statements with < 2 analyses
 /// or newly ingested statements won't have consensus yet.
 ///
-/// Framing labels (locked — matches A7A):
+/// Framing labels (locked - matches A7A):
 /// - Adversarial / Oppositional
 /// - Problem Identification
 /// - Commitment / Forward-Looking
@@ -128,12 +128,12 @@ throw FormatException(
 'Consensus.fromJson: computed_at unparseable: $computedAtRaw',
 );
 }
-// Parse models_included — could be List<String> or List<dynamic>.
+// Parse models_included - could be List<String> or List<dynamic>.
 final rawModels = json['models_included'];
 final modelsIncluded = rawModels is List
 ? rawModels.whereType<String>().toList()
 : <String>[];
-// Parse JSONB fields defensively — Supabase decoder may return
+// Parse JSONB fields defensively - Supabase decoder may return
 // Map<String, Object?> or Map<dynamic, dynamic> instead of
 // Map<String, dynamic>. Use Map.from() to normalize.
 final rawSignalComponents = json['signal_components'];
@@ -201,7 +201,7 @@ Map<String, dynamic> toJson() => {
 };
 /// Safely converts a JSON numeric to double, defaulting to 0.0.
 /// Consensus metrics are NOT NULL in the DB (default 0), so zero
-/// fallback is correct here — unlike nullable metrics elsewhere.
+/// fallback is correct here, unlike nullable metrics elsewhere.
 static double _safeDoubleOrZero(dynamic value) {
 if (value == null) return 0.0;
 if (value is num) {

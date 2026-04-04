@@ -1,5 +1,5 @@
 -- ========================================================================
--- A12A v1.0.2: MIGRATION — Baseline Delta Backfill (Baseline V1.4) — FINAL
+-- A12A v1.0.2: MIGRATION  - Baseline Delta Backfill (Baseline V1.4)  - FINAL
 -- File: migrations/add_baseline_delta_backfill.sql
 --
 -- Allows retroactive computation of baseline_delta for statements embedded
@@ -7,13 +7,13 @@
 --
 -- FIXES APPLIED (V1.0.0 → V1.0.1):
 -- B1: Added topics to pinned columns in both trigger paths
--- B2: This is the CANONICAL trigger definition — A1 should reference, not duplicate
+-- B2: This is the CANONICAL trigger definition  - A1 should reference, not duplicate
 -- B3: RPC changed to SECURITY INVOKER (service_role bypasses RLS already)
 -- H1: v_backfill_candidates filters f.is_active = true
 -- H3: Added pgvector extension guard
 -- H4: Documented window size / threshold coupling with A4
 --
--- FIXES APPLIED (V1.0.1 → V1.0.2 — RECONCILED FROM GPT + GROK AUDITS):
+-- FIXES APPLIED (V1.0.1 → V1.0.2  - RECONCILED FROM GPT + GROK AUDITS):
 -- 1: Trigger rewritten using NEW := OLD pattern (schema-future-proof)
 -- 2: baseline_delta precision documented (confirm column type against A1)
 --
@@ -115,7 +115,7 @@ COMMENT ON FUNCTION prevent_statement_updates IS
 Allows: (1) is_revoked flip, (2) embedding write-once, (3) baseline_delta write-once. All other
 columns/new columns are automatically pinned.';
 -- ── Step 2: Backfill RPC─────────────────────────────────────────────────────
--- Window=50, threshold=30 — matches A4 generate-embedding.
+-- Window=50, threshold=30  - matches A4 generate-embedding.
 -- If A4 changes these values, this RPC MUST be updated to match.
 -- V1.0.2 FIX (2): baseline_delta ROUND(..., 2) assumes NUMERIC column type.
 -- If column is INTEGER, change to ROUND(..., 0)::int. Confirm against A1.

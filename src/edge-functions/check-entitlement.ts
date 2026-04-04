@@ -1,8 +1,8 @@
 // ========================================================================
-// BASELINE V1.4 — ENTITLEMENT MIDDLEWARE
-// A17D — V1.0.1
+// BASELINE V1.4 -- ENTITLEMENT MIDDLEWARE
+// A17D -- V1.0.1
 //
-// FIXES APPLIED (V1.0.0 → V1.0.1 — dual audit reconciliation):
+// FIXES APPLIED (V1.0.0 → V1.0.1 - dual audit reconciliation):
 // FIX1: Server-enforced rate limiting via signed entitlement token.
 // A17D now returns an HMAC-signed X-Entitlement-Token containing
 // endpoint + user_id/ip + timestamp + expiry. Target endpoints
@@ -18,7 +18,7 @@
 // malformed proxy headers or misconfigured CDN.
 // [Audit 2 Critical Blocker #3]
 // FIX4: X-RateLimit-Remaining now returns exact value from
-// check_rate_limit(). No manual decrement — avoids lying headers
+// check_rate_limit(). No manual decrement - avoids lying headers
 // when fire-and-forget record fails.
 // [Audit 2 Non-blocking #4]
 // FIX5: Canonical endpoint allowlist. Server-side enum of valid
@@ -49,7 +49,7 @@
 // DEPENDENCIES:
 // - A17C V1.0.1 deployed (check_rate_limit, record_rate_limit_hit RPCs)
 // - A13A V1.0.2 deployed (user_profiles, get_my_tier())
-// - A13B V1.0.1 deployed (check_feature_access RPC — optional gating)
+// - A13B V1.0.1 deployed (check_feature_access RPC - optional gating)
 // - Supabase Edge Functions runtime (Deno)
 //
 // ENDPOINT:
@@ -109,7 +109,7 @@ const CORS_HEADERS: Record<string, string> = {
 "authorization, x-client-info, apikey, content-type, x-entitlement-token",
 "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
-// FIX5: Canonical endpoint allowlist — server-side enum.
+// FIX5: Canonical endpoint allowlist - server-side enum.
 // A17D only accepts these values. Target endpoints must match.
 // Add new entries here when new protected endpoints are deployed.
 const CANONICAL_ENDPOINTS = new Set([
@@ -171,7 +171,7 @@ if (typeof rl.limit === "number") {
 headers["X-RateLimit-Limit"] = String(rl.limit);
 }
 if (typeof rl.remaining === "number") {
-// FIX4: Return exact value from check — no manual decrement
+// FIX4: Return exact value from check - no manual decrement
 headers["X-RateLimit-Remaining"] = String(rl.remaining);
 }
 if (rl.reset_at) {
@@ -215,7 +215,7 @@ return `${payloadB64}.${sigB64}`;
 // const payload = await verifyEntitlementToken(token, "get-receipt", secret);
 // if (!payload) return 403;
 //
-// This is provided as documentation — each target endpoint implements
+// This is provided as documentation - each target endpoint implements
 // its own verification using the same ENTITLEMENT_SIGNING_SECRET env var.
 //
 // async function verifyEntitlementToken(
@@ -351,7 +351,7 @@ userTier = tierData;
 const clientIp = !isAuthenticated ? getClientIp(req) : null;
 // FIX3: Anonymous with no IP → deny (not fail-open)
 if (!isAuthenticated && !clientIp) {
-console.warn("A17D: No user_id or client_ip — denying request");
+console.warn("A17D: No user_id or client_ip - denying request");
 return jsonResponse(
 {
 allowed: false,
@@ -423,7 +423,7 @@ retry_after: retryAfter,
 { ...rlHeaders, "Retry-After": String(retryAfter) }
 );
 }
-// ── Check feature access (A13B — optional) ──────────────────────
+// ── Check feature access (A13B - optional) ──────────────────────
 let featureAccess: boolean | null = null;
 if (featureFlag) {
 if (isAuthenticated) {
@@ -469,7 +469,7 @@ rlHeaders
 featureAccess = null;
 }
 }
-// ── Allowed — record the hit (fire-and-forget) ──────────────────
+// ── Allowed - record the hit (fire-and-forget) ──────────────────
 serviceClient
 .rpc("record_rate_limit_hit", {
 p_endpoint: endpoint,

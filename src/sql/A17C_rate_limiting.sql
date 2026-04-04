@@ -1,8 +1,8 @@
 -- ========================================================================
--- BASELINE V1.4 — RATE LIMITING SQL PRIMITIVES
--- A17C — V1.0.1
+-- BASELINE V1.4  - RATE LIMITING SQL PRIMITIVES
+-- A17C  - V1.0.1
 --
--- FIXES APPLIED (V1.0.0 → V1.0.1 — dual audit reconciliation):
+-- FIXES APPLIED (V1.0.0 → V1.0.1  - dual audit reconciliation):
 -- FIX1: Added auth.role() = 'service_role' guard to check_rate_limit()
 -- and record_rate_limit_hit(). Defense-in-depth: grants already
 -- restrict to service_role, but explicit check prevents future
@@ -13,7 +13,7 @@
 -- entries exist, reset_at = now() (not now+1h). Prevents
 -- misleading X-RateLimit-Reset headers.
 -- [Audit 2 Critical Blocker #2]
--- FIX3: Added endpoint constraints on table — max 64 chars, lowercase
+-- FIX3: Added endpoint constraints on table  - max 64 chars, lowercase
 -- alphanumeric + hyphens only. Prevents namespace injection and
 -- cardinality abuse. A17D must normalize routes to canonical keys.
 -- [Audit 2 High #4, Audit 1 Security]
@@ -23,21 +23,21 @@
 -- clear error message (not just opaque CHECK constraint failure).
 -- [Audit 2 Medium #7]
 -- FIX6: check_rate_limit() validates endpoint format before querying.
--- [Audit 1 Security — endpoint TEXT no val]
+-- [Audit 1 Security  - endpoint TEXT no val]
 --
 -- PURPOSE:
 -- Database layer for request rate limiting. Provides a sliding-window
 -- counter table, check + record RPCs, and automatic cleanup.
 -- Consumed by A17D (entitlement middleware Edge Function).
 --
--- RATE LIMITS (Locked Decision #3 — from A13B):
+-- RATE LIMITS (Locked Decision #3  - from A13B):
 -- free: 100 requests / hour
 -- pro: 1,000 requests / hour
 -- pro_plus: 5,000 requests / hour
 -- b2b: 10,000 requests / hour
 --
 -- DESIGN DECISIONS:
--- 1. Sliding window (1-hour lookback) — more accurate than fixed windows,
+-- 1. Sliding window (1-hour lookback)  - more accurate than fixed windows,
 -- no sudden reset bursts. Trade-off: COUNT query per check.
 -- 2. Dual key: user_id (authenticated) OR client_ip (anonymous/public).
 -- Authenticated users rate-limited by user_id (tier-aware).
@@ -45,7 +45,7 @@
 -- 3. Endpoint-scoped: each endpoint has its own counter namespace.
 -- e.g., 'get-receipt' and 'get-feed' have separate quotas.
 -- 4. check_rate_limit returns remaining + reset info for response headers.
--- 5. Cleanup via expire_rate_limit_entries() — called by cron.
+-- 5. Cleanup via expire_rate_limit_entries()  - called by cron.
 -- 6. Hardcoded tier→limit map for MVP performance (no DB hit per check).
 -- Migration path: swap get_tier_rate_limit() to read from
 -- tier_features.config->>'rate_limit' when per-endpoint or dynamic
@@ -53,7 +53,7 @@
 --
 -- DEPENDENCIES:
 -- - A13A V1.0.2 deployed (user_profiles, get_my_tier())
--- - A13B V1.0.1 deployed (tier_features — rate limit values hardcoded
+-- - A13B V1.0.1 deployed (tier_features  - rate limit values hardcoded
 -- here for MVP, config-driven migration documented above)
 -- - Supabase Auth (auth.uid(), auth.role())
 --
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS rate_limit_entries (
 entry_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 -- Authenticated user (NULL for anonymous)
 user_id UUID,
--- Anonymous IP (NULL for authenticated — user_id takes precedence)
+-- Anonymous IP (NULL for authenticated  - user_id takes precedence)
 client_ip INET,
 -- Endpoint namespace (e.g., 'get-receipt', 'get-feed', 'annotations')
 -- FIX3: Constrained to prevent namespace injection / cardinality abuse
@@ -140,7 +140,7 @@ $$;
 -- if proceeding). This separation lets middleware check-then-act.
 --
 -- For authenticated users: looks up tier via p_tier param (required for
--- service_role calls — centralizes tier resolution in middleware/A17D).
+-- service_role calls  - centralizes tier resolution in middleware/A17D).
 -- For anonymous: uses free-tier cap (100/hr).
 --
 -- FIX1: service_role guard (defense-in-depth).
@@ -347,7 +347,7 @@ REVOKE ALL ON FUNCTION get_tier_rate_limit(TEXT) FROM PUBLIC;
 REVOKE ALL ON FUNCTION get_tier_rate_limit(TEXT) FROM anon;
 GRANT EXECUTE ON FUNCTION get_tier_rate_limit(TEXT) TO authenticated;
 GRANT EXECUTE ON FUNCTION get_tier_rate_limit(TEXT) TO service_role;
--- check_rate_limit (service_role only — called by middleware)
+-- check_rate_limit (service_role only  - called by middleware)
 REVOKE ALL ON FUNCTION check_rate_limit(TEXT, UUID, INET, TEXT) FROM PUBLIC;
 REVOKE ALL ON FUNCTION check_rate_limit(TEXT, UUID, INET, TEXT) FROM anon;
 REVOKE ALL ON FUNCTION check_rate_limit(TEXT, UUID, INET, TEXT) FROM
@@ -359,11 +359,11 @@ REVOKE ALL ON FUNCTION record_rate_limit_hit(TEXT, UUID, INET) FROM PUBLIC;
 REVOKE ALL ON FUNCTION record_rate_limit_hit(TEXT, UUID, INET) FROM anon;
 REVOKE ALL ON FUNCTION record_rate_limit_hit(TEXT, UUID, INET) FROM authenticated;
 GRANT EXECUTE ON FUNCTION record_rate_limit_hit(TEXT, UUID, INET) TO service_role;
--- expire_rate_limit_entries (service_role only — cron)
+-- expire_rate_limit_entries (service_role only  - cron)
 REVOKE ALL ON FUNCTION expire_rate_limit_entries(INTEGER) FROM PUBLIC;
 REVOKE ALL ON FUNCTION expire_rate_limit_entries(INTEGER) FROM anon;
 REVOKE ALL ON FUNCTION expire_rate_limit_entries(INTEGER) FROM authenticated;
 GRANT EXECUTE ON FUNCTION expire_rate_limit_entries(INTEGER) TO service_role;
 -- ========================================================================
--- END A17C — V1.0.1
+-- END A17C  - V1.0.1
 -- ========================================================================

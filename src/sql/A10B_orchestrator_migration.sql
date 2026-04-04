@@ -1,5 +1,5 @@
 -- ========================================================================
--- A10B v1.0.2: MIGRATION — Orchestrator State Lock (Baseline V1.4) — FINAL
+-- A10B v1.0.2: MIGRATION  - Orchestrator State Lock (Baseline V1.4)  - FINAL
 -- File: migrations/create_system_orchestrator.sql
 --
 -- Purpose:
@@ -7,12 +7,12 @@
 -- Prevents permanent lock jams in n8n (replaces session-scoped advisory locks).
 --
 -- FIXES APPLIED (V1.0.0 → V1.0.1):
--- B1: RLS enforced — service_role only (anon/auth cannot touch this table)
+-- B1: RLS enforced  - service_role only (anon/auth cannot touch this table)
 -- H1: status CHECK constraint ('idle', 'running')
 -- M1: Updated to V1.4
 -- M2: Added updated_at column with auto-trigger
 --
--- FIXES APPLIED (V1.0.1 → V1.0.2 — RECONCILED FROM GPT + GROK AUDITS):
+-- FIXES APPLIED (V1.0.1 → V1.0.2  - RECONCILED FROM GPT + GROK AUDITS):
 -- 1: Added FORCE ROW LEVEL SECURITY (prevents table owner bypass)
 -- 2: Added CHECK constraint for claimed_at/claimed_by vs status invariants
 --
@@ -53,11 +53,11 @@ CREATE TRIGGER set_updated_at
 BEFORE UPDATE ON system_orchestrator
 FOR EACH ROW
 EXECUTE FUNCTION trg_system_orchestrator_updated_at();
--- V1.0.1 FIX (B1): RLS enforced — service_role only
+-- V1.0.1 FIX (B1): RLS enforced  - service_role only
 -- Anon/auth must NEVER touch orchestrator state
 ALTER TABLE system_orchestrator ENABLE ROW LEVEL SECURITY;
 -- V1.0.2 FIX (1): FORCE prevents table owner from bypassing RLS
 ALTER TABLE system_orchestrator FORCE ROW LEVEL SECURITY;
 REVOKE ALL ON system_orchestrator FROM anon, authenticated;
 -- Service role bypasses RLS by default in Supabase.
--- No explicit policy needed — only service_role can access.
+-- No explicit policy needed  - only service_role can access.

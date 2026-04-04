@@ -127,7 +127,7 @@ BEGIN
 END;
 $function$;
 
--- FIX 4: get_tracked_bills — SECURITY INVOKER (was DEFINER unnecessarily)
+-- FIX 4: get_tracked_bills  - SECURITY INVOKER (was DEFINER unnecessarily)
 CREATE OR REPLACE FUNCTION public.get_tracked_bills(p_congress_session integer DEFAULT 119)
 RETURNS TABLE(bill_id text, bill_number text, chamber_code text, congress_session integer, has_versions boolean)
 LANGUAGE sql
@@ -169,7 +169,7 @@ $function$;
 
 GRANT EXECUTE ON FUNCTION get_tracked_bills(integer) TO anon, authenticated, service_role;
 
--- FIX 5: count_todays_tweets — add search_path
+-- FIX 5: count_todays_tweets  - add search_path
 CREATE OR REPLACE FUNCTION public.count_todays_tweets()
 RETURNS integer
 LANGUAGE sql
@@ -182,7 +182,7 @@ AS $function$
     AND posted_at::date = CURRENT_DATE;
 $function$;
 
--- FIX 6: get_mutation_timeline — add search_path + ORDER BY to LIMIT 1
+-- FIX 6: get_mutation_timeline  - add search_path + ORDER BY to LIMIT 1
 CREATE OR REPLACE FUNCTION public.get_mutation_timeline(p_bill_id text)
 RETURNS jsonb
 LANGUAGE plpgsql

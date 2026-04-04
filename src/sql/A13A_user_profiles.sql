@@ -1,23 +1,23 @@
 -- ========================================================================
--- BASELINE V1.4 — USER PROFILES + AUTH FOUNDATION
--- A13A — V1.0.2
+-- BASELINE V1.4  - USER PROFILES + AUTH FOUNDATION
+-- A13A  - V1.0.2
 --
--- FIXES APPLIED (V1.0.0 → V1.0.1 — GPT + Grok audit reconciliation):
+-- FIXES APPLIED (V1.0.0 → V1.0.1  - GPT + Grok audit reconciliation):
 -- FIX1: handle_new_user null-safe for OAuth/phone auth (no email)
 -- Added NULLIF+trim on metadata, 'user_' || id as final fallback [GPT]
 -- FIX2: handle_new_user exception handler uses RAISE LOG (not pipeline_events)
 -- Avoids A11A stage enum dependency. Signup never blocked. [GPT+Grok]
 -- FIX3: get_my_tier() returns 'free' via COALESCE (not NULL) [GPT]
 -- FIX4: protect_user_tier: RAISE EXCEPTION on non-service tier change
--- (was silent pin — caused UX confusion) [Grok C3]
+-- (was silent pin  - caused UX confusion) [Grok C3]
 -- FIX5: preferences JSONB must be object type CHECK constraint [GPT]
 -- FIX6: Schema-qualify all tables in SECURITY DEFINER functions [Grok C2]
 -- FIX7: Column-level UPDATE grants (authenticated can only change
--- display_name, avatar_url, preferences — not tier/timestamps) [Grok H1]
+-- display_name, avatar_url, preferences  - not tier/timestamps) [Grok H1]
 -- FIX8: Explicit REVOKE/GRANT on table (don't rely on Supabase defaults) [Grok H5]
 -- FIX9: Tier change audit via RAISE LOG (not pipeline_events) [Grok C1]
 --
--- FIXES APPLIED (V1.0.1 → V1.0.2 — Final audit reconciliation):
+-- FIXES APPLIED (V1.0.1 → V1.0.2  - Final audit reconciliation):
 -- FIX10: REVOKE get_my_tier() FROM PUBLIC (Postgres default execute hole) [Grok C1]
 -- FIX11: REVOKE ALL ON TABLE user_profiles FROM PUBLIC [Grok H1]
 -- FIX12: SECURITY DEFINER search_path = pg_catalog, public [Grok C2]
@@ -40,7 +40,7 @@
 -- - Does not create subscriptions (deferred to A18A)
 -- - Does not write to pipeline_events (avoids A11A stage enum coupling)
 --
--- SUPABASE AUTH CONFIGURATION (Dashboard settings — not SQL):
+-- SUPABASE AUTH CONFIGURATION (Dashboard settings  - not SQL):
 -- 1. Enable Email/Password auth (Settings → Auth → Providers)
 -- 2. Enable Google OAuth (optional, recommended for mobile)
 -- 3. Enable Apple OAuth (required for iOS App Store)
@@ -50,15 +50,15 @@
 -- 7. Disable signup if you want invite-only during beta
 --
 -- TIER DEFINITIONS:
--- 'free' — default, ad-supported, limited features
--- 'pro' — paid, no ads, full features
--- 'pro_plus' — paid, no ads, full features + priority
--- 'b2b' — enterprise, custom terms
+-- 'free'  - default, ad-supported, limited features
+-- 'pro'  - paid, no ads, full features
+-- 'pro_plus'  - paid, no ads, full features + priority
+-- 'b2b'  - enterprise, custom terms
 --
 -- Safety:
--- CREATE TABLE IF NOT EXISTS — idempotent
--- CREATE OR REPLACE FUNCTION — idempotent
--- DROP TRIGGER IF EXISTS — idempotent
+-- CREATE TABLE IF NOT EXISTS  - idempotent
+-- CREATE OR REPLACE FUNCTION  - idempotent
+-- DROP TRIGGER IF EXISTS  - idempotent
 -- ========================================================================
 -- ========================================================================
 -- USER PROFILES TABLE
@@ -70,7 +70,7 @@ user_id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
 display_name TEXT CHECK (char_length(display_name) <= 100),
 avatar_url TEXT CHECK (char_length(avatar_url) <= 500),
 -- Tier (managed by service_role via A18B RevenueCat webhook)
--- Users cannot change tier — protected by trigger + column-level grants
+-- Users cannot change tier  - protected by trigger + column-level grants
 tier TEXT NOT NULL DEFAULT 'free' CHECK (tier IN ('free', 'pro', 'pro_plus', 'b2b')),
 -- Preferences (user-editable, flexible JSONB)
 -- Example: { "theme": "dark", "default_figure": "uuid", "notifications": true }
@@ -171,8 +171,8 @@ CREATE POLICY profiles_user_update ON user_profiles
 FOR UPDATE TO authenticated
 USING (auth.uid() = user_id)
 WITH CHECK (auth.uid() = user_id);
--- ── No INSERT policy for authenticated — profiles are auto-created by trigger
--- ── No DELETE policy for authenticated — users cannot delete their profile
+-- ── No INSERT policy for authenticated  - profiles are auto-created by trigger
+-- ── No DELETE policy for authenticated  - users cannot delete their profile
 -- ── Service role has full access (for admin, webhooks, tier updates) ─────────
 DROP POLICY IF EXISTS profiles_service_all ON user_profiles;
 CREATE POLICY profiles_service_all ON user_profiles
@@ -200,7 +200,7 @@ GRANT ALL ON TABLE user_profiles TO service_role;
 -- TIER PROTECTION TRIGGER
 -- ========================================================================
 -- V1.0.1 FIX4: RAISE EXCEPTION instead of silent pin (Grok C3).
--- Non-service tier change attempts fail explicitly — no silent revert.
+-- Non-service tier change attempts fail explicitly  - no silent revert.
 -- V1.0.1 FIX6: Schema-qualified references.
 -- V1.0.1 FIX9: Tier change audit via RAISE LOG (not pipeline_events).
 -- V1.0.2 FIX12: search_path = pg_catalog, public (hardened SECURITY DEFINER).
@@ -273,8 +273,8 @@ GRANT EXECUTE ON FUNCTION get_my_tier() TO service_role;
 REVOKE ALL ON FUNCTION handle_new_user() FROM PUBLIC;
 REVOKE ALL ON FUNCTION protect_user_tier() FROM PUBLIC;
 -- ========================================================================
--- SEED DATA (none — profiles are auto-created on signup)
+-- SEED DATA (none  - profiles are auto-created on signup)
 -- ========================================================================
 -- ========================================================================
--- END A13A — V1.0.2
+-- END A13A  - V1.0.2
 -- ========================================================================

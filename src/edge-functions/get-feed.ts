@@ -7,11 +7,11 @@
 // Public read endpoint (anon key). No auth required.
 //
 // SORT MODES:
-//   'smart'     — composite score (default): signal × recency × diversity
-//   'recency'   — pure reverse-chronological
-//   'signal'    — pure signal_rank descending
-//   'novelty'   — novelty_avg descending (most novel first)
-//   'divergence'— variance_detected first, then signal
+//   'smart'     - composite score (default): signal × recency × diversity
+//   'recency'   - pure reverse-chronological
+//   'signal'    - pure signal_rank descending
+//   'novelty'   - novelty_avg descending (most novel first)
+//   'divergence' - variance_detected first, then signal
 //
 // V2.0.0 CHANGES:
 //   - Default sort changed from recency to smart mix

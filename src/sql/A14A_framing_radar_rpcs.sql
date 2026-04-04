@@ -1,13 +1,13 @@
 -- ========================================================================
--- BASELINE V1.4 — FRAMING RADAR + HISTORICAL TRENDS
--- A14A — V1.0.1
+-- BASELINE V1.4  - FRAMING RADAR + HISTORICAL TRENDS
+-- A14A  - V1.0.1
 --
--- FIXES APPLIED (V1.0.0 → V1.0.1 — GPT + Grok audit reconciliation):
--- FIX1: Week bucket comment corrected — uses date_trunc('week', timestamp),
+-- FIXES APPLIED (V1.0.0 → V1.0.1  - GPT + Grok audit reconciliation):
+-- FIX1: Week bucket comment corrected  - uses date_trunc('week', timestamp),
 -- not "ISO week boundaries" as previously claimed [Grok M1]
 -- FIX2: Removed unused v_bucket_interval variable from
 -- get_framing_over_time [Grok M2]
--- FIX3: Added date range validation — RAISE EXCEPTION if
+-- FIX3: Added date range validation  - RAISE EXCEPTION if
 -- start >= end to prevent silent inverted-range queries [GPT]
 --
 -- PURPOSE:
@@ -36,7 +36,7 @@
 -- TEXT[]). RPCs return empty results until ingestion populates topics.
 --
 -- Safety:
--- CREATE OR REPLACE FUNCTION — idempotent
+-- CREATE OR REPLACE FUNCTION  - idempotent
 -- ========================================================================
 -- ========================================================================
 -- RPC: Framing Distribution for a Figure
@@ -431,5 +431,5 @@ TIMESTAMPTZ, TEXT) TO authenticated;
 GRANT EXECUTE ON FUNCTION get_topic_over_time(UUID, TIMESTAMPTZ,
 TIMESTAMPTZ, TEXT) TO service_role;
 -- ========================================================================
--- END A14A — V1.0.1
+-- END A14A  - V1.0.1
 -- ========================================================================

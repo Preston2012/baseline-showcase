@@ -1,5 +1,5 @@
 -- ========================================================================
--- PM-ST.1 — Spending Scope™ SQL Schema — LOCKED
+-- PM-ST.1  - Spending Scope™ SQL Schema  - LOCKED
 --
 -- Four tables powering Spending Scope™:
 --   1. bill_spending_summary: Per-bill aggregate spending (CBO + extracted)
@@ -422,7 +422,7 @@ CREATE TRIGGER trigger_spending_anomalies_immutability
   FOR EACH ROW
   EXECUTE FUNCTION prevent_immutable_mutation();
 
--- bill_spending_summary: EXCEPTION — mutable.
+-- bill_spending_summary: EXCEPTION  - mutable.
 -- Updated when new version spending is ingested. latest_version_id and
 -- totals change as new data arrives. No immutability trigger.
 -- UPDATE granted to service_role only (see Section 11).

@@ -1,171 +1,239 @@
-# Baseline - Political Intelligence Platform
+# Baseline: Political Intelligence Platform
 
-> Multi-provider AI analysis of public figures' statements with consensus scoring.
-> Solo-built. Google Play approved (closed testing).
+Baseline is a political intelligence platform that tracks 106 public figures using 4 independent AI providers. Each statement is analyzed separately by Claude, GPT, Gemini, and Grok, then reconciled through a consensus engine that detects and flags model disagreements. Built solo using a documented multi-model orchestration methodology across 500+ build sessions.
 
-[![Live Site](https://img.shields.io/badge/Live-baseline.marketing-blue)](https://baseline.marketing)
 [![Google Play](https://img.shields.io/badge/Google%20Play-Approved-green)]()
 [![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B)]()
 [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL%2017-3ECF8E)]()
 
 ---
 
-## What Baseline Does
+## What This Repo Contains
 
-Baseline tracks **106 public figures** across the political spectrum, ingests their public statements from official sources, analyzes each statement through **4 independent AI providers**, and computes a **consensus score** that measures alignment between what politicians say and what they do.
+- Architecture documentation and system design ([SYSTEM_DESIGN.md](SYSTEM_DESIGN.md), [ARCHITECTURE.mermaid](ARCHITECTURE.mermaid))
+- Representative Flutter code: widgets, design system, data models ([src/flutter/](src/flutter/))
+- Supabase Edge Functions: analysis pipeline, consensus engine, feed API ([src/edge-functions/](src/edge-functions/))
+- 30 PostgreSQL migrations showing schema evolution from MVP to production ([src/sql/](src/sql/))
+- App configuration: constants, routing, theme tokens ([src/config/](src/config/))
 
-**Production stats:**
-- 5,400+ statements ingested and analyzed
-- 16,200+ individual AI analyses computed
-- 5,300+ consensus scores generated
-- 364 legislative bill versions tracked
-- 38,600+ pipeline events processed
-- Real-time cost tracking across all AI providers
+This is a public showcase. The full production codebase is in a private repo available for hiring review.
+
+## What Is Intentionally Not Public
+
+- AI prompt text sent to each provider (proprietary)
+- Provider-specific tuning parameters and scoring weights
+- Full Flutter application code (28 screens, state management, services)
+- Production environment configuration
+
+Contact [Droiddna2013@gmail.com](mailto:Droiddna2013@gmail.com) for private repo access.
+
+---
+
+## Why This Project Matters
+
+Political discourse analysis is dominated by single-model tools with no bias correction. When one AI provider hallucinates or carries a political lean, there is no check on the output. Baseline's multi-provider consensus approach treats model disagreement as signal, not noise. Statements where providers fundamentally disagree are surfaced, not hidden.
 
 ---
 
 ## Architecture Overview
+
 ```
-Flutter App (28 screens)
+Official Sources
     |
     v
-Supabase (PostgreSQL 17 + Row Level Security)
+Ingestion Pipeline (Make.com workflows, source hashing, dedup)
     |
-    +-- 22 Edge Functions (TypeScript/Deno)
-    |       |
-    |       +-- Statement Ingestion Pipeline
-    |       |       manual-ingest-trigger
-    |       |       get-feed
-    |       |       backfill-baseline
-    |       |
-    |       +-- Multi-Provider AI Analysis
-    |       |       analyze-statement --> [Claude | GPT-4 | Gemini | Grok]
-    |       |       compute-consensus
-    |       |       generate-embedding
-    |       |       get-baseline-score
-    |       |
-    |       +-- Legislative Tracking
-    |       |       sync-bill-versions
-    |       |       ingest-bill-version
-    |       |       compute-bill-mutation
-    |       |       summarize-bill
-    |       |
-    |       +-- Data & API Layer
-    |               get-statement
-    |               get-figure-profile
-    |               get-narrative-sync
-    |               get-trends
-    |               get-votes / sync-votes
-    |               get-receipt
+    v
+Extraction (Gemini structured output)
     |
-    +-- 30 Tables with RLS
-    +-- RevenueCat (subscription management)
-    +-- Automation Workflows (Make.com)
-```
-## Tech Stack
-
-| Layer | Technology | Details |
-|-------|-----------|---------|
-| **Mobile** | Flutter 3.x / Dart | 28 screens, Material Design 3, responsive layout |
-| **Backend** | Supabase | PostgreSQL 17, Row Level Security on all 30 tables |
-| **Serverless** | Deno Edge Functions | 22 functions, TypeScript, deployed globally |
-| **AI Providers** | OpenAI, Anthropic, Google, xAI | GPT-4, Claude, Gemini, Grok |
-| **Consensus** | Custom scoring engine | Multi-provider reconciliation with confidence weighting |
-| **Legislative** | Congress.gov API | Bill version tracking, mutation diffing, spending analysis |
-| **Embeddings** | Vector search | Semantic similarity across statements |
-| **Payments** | RevenueCat | Subscription tiers with entitlement checking |
-| **Automation** | Make.com | 9 workflows for data pipeline orchestration |
-| **Hosting** | Google Play | Approved for closed testing |
-
-## Database Schema (30 tables)
-
-**Core Intelligence:**
-`figures` (106 rows) | `statements` (5,454) | `analyses` (16,251) | `analyses_audit` (16,251) | `consensus` (5,361)
-
-**Legislative Tracking:**
-`bill_versions` (364) | `bill_summaries` (354) | `version_comparisons` | `mutation_diffs` (109) | `bill_spending_summary` (50)
-
-**Data Pipeline:**
-`raw_ingestion_jobs` (20,921) | `pipeline_events` (38,658) | `source_hashes` (2,277) | `gemini_structured_output` (2,644) | `cost_log` (11,224)
-
-**Platform:**
-`user_profiles` | `subscriptions` | `subscription_events` | `tier_features` (52) | `feature_flags` (16) | `rate_limit_entries` | `votes` (161) | `annotations` | `waitlist`
-## Key Features
-
-- **Multi-Provider AI Consensus:** Every statement is analyzed independently by 4 AI providers. A consensus scoring algorithm reconciles outputs to produce a single reliability score. This eliminates single-model bias.
-- **Legislative Bill Tracking:** Automatically syncs bill versions from Congress.gov, computes mutations between versions, summarizes changes, and tracks spending implications.
-- **Real-Time Feed:** Aggregated feed of analyzed statements with filtering by figure, topic, party, and consensus score.
-- **Figure Profiles:** Detailed profiles for each tracked figure with historical analysis, narrative sync scores, and trend data.
-- **Embedding Search:** Vector-based semantic search across all statements for finding related political positions.
-- **Cost Tracking:** Every AI API call is logged with cost data for budget management across providers.
-- **Subscription System:** RevenueCat integration with tiered access, entitlement checking, and webhook handling.
-
-## 22 Edge Functions
-
-| Function | Purpose |
-|----------|---------|
-| `analyze-statement` | Routes statements to 4 AI providers for independent analysis |
-| `compute-consensus` | Reconciles multi-provider analyses into consensus scores |
-| `get-baseline-score` | Computes overall reliability scores per figure |
-| `get-feed` | Serves the main statement feed with filtering and pagination |
-| `get-figure-profile` | Returns complete figure profiles with historical data |
-| `get-narrative-sync` | Measures alignment between a figure's statements over time |
-| `get-trends` | Computes trending topics and figures |
-| `get-statement` | Returns detailed statement with all analyses |
-| `generate-embedding` | Creates vector embeddings for semantic search |
-| `manual-ingest-trigger` | Triggers statement ingestion pipeline on demand |
-| `backfill-baseline` | Backfills historical data for new figures |
-| `sync-bill-versions` | Syncs latest bill versions from Congress.gov |
-| `ingest-bill-version` | Processes and stores individual bill versions |
-| `compute-bill-mutation` | Diffs bill versions to identify changes |
-| `summarize-bill` | AI-powered bill summarization |
-| `sync-votes` | Syncs voting records |
-| `get-votes` | Returns voting data for figures |
-| `get-receipt` | Returns AI analysis cost receipts |
-| `check-entitlement` | Validates subscription tier access |
-| `revenuecat-webhook` | Handles subscription lifecycle events |
-| `manage-account` | User account management |
-| `annotations` | User annotation system for statements |
-## Why These Architectural Choices
-
-- **Multi-provider over single-model:** Single AI models hallucinate, carry political bias, and degrade silently. Running 4 providers independently and reconciling via consensus eliminates single-model failure modes.
-- **Edge Functions over traditional server:** Global low-latency, scales to zero, no server management. 22 functions deployed globally via Deno.
-- **RLS over app-layer auth:** Row Level Security pushes access control into the database. Every query is filtered at the PostgreSQL level — no auth bugs from missed middleware.
-- **Cost tracking as a first-class feature:** Every AI API call logs to `cost_log` with token counts and estimated cost. 11,200+ entries enable per-provider ROI analysis and budget alerts.
-- **Source hashing for dedup:** Prevents wasted AI spend by detecting duplicate statements at ingestion time before they hit the analysis pipeline.
-
-## Project Structure
-
-```
-baseline/
-  lib/                          # Flutter app (28 screens)
-    screens/                    # UI screens
-    widgets/                    # Reusable components
-    services/                   # API and data services
-    models/                     # Data models
-    providers/                  # State management
-    theme/                      # Design system
-  supabase/
-    functions/                  # 22 Edge Functions (TypeScript)
-    migrations/                 # SQL migrations
-  assets/                       # Images, icons, fonts
-  test/                         # Test suites
+    v
+Multi-Provider Analysis (Claude + GPT + Grok in parallel)
+    |       |       |
+    v       v       v
+  [Each returns: repetition, novelty, affect, entropy, framing]
+    |       |       |
+    v       v       v
+Consensus Engine (agreement measurement, variance detection, outlier flagging)
+    |
+    v
+Scored Statement (signal rank, agreement level, framing consensus)
+    |
+    v
+Feed / Profiles / Trends / Legislative Correlation
 ```
 
-## Reliability & Observability
-
-- **Pipeline events:** 38,600+ events logged across ingestion, analysis, and consensus stages. Every failure is captured with context for debugging.
-- **Cost observability:** Per-provider, per-figure cost tracking across 11,200+ API calls. Budget alerts prevent runaway spend.
-- **Graceful degradation:** Non-critical services (xAI, RevenueCat, Make.com webhooks) fail silently without blocking core analysis flow. Kill switch halts the pipeline instantly if needed.
-- **Audit trail:** Every AI analysis has a mirrored audit record. Full provenance from raw ingestion through consensus scoring.
+See [ARCHITECTURE.mermaid](ARCHITECTURE.mermaid) for the full component diagram.
 
 ---
 
-## App Access & Full Codebase
+## Key Technical Decisions
 
-Baseline is in **Google Play closed testing**. This showcase repo demonstrates architecture and code quality — the full production codebase (28 screens, 22 Edge Functions, 100K+ lines) is available via private repo access.
+### Why 4 AI providers instead of 1 or 2
 
-**Request access:** [Droiddna2013@gmail.com](mailto:Droiddna2013@gmail.com)
-**Portfolio:** [baseline.marketing/built](https://baseline.marketing/built)
-**LinkedIn:** [Preston Winters](https://linkedin.com/in/prestonwinters)
-**GitHub:** [Preston2012/baseline-showcase](https://github.com/Preston2012/baseline-showcase)
+**Decision:** Route every statement to Claude, GPT, and Grok independently for analysis. Gemini handles structured extraction.
+
+**Why:** Single models hallucinate, carry political bias, and degrade silently between versions. With 2 providers, a disagreement is a coin flip. With 3+ independent analyses, you can identify the outlier and measure confidence.
+
+**What we observed:** GPT and Claude agreed on framing classification roughly 78% of the time. When they disagreed, Grok broke the tie in a consistent direction roughly 60% of the time, which was enough to flag genuinely ambiguous statements rather than forcing a binary call.
+
+**Tradeoff:** 3x the API cost per statement. Cost tracking (11,224 log entries) revealed GPT-4 was roughly 10x more expensive per analysis than Gemini, which led to using Gemini for extraction (where structured output matters more than reasoning depth) and reserving GPT/Claude/Grok for analysis.
+
+### Why Supabase Edge Functions over a traditional backend
+
+**Decision:** 22 Deno Edge Functions deployed globally via Supabase.
+
+**Why:** Serverless, TypeScript-native, globally distributed, scales to zero. No server management for a solo developer.
+
+**Tradeoff:** Cold start latency on infrequently-called functions. No long-running processes, so the analysis pipeline is event-driven rather than streaming. Functions that need to orchestrate multiple steps (like the full ingestion pipeline) rely on Make.com workflows to chain calls.
+
+### Why Flutter over React Native
+
+**Decision:** Flutter 3.x with Dart.
+
+**Why:** Dart's type safety caught schema mismatches at compile time during rapid iteration. Custom painting (CustomPainter) was essential for the consensus badge: 37 visual treatments based on agreement level, model count, and variance. React Native would have required a bridge to native canvas.
+
+**Tradeoff:** Smaller ecosystem, fewer third-party packages. Hiring pool is smaller for Flutter than React Native.
+
+### Why RLS on every table
+
+**Decision:** Row Level Security enabled on all 30 tables, even for a solo developer.
+
+**Why:** RLS pushes access control into PostgreSQL. Every query is filtered at the database level. There is no class of bug where a missing middleware check exposes data.
+
+**Tradeoff:** Query complexity increases. Debugging RLS policy interactions is harder than debugging application-layer auth. Some queries required restructuring to work within RLS constraints.
+
+### Why cost tracking per API call
+
+**Decision:** Every AI API call logs to `cost_log` with provider, model, input/output tokens, and estimated USD.
+
+**Why:** Without per-call cost tracking, budget overruns are invisible until the invoice arrives. Early logging revealed that GPT-4 was roughly 10x more expensive per analysis than Gemini. This data drove the decision to use Gemini for extraction and reserve expensive providers for analysis only.
+
+**Tradeoff:** Additional write per API call. At 11,224 log entries, storage cost is negligible, but it adds latency to the analysis path (mitigated by logging asynchronously after the response is stored).
+
+### Why 5-layer deduplication
+
+**Decision:** Source hashing, content fingerprinting, ingestion-time dedup, statement-level dedup, and analysis-level dedup.
+
+**Why:** Early versions ingested duplicates that corrupted consensus scores. A statement analyzed twice would double-count one provider's output, skewing the consensus. Each dedup layer catches a different failure mode: same URL re-crawled, same text from different sources, same statement re-triggered by automation, same analysis re-run after a partial failure.
+
+**Tradeoff:** Pipeline complexity. Five dedup checks add latency to ingestion. But the cost of a false duplicate (missed statement) is lower than the cost of a false unique (corrupted consensus).
+
+### Why consensus scoring instead of simple averaging
+
+**Decision:** Compute inter-provider agreement, variance detection, outlier flagging, and framing consensus rather than averaging scores.
+
+**Why:** Averaging hides disagreement. If Claude scores a statement at 80 and GPT scores it at 20, the average (50) tells you nothing. Variance detection surfaces these cases as high-signal: the providers fundamentally disagree about what the statement means, which is often more interesting than the cases where they agree.
+
+**Tradeoff:** More complex data model (stddev columns, framing_split JSONB, variance_detected boolean). More complex frontend rendering (37 visual treatments in the consensus badge). But the alternative, a single number, would lose the most valuable signal in the system.
+
+---
+
+## Where to Look First
+
+| File | What it shows |
+|------|--------------|
+| [`src/edge-functions/analyze-statement.sample.ts`](src/edge-functions/analyze-statement.sample.ts) | Multi-provider routing: 4 providers called via Promise.allSettled, response normalization, cost logging. Prompt text redacted. |
+| [`src/edge-functions/compute-consensus.sample.ts`](src/edge-functions/compute-consensus.sample.ts) | Consensus algorithm: per-metric averages/stddev, variance detection, outlier flagging, framing majority vote. Threshold values redacted. |
+| [`src/edge-functions/get-feed.ts`](src/edge-functions/get-feed.ts) | Smart feed ranking: signal x recency_decay x variance_boost x novelty_boost, figure diversity cap, 5 sort modes. |
+| [`src/flutter/consensus_badge.dart`](src/flutter/consensus_badge.dart) | 1,100+ line CustomPainter with 37 visual treatments and animated ring gauge. |
+| [`src/flutter/theme.dart`](src/flutter/theme.dart) | Production design system: color, typography, spacing, motion, border, and opacity tokens. |
+| [`src/flutter/models_consensus.dart`](src/flutter/models_consensus.dart) | Consensus data model with defensive JSON parsing, null safety, and JSONB field handling. |
+| [`src/flutter/models_statement.dart`](src/flutter/models_statement.dart) | Statement data model with factory constructors, copyWith, and defensive date parsing. |
+| [`src/flutter/models_figure.dart`](src/flutter/models_figure.dart) | Figure model with metadata extraction for 7 figure categories. |
+| [`src/sql/`](src/sql/) | 30 PostgreSQL migrations: schema evolution from MVP to production, RLS policies, custom RPCs. |
+
+---
+
+## Representative Code Paths
+
+### Path 1: Statement analysis and consensus
+
+A statement enters the system. `analyze-statement.ts` validates the request, then calls Claude, GPT, Gemini, and Grok in parallel via `Promise.allSettled`. Each provider returns structured JSON (repetition, novelty, affective language rate, topic entropy, framing label). Responses are validated, clamped to 0-100 ranges, and normalized into a common schema. Each result is inserted into the `analyses` table with a mirror row in `analyses_audit`. Token usage and estimated USD cost are logged to `cost_log`. Then `compute-consensus.ts` loads all provider results, computes per-metric averages and standard deviations, measures inter-provider spread, detects variance (any metric stddev above threshold), identifies the outlier provider, determines framing consensus via majority vote, and upserts the result to the `consensus` table.
+
+### Path 2: Feed ranking and delivery
+
+A feed request hits `get-feed.ts`. The function fetches 3x the requested limit from `v_feed_ranked`, then scores each row: `signal x recency_decay (36-hour half-life) x variance_boost (+30% if variance detected) x novelty_boost (+15% max)`. A diversification pass caps any single figure at 20% of results (minimum 3 per figure). The paginated slice is returned with metadata. Five sort modes available: smart (default), recency, signal, novelty, divergence.
+
+### Path 3: Consensus badge rendering
+
+`consensus_badge.dart` receives a Consensus model. Based on agreement level, model count, and whether variance was detected, it selects one of 37 visual treatments. The widget renders an animated ring gauge via CustomPainter, with the ring fill representing consensus score, color encoding agreement level, and optional variance indicators. The painting logic handles edge cases: missing consensus (shimmer placeholder), single-provider results (partial ring), and split decisions (segmented ring with per-provider colors).
+
+---
+
+## Data Model
+
+30 tables across 5 domains, all with Row Level Security enabled.
+
+**Core Intelligence:**
+`figures` (106 rows), `statements` (5,454), `analyses` (16,251), `analyses_audit` (16,251), `consensus` (5,361)
+
+**Legislative Tracking:**
+`bill_versions` (364), `bill_summaries` (354), `version_comparisons`, `mutation_diffs` (109), `bill_spending_summary` (50)
+
+**Data Pipeline:**
+`raw_ingestion_jobs` (20,921), `pipeline_events` (38,658), `source_hashes` (2,277), `gemini_structured_output` (2,644), `cost_log` (11,224)
+
+**Platform:**
+`user_profiles`, `subscriptions`, `subscription_events`, `tier_features` (52), `feature_flags` (16), `rate_limit_entries`, `votes` (161), `annotations`, `waitlist`
+
+**Social:**
+`posted_tweets`, `trending_topics`
+
+---
+
+## AI Provider Orchestration
+
+- Same statement sent to Claude, GPT, and Grok independently (Gemini handles extraction, not analysis)
+- Each provider returns structured metrics: repetition score, novelty score, affect intensity, entropy, framing label
+- Providers never see each other's output
+- Consensus engine loads all results, measures inter-model agreement, flags high-variance cases
+- Every API call is cost-tracked: provider, model, input/output tokens, estimated USD (11,224 log entries across all providers)
+- 4 providers: Claude (Anthropic), GPT-4 (OpenAI), Gemini (Google), Grok (xAI)
+
+---
+
+## Production Stats
+
+| Metric | Count |
+|--------|-------|
+| Tracked figures | 106 |
+| Statements analyzed | 5,454 |
+| AI analyses computed | 16,251 |
+| Consensus scores | 5,361 |
+| Pipeline events | 38,658 |
+| Cost log entries | 11,224 |
+| Bill versions tracked | 364 |
+| Edge Functions | 22 |
+| Database tables (all RLS) | 30 |
+| Flutter screens | 28 |
+| PostgreSQL version | 17 |
+
+---
+
+## What I Would Improve Next
+
+- Add Gemini as a 4th analysis provider (currently handles extraction only)
+- Add automated regression tests for Edge Functions (audit flagged this gap)
+- Add structured logging and observability beyond pipeline_events (audit flagged this gap)
+- Implement real-time WebSocket feed updates (currently polling)
+- Build a public API for researchers
+- Performance optimization on feed query for 50K+ statements
+- Formalize the tradeoffs section into an ADR (Architecture Decision Record) pack
+
+---
+
+## App Access
+
+Baseline is in closed testing on Google Play. Contact [Droiddna2013@gmail.com](mailto:Droiddna2013@gmail.com) for reviewer access.
+
+---
+
+## Related
+
+- [trading-toolkit](https://github.com/Preston2012/trading-toolkit) - Python automation: options scanner, trading bots, VPS infrastructure
+- [ai-council](https://github.com/Preston2012/ai-council) - Multi-model AI orchestration methodology (how this was built)
+- [baseline.marketing](https://github.com/Preston2012/baseline.marketing) - Marketing site and portfolio
+- Portfolio: [baseline.marketing/built](https://baseline.marketing/built)
+- LinkedIn: [linkedin.com/in/prestonwinters](https://linkedin.com/in/prestonwinters)
+- GitHub: [github.com/Preston2012](https://github.com/Preston2012)
+- Contact: [Droiddna2013@gmail.com](mailto:Droiddna2013@gmail.com)

@@ -6,7 +6,7 @@
 --   2. Run the UPDATE
 --   3. Re-enable the trigger
 --
--- RUN WITH CARE — this is a one-time data fix.
+-- RUN WITH CARE  - this is a one-time data fix.
 -- ──────────────────────────────────────────
 
 BEGIN;
