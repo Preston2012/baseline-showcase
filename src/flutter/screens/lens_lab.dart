@@ -1,4 +1,4 @@
-/// F4.11 — Lens Lab™ Screen (Spectral Analysis Bench)
+/// F4.11 -- Lens Lab™ Screen (Spectral Analysis Bench)
 ///
 /// Three independent measurement instruments (GP, CL, GR) each pass
 /// different analytical wavelengths through the same speech specimen.
@@ -454,7 +454,7 @@ class _LensLabScreenState extends State<LensLabScreen>
         stmtCount = await FiguresService()
             .getStatementCount(response.statement.figureId);
       } catch (_) {
-        // Non-critical — fall back to 0 (hides count-up)
+        // Non-critical - fall back to 0 (hides count-up)
       }
 
       setState(() {

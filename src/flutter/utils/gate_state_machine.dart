@@ -103,7 +103,7 @@ DateTime.fromMillisecondsSinceEpoch(_firstTapMs!),
 ///
 /// Call once at app startup (F0.5 main.dart).
 /// All reads are synchronous after this point.
-/// Safe to call multiple times — subsequent calls no-op (A2-2).
+/// Safe to call multiple times - subsequent calls no-op (A2-2).
 static Future<void> init() async {
 // Guard double-init (A2-2).
 if (_initialized) return;
@@ -131,7 +131,7 @@ debugPrint(
 }
 return;
 }
-// Cooldown expired — clean up.
+// Cooldown expired - clean up.
 _cooldownUntilMs = null;
 await prefs.remove(_kCooldownKey);
 }
@@ -253,7 +253,7 @@ if (!isDuplicate) {
 _journey.add(sanitizedFeature);
 }
 }
-// First tap in cycle — record start time.
+// First tap in cycle - record start time.
 _firstTapMs ??= now.millisecondsSinceEpoch;
 // ── Advance stage ────────────────────────────────
 final stageAtTap = _currentStage;
@@ -414,7 +414,7 @@ debugPrint(
 /// Forces the machine to Drop stage.
 ///
 /// Phase 7: "30-day-as-Pro" path triggers Drop directly.
-/// Not wired at MVP — infrastructure only.
+/// Not wired at MVP - infrastructure only.
 static Future<void> forceDrop() async {
 _ensureInit();
 final now = DateTime.now();
@@ -470,7 +470,7 @@ _initialized = true;
 }
 /// Closes the stream controller.
 ///
-/// **Tests only — do not call in production.** The stream
+/// **Tests only - do not call in production.** The stream
 /// controller lives for the app's lifetime. Closing it
 /// permanently breaks all listeners with no recovery.
 @visibleForTesting

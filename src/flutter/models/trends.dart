@@ -1,18 +1,18 @@
 /// Trends models for Baseline.
 ///
 /// Contains:
-/// - TrendMetric enum — available metrics for timeline queries
-/// - TrendPeriod enum — time window options (30d/90d/1y)
-/// - TrendGranularity enum — bucketing options (day/week/month)
-/// - TrendDataPoint — single time-series data point
-/// - MetricTimeline — complete timeline response
-/// - FramingRadarData — 5-axis framing distribution (current + previous)
+/// - TrendMetric enum - available metrics for timeline queries
+/// - TrendPeriod enum - time window options (30d/90d/1y)
+/// - TrendGranularity enum - bucketing options (day/week/month)
+/// - TrendDataPoint - single time-series data point
+/// - MetricTimeline - complete timeline response
+/// - FramingRadarData - 5-axis framing distribution (current + previous)
 ///
 /// Backend source: get-trends EF → A14A RPCs.
 ///
 /// Two distinct query types through the same endpoint:
-/// 1. Metrics Timeline (ENABLE_TRENDS) — time-series for a single metric
-/// 2. Framing Radar (ENABLE_RADAR) — 5-axis distribution for current + previous period
+/// 1. Metrics Timeline (ENABLE_TRENDS) - time-series for a single metric
+/// 2. Framing Radar (ENABLE_RADAR) - 5-axis distribution for current + previous period
 ///
 /// EF routing: presence of `metric` field → timeline route. Absence → radar route.
 ///
@@ -310,7 +310,7 @@ if (item is Map<String, dynamic>) {
 try {
 dataPoints.add(TrendDataPoint.fromJson(item));
 } on FormatException {
-// Skip malformed data points — partial data better than crash
+// Skip malformed data points - partial data better than crash
 }
 }
 }

@@ -1,10 +1,10 @@
-/// P4 — BillSummary model for Baseline.
+/// P4 -- BillSummary model for Baseline.
 ///
 /// Represents a bill summary + provisions as stored in bill_summaries (PD1)
 /// and returned by summarize-bill (P2) or PD1 RPCs.
 ///
 /// Provision Drift™ scores are per-provision (computed by P2). Drift labels
-/// are computed CLIENT-SIDE from quartile thresholds — never stored in DB.
+/// are computed CLIENT-SIDE from quartile thresholds - never stored in DB.
 ///
 /// This model is READ-ONLY on the client. P2 owns persistence.
 ///
@@ -84,7 +84,7 @@ return 'Standalone Provision';
 /// JSONB element shape (from PD1 `provisions` array):
 /// ```json
 /// {
-/// "title": "Section 203 — Rural Broadband Expansion",
+/// "title": "Section 203 - Rural Broadband Expansion",
 /// "description": "Allocates $2.1B for broadband infrastructure...",
 /// "category": "STANDALONE_PROVISION",
 /// "provision_note": "Sunsets after 5 years.",
@@ -111,7 +111,7 @@ final String title;
 final String description;
 /// Structural classification per P1 decision tree.
 final ProvisionCategory category;
-/// Optional structural context — funding amounts, dates, sunset clauses.
+/// Optional structural context - funding amounts, dates, sunset clauses.
 /// Empty string if nothing notable (P2 guarantees non-null).
 final String provisionNote;
 /// Cosine distance between this provision's embedding and the bill's
@@ -141,7 +141,7 @@ return 'Very High';
 /// Parse a single provision from the JSONB element.
 ///
 /// Handles Supabase decoder variance where elements may arrive as
-/// `Map<dynamic, dynamic>` — caller coerces via `Map<String, dynamic>.from()`.
+/// `Map<dynamic, dynamic>` - caller coerces via `Map<String, dynamic>.from()`.
 factory Provision.fromJson(Map<String, dynamic> json) {
 return Provision(
 title: json['title'] as String? ?? '',
@@ -173,10 +173,10 @@ if (driftScore != null) 'drift_score': driftScore,
 /// - P2 Edge Function (`summarize-bill`) inside `{ source, bill_summary: {...} }` envelope
 /// - PD1 RPCs (`get_bill_summary`, `get_bill_summaries_batch`) as direct rows
 ///
-/// Use [fromEnvelopeOrRow] in P3 — it handles both shapes automatically.
+/// Use [fromEnvelopeOrRow] in P3 - it handles both shapes automatically.
 /// Use [fromJson] only when you already have a pure PD1 row (e.g., from local cache).
 ///
-/// Immutable after creation. Bills are public records — cache forever.
+/// Immutable after creation. Bills are public records - cache forever.
 ///
 /// Provision Drift™:
 /// - [driftComputed]: Whether P2 successfully computed embeddings + distances.
@@ -202,7 +202,7 @@ this.source,
 /// UUID primary key (PD1).
 final String billSummaryId;
 /// Bill identifier (e.g., "hr-1234-118"). Matches votes table bill_id.
-/// UNIQUE in PD1 — one summary per bill.
+/// UNIQUE in PD1 - one summary per bill.
 final String billId;
 /// Bill title as extracted from bill text or provided at ingestion.
 final String billTitle;
@@ -228,10 +228,10 @@ final int provisionCount;
 final String sourceBillUrl;
 /// Congressional session number extracted from bill_id (e.g., 118).
 /// PD1 enforces > 0 via CHECK constraint. Default 0 used as parse fallback
-/// only — check [hasValidCongressSession] before display.
+/// only - check [hasValidCongressSession] before display.
 final int congressSession;
 /// Row creation timestamp (UTC).
-/// Falls back to epoch (1970-01-01) if unparseable — detectable sentinel,
+/// Falls back to epoch (1970-01-01) if unparseable - detectable sentinel,
 /// never looks like a real timestamp.
 final DateTime createdAt;
 /// Response source: "cache", "fresh", or "cache_race".
@@ -251,7 +251,7 @@ if (score <= 0.75) return 'High';
 return 'Very High';
 }
 /// Whether [congressSession] is valid per PD1 invariant (> 0).
-/// False indicates a parse fallback — do not display session number.
+/// False indicates a parse fallback - do not display session number.
 bool get hasValidCongressSession => congressSession > 0;
 /// Provisions sorted by drift score descending (highest drift first).
 /// Non-scored provisions sort to the end.
@@ -287,7 +287,7 @@ row['source'] = json['source'];
 }
 return BillSummary.fromJson(row);
 }
-// Direct RPC row — parse as-is.
+// Direct RPC row - parse as-is.
 return BillSummary.fromJson(json);
 }
 /// Parse from a pure PD1 row shape (no envelope).
@@ -298,7 +298,7 @@ return BillSummary.fromJson(json);
 /// - Timestamps: always UTC, epoch sentinel on parse failure.
 factory BillSummary.fromJson(Map<String, dynamic> json) {
 // Parse provisions from JSONB array defensively.
-// Supabase JSON decoder may return Map<dynamic, dynamic> elements —
+// Supabase JSON decoder may return Map<dynamic, dynamic> elements  - 
 // use whereType<Map> (not Map<String, dynamic>) then coerce each.
 final rawProvisions = json['provisions'];
 final List<Provision> provisions = (rawProvisions is List)

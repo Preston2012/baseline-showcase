@@ -1,17 +1,17 @@
 /// Lens Lab™ data models for Baseline.
 ///
 /// Contains:
-/// - LensMetric — 4 numeric metrics (Repetition, Novelty, Affect, Entropy)
-/// - LensMetricValue — single model's value for a metric
-/// - MetricComparison — per-metric 3-model side-by-side
-/// - LensFramingValue — single model's framing classification
-/// - FramingComparison — framing agreement/split detection
-/// - LensComparison — top-level view-model for Lens Lab screen
+/// - LensMetric - 4 numeric metrics (Repetition, Novelty, Affect, Entropy)
+/// - LensMetricValue - single model's value for a metric
+/// - MetricComparison - per-metric 3-model side-by-side
+/// - LensFramingValue - single model's framing classification
+/// - FramingComparison - framing agreement/split detection
+/// - LensComparison - top-level view-model for Lens Lab screen
 ///
 /// ALL data originates from get-statement (A9C) response.
 /// No additional API calls. Pure transformation of Analysis + Consensus.
 ///
-/// Brand neutrality: Models don't "think" or "believe" — they produce
+/// Brand neutrality: Models don't "think" or "believe" - they produce
 /// measurements. Say "GP analysis:" not "OpenAI thinks..."
 ///
 /// Path: lib/models/lens_lab.dart
@@ -140,7 +140,7 @@ this.consensusStddev,
 final LensMetric metric;
 /// Per-model values, ordered: GP → CL → GR (display order).
 /// May have 1–3 entries depending on which models have analyzed.
-/// Never empty — MetricComparison is only created if ≥1 value exists.
+/// Never empty - MetricComparison is only created if ≥1 value exists.
 final List<LensMetricValue> values;
 /// Consensus average for ALL view. Null if consensus unavailable
 /// or if fewer than 2 models contributed (consensus not meaningful).
@@ -230,7 +230,7 @@ Set<String> get uniqueFramings => values.map((v) => v.framing).toSet();
 /// metadata needed to render the full Lens Lab experience.
 ///
 /// Created by [LensLabService.buildComparison] from raw Analysis +
-/// Consensus data. No API calls — pure transformation.
+/// Consensus data. No API calls - pure transformation.
 class LensComparison {
 const LensComparison({
 required this.metrics,
@@ -256,7 +256,7 @@ final bool varianceDetected;
 bool get hasData => metrics.isNotEmpty && modelCount > 0;
 /// Retrieves a specific metric comparison by type.
 ///
-/// Throws [StateError] if metric is missing — should never happen
+/// Throws [StateError] if metric is missing - should never happen
 /// when hasData is true, as buildComparison creates all 4 metrics.
 MetricComparison metricFor(LensMetric metric) {
 for (final m in metrics) {

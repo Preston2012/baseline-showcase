@@ -1,11 +1,11 @@
 /// Vote models for Baseline (Congressional Vote Tracker).
 ///
 /// Contains:
-/// - VoteCast enum — type-safe vote values (YEA/NAY/NOT_VOTING/PRESENT)
-/// - Chamber enum — HOUSE/SENATE
-/// - Vote — individual vote record
-/// - VoteSummary — aggregated count per vote type
-/// - VotePage — paginated response wrapper
+/// - VoteCast enum - type-safe vote values (YEA/NAY/NOT_VOTING/PRESENT)
+/// - Chamber enum - HOUSE/SENATE
+/// - Vote - individual vote record
+/// - VoteSummary - aggregated count per vote type
+/// - VotePage - paginated response wrapper
 ///
 /// Backend source: get-votes EF (A16C) → A16A RPCs → votes table (A1).
 ///
@@ -138,7 +138,7 @@ return null;
 /// Parsed from get-votes EF response (A16C → A16A RPCs).
 ///
 /// vote_date is a date-only field stored as UTC midnight.
-/// No time component — do not display time.
+/// No time component - do not display time.
 /// Source URL links to the official congressional record.
 class Vote {
 const Vote({
@@ -159,12 +159,12 @@ final String figureId;
 final String figureName;
 /// Bill identifier (e.g., "H.R. 1234", "S. 567").
 final String billId;
-/// Bill title / description. May be long — UI should truncate.
+/// Bill title / description. May be long - UI should truncate.
 /// Empty string if not provided by backend.
 final String billTitle;
 /// How this figure voted.
 final VoteCast voteCast;
-/// Date of the vote (UTC midnight, date-only — no time component).
+/// Date of the vote (UTC midnight, date-only - no time component).
 final DateTime voteDate;
 /// Congressional chamber. Null if not provided.
 final Chamber? chamber;
@@ -177,7 +177,7 @@ final String? sourceUrl;
 /// Parses a vote JSON object from get-votes response.
 ///
 /// Supports dual-key for vote field: 'vote' (A16A RPC) or
-/// 'vote_cast' (schema column name) — whichever is present.
+/// 'vote_cast' (schema column name) - whichever is present.
 ///
 /// Throws [FormatException] if required fields are missing.
 factory Vote.fromJson(Map<String, dynamic> json) {
@@ -295,7 +295,7 @@ Map<String, dynamic> toJson() => {
 //
 // ════════════════════════════════════════════════════════════
 // ═══════════
-/// Aggregated vote count for a figure — one entry per vote type.
+/// Aggregated vote count for a figure - one entry per vote type.
 ///
 /// From get_vote_summary_for_figure RPC (A16A).
 /// Used in the Vote Record screen header bar: "Total: 47 YEA: 32 NAY: 12"

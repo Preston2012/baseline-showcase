@@ -11,19 +11,24 @@ Baseline is a political intelligence platform that tracks 106 public figures usi
 ## What This Repo Contains
 
 - Architecture documentation and system design ([SYSTEM_DESIGN.md](SYSTEM_DESIGN.md), [ARCHITECTURE.mermaid](ARCHITECTURE.mermaid))
-- Representative Flutter code: widgets, design system, data models ([src/flutter/](src/flutter/))
-- Supabase Edge Functions: analysis pipeline, consensus engine, feed API ([src/edge-functions/](src/edge-functions/))
+- 10 Flutter screens with full UI logic ([src/flutter/screens/](src/flutter/screens/))
+- 15 custom widgets including hand-painted icon sets, CustomPainter data visualizations, and animated components ([src/flutter/widgets/](src/flutter/widgets/))
+- 9 data models with defensive JSON parsing, factory constructors, and null safety ([src/flutter/models/](src/flutter/models/))
+- 5 service classes showing Supabase RPC integration patterns ([src/flutter/services/](src/flutter/services/))
+- 2 state management providers ([src/flutter/providers/](src/flutter/providers/))
+- All 22 Supabase Edge Functions: analysis pipeline, consensus engine, legislative tracking, feed API, subscription management ([src/edge-functions/](src/edge-functions/))
 - 30 PostgreSQL migrations showing schema evolution from MVP to production ([src/sql/](src/sql/))
 - App configuration: constants, routing, theme tokens ([src/config/](src/config/))
 
-This is a public showcase. The full production codebase is in a private repo available for hiring review.
+This is a public showcase representing the majority of the production codebase. Remaining private code is available for hiring review.
 
 ## What Is Intentionally Not Public
 
-- AI prompt text sent to each provider (proprietary)
-- Provider-specific tuning parameters and scoring weights
-- Full Flutter application code (28 screens, state management, services)
-- Production environment configuration
+- AI prompt text sent to each provider (redacted in-place, control flow visible)
+- Consensus scoring weights and threshold values (redacted as constants)
+- 18 additional Flutter screens (settings, onboarding, auth, paywall)
+- Production environment configuration (API keys, Supabase URLs)
+- Trademarked icon assets
 
 Contact [Droiddna2013@gmail.com](mailto:Droiddna2013@gmail.com) for private repo access.
 
@@ -130,17 +135,41 @@ See [ARCHITECTURE.mermaid](ARCHITECTURE.mermaid) for the full component diagram.
 
 ## Where to Look First
 
+### Edge Functions (orchestration and pipeline)
+
 | File | What it shows |
 |------|--------------|
-| [`src/edge-functions/analyze-statement.sample.ts`](src/edge-functions/analyze-statement.sample.ts) | Multi-provider routing: 4 providers called via Promise.allSettled, response normalization, cost logging. Prompt text redacted. |
-| [`src/edge-functions/compute-consensus.sample.ts`](src/edge-functions/compute-consensus.sample.ts) | Consensus algorithm: per-metric averages/stddev, variance detection, outlier flagging, framing majority vote. Threshold values redacted. |
-| [`src/edge-functions/get-feed.ts`](src/edge-functions/get-feed.ts) | Smart feed ranking: signal x recency_decay x variance_boost x novelty_boost, figure diversity cap, 5 sort modes. |
-| [`src/flutter/consensus_badge.dart`](src/flutter/consensus_badge.dart) | 1,100+ line CustomPainter with 37 visual treatments and animated ring gauge. |
-| [`src/flutter/theme.dart`](src/flutter/theme.dart) | Production design system: color, typography, spacing, motion, border, and opacity tokens. |
-| [`src/flutter/models_consensus.dart`](src/flutter/models_consensus.dart) | Consensus data model with defensive JSON parsing, null safety, and JSONB field handling. |
-| [`src/flutter/models_statement.dart`](src/flutter/models_statement.dart) | Statement data model with factory constructors, copyWith, and defensive date parsing. |
-| [`src/flutter/models_figure.dart`](src/flutter/models_figure.dart) | Figure model with metadata extraction for 7 figure categories. |
-| [`src/sql/`](src/sql/) | 30 PostgreSQL migrations: schema evolution from MVP to production, RLS policies, custom RPCs. |
+| [`analyze-statement.sample.ts`](src/edge-functions/analyze-statement.sample.ts) | Multi-provider routing: 4 providers called via Promise.allSettled, response normalization, cost logging. Prompt text redacted. |
+| [`compute-consensus.sample.ts`](src/edge-functions/compute-consensus.sample.ts) | Consensus algorithm: per-metric averages/stddev, variance detection, outlier flagging, framing majority vote. Threshold values redacted. |
+| [`get-feed.ts`](src/edge-functions/get-feed.ts) | Smart feed ranking: signal x recency_decay x variance_boost x novelty_boost, figure diversity cap, 5 sort modes. |
+| [`get-narrative-sync.ts`](src/edge-functions/get-narrative-sync.ts) | 865-line narrative consistency engine. Measures how a figure's positions shift over time. |
+| [`compute-bill-mutation.ts`](src/edge-functions/compute-bill-mutation.ts) | 857-line bill version differ. Tracks legislative changes between bill revisions. |
+| [`summarize-bill.ts`](src/edge-functions/summarize-bill.ts) | AI-powered bill summarization with provision extraction and category classification. Prompt text redacted. |
+| [`check-entitlement.ts`](src/edge-functions/check-entitlement.ts) | Rate limiting, feature gating, signed entitlement tokens with HMAC-SHA256. |
+| [`revenuecat-webhook.ts`](src/edge-functions/revenuecat-webhook.ts) | Subscription lifecycle: idempotency, PII sanitization, constant-time auth, store mapping. |
+
+### Flutter (screens, custom painters, data viz)
+
+| File | What it shows |
+|------|--------------|
+| [`screens/figure_profile.dart`](src/flutter/screens/figure_profile.dart) | 3,900+ line figure profile with historical trends, framing radar, and signal timeline. |
+| [`screens/today_feed.dart`](src/flutter/screens/today_feed.dart) | 3,200+ line main feed screen with smart ranking, pull-to-refresh, and infinite scroll. |
+| [`screens/lens_lab.dart`](src/flutter/screens/lens_lab.dart) | 2,600+ line multi-model comparison view. Side-by-side provider analysis. |
+| [`widgets/baseline_icons.dart`](src/flutter/widgets/baseline_icons.dart) | 1,200+ lines of hand-painted custom icons via CustomPainter. |
+| [`widgets/convergence_painter.dart`](src/flutter/widgets/convergence_painter.dart) | 1,600+ line narrative convergence visualization. |
+| [`widgets/framing_fingerprint.dart`](src/flutter/widgets/framing_fingerprint.dart) | 1,900+ line framing fingerprint data visualization. |
+| [`widgets/constellation_nav.dart`](src/flutter/widgets/constellation_nav.dart) | 1,300+ line custom navigation system. |
+| [`consensus_badge.dart`](src/flutter/consensus_badge.dart) | 1,100+ line CustomPainter with 37 visual treatments and animated ring gauge. |
+
+### Data layer and infrastructure
+
+| File | What it shows |
+|------|--------------|
+| [`models/`](src/flutter/models/) | 9 data models: analysis, bill_summary, consensus, feed_statement, figure, framing, lens_lab, trends, vote. |
+| [`services/`](src/flutter/services/) | 5 service classes: Supabase RPC integration, error handling, response parsing. |
+| [`providers/`](src/flutter/providers/) | State management for feed and figures. |
+| [`utils/gate_state_machine.dart`](src/flutter/utils/gate_state_machine.dart) | Feature gating state machine for tier-based access control. |
+| [`sql/`](src/sql/) | 30 PostgreSQL migrations: schema evolution from MVP to production, RLS policies, custom RPCs. |
 
 ---
 

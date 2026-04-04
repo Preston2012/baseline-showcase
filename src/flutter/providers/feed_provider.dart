@@ -118,7 +118,7 @@ final sorted = List<FeedStatement>.from(statements);
 sorted.sort((a, b) {
 final aVal = a.baselineDelta ?? -1.0;
 final bVal = b.baselineDelta ?? -1.0;
-return bVal.compareTo(aVal); // Descending — highest divergence first.
+return bVal.compareTo(aVal); // Descending - highest divergence first.
 });
 return sorted;
 }
@@ -126,7 +126,7 @@ return sorted;
 /// Loads the next page of statements.
 ///
 /// No-op if: already loading more, no more pages, or initial
-/// load hasn't completed. Errors are non-fatal — existing data
+/// load hasn't completed. Errors are non-fatal - existing data
 /// stays visible, user can retry by scrolling again.
 ///
 /// Epoch-guarded: if a refresh or filter change occurs while
@@ -295,12 +295,12 @@ current.filter.copyWith(followedOnly: !current.filter.followedOnly),
 /// If different, sets [hasNewStatements] = true. Tapping the banner
 /// in the UI calls [refresh].
 ///
-/// Only runs when sort is [FeedSort.recency] — divergence sort has
+/// Only runs when sort is [FeedSort.recency] - divergence sort has
 /// no meaningful "newest on top" contract, so banner would be
 /// misleading. Skips if feed is empty, refreshing, already showing
 /// banner, or throttled (60s min interval).
 ///
-/// Silent failure — banner check is non-critical.
+/// Silent failure - banner check is non-critical.
 Future<void> checkForNew() async {
 final current = state.valueOrNull;
 if (current == null || current.hasNoStatements) return;
@@ -313,7 +313,7 @@ if (lastRefresh != null &&
 DateTime.now().difference(lastRefresh) < _kNewCheckThrottle) {
 return;
 }
-final epoch = _epoch; // Don't bump — this is read-only.
+final epoch = _epoch; // Don't bump - this is read-only.
 try {
 final probe = await _feedService
 .getFeed(
@@ -332,7 +332,7 @@ current.statements.first.statementId) {
 state = AsyncData(current.copyWith(hasNewStatements: true));
 }
 } catch (_) {
-// Silent — banner check is non-critical.
+// Silent - banner check is non-critical.
 }
 }
 }

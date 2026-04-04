@@ -12,7 +12,7 @@
 ///
 /// 5-AXIS PENTAGON (LOCKED):
 /// Axes: Adversarial, Problem, Commitment, Justification, Imperative.
-/// Mockup shows 6 axes — KNOWN MOCKUP ERROR. Do NOT add a 6th axis.
+/// Mockup shows 6 axes - KNOWN MOCKUP ERROR. Do NOT add a 6th axis.
 ///
 /// Path: lib/services/framing_service.dart
 library;
@@ -31,13 +31,13 @@ import 'package:baseline_app/services/supabase_client.dart';
 /// Typed exception for framing operations.
 ///
 /// Special codes:
-/// 'not_found' — figure doesn't exist or has no analyzed statements
-/// 'auth_required' — JWT invalid or expired (401) — prompt re-login
-/// 'feature_gated' — tier insufficient for Framing Radar (403) — show paywall
-/// 'rate_limited' — rate limit exceeded (429)
-/// 'bad_request' — invalid input (400)
-/// 'insufficient_data' — too few statements for meaningful distribution
-/// 'timeout' — request timed out
+/// 'not_found' - figure doesn't exist or has no analyzed statements
+/// 'auth_required' - JWT invalid or expired (401) - prompt re-login
+/// 'feature_gated' - tier insufficient for Framing Radar (403) - show paywall
+/// 'rate_limited' - rate limit exceeded (429)
+/// 'bad_request' - invalid input (400)
+/// 'insufficient_data' - too few statements for meaningful distribution
+/// 'timeout' - request timed out
 class FramingServiceException implements Exception {
 const FramingServiceException(this.message, {this.code});
 final String message;
@@ -105,9 +105,9 @@ return (message: null, code: null);
 /// Returns a 5-axis distribution (current period + optional previous
 /// period comparison) for the Framing Radar™ pentagon visualization.
 ///
-/// [figureId] — UUID of the figure.
-/// [entitlementToken] — signed token from check-entitlement (F3.12).
-/// [period] — time window: '30d', '90d', or '1y'.
+/// [figureId] - UUID of the figure.
+/// [entitlementToken] - signed token from check-entitlement (F3.12).
+/// [period] - time window: '30d', '90d', or '1y'.
 ///
 /// The backend will:
 /// 1. Verify the entitlement token

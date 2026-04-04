@@ -1,4 +1,4 @@
-/// A-11 — Drift League Table
+/// A-11 -- Drift League Table
 /// Path: lib/widgets/drift_league_table.dart
 ///
 /// Provisions classified into tier bands (Very High → High → Moderate → Low).
@@ -7,7 +7,7 @@
 ///
 /// Depends on: F1.1/F1.11.9 (theme), F1.10 (constants), F2.18 (InfoBottomSheet),
 /// P4 (BillSummary, Provision, ProvisionCategory), haptic_util
-/// Consumed by: F4.12 (Vote Record — Bill Overview section)
+/// Consumed by: F4.12 (Vote Record - Bill Overview section)
 /// Gated by: F6.3 driftLeagueTable (Pro+)
 library;
 import 'dart:math' as math;
@@ -58,7 +58,7 @@ const _kBandSealText = {
 };
 //
 // ═══════════════════════════════════════════════════════════
-// COLOR + LABEL HELPERS (A-10 doctrine — shared)
+// COLOR + LABEL HELPERS (A-10 doctrine - shared)
 //
 // ═══════════════════════════════════════════════════════════
 Color _driftColor(double? score, {double baseOp = 1.0}) {
@@ -610,7 +610,7 @@ child: Padding(
 padding: EdgeInsets.only(top: isFirst ? 0 : 14, bottom: 6),
 child: Stack(
 children: [
-// Classification stripe — left edge.
+// Classification stripe - left edge.
 Positioned(
 left: 0,
 top: 0,
@@ -878,7 +878,7 @@ BaselineColors.teal.atOpacity(0.04),
 ),
 ),
 const SizedBox(width: 6),
-// Score (0 decimal — glance).
+// Score (0 decimal - glance).
 SizedBox(
 width: 28,
 child: Text(
@@ -1093,7 +1093,7 @@ barHeight: 4,
 roundRadius: 2,
 ),
 ),
-// Score at tip (1 decimal — detail precision).
+// Score at tip (1 decimal - detail precision).
 Positioned(
 left: (w * score.clamp(0.0, 1.0)) + 4,
 top: -3,

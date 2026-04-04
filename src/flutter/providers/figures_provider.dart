@@ -1,19 +1,19 @@
-/// F7.3 — Figures Provider
+/// F7.3 -- Figures Provider
 ///
 /// Riverpod providers for figure data:
 ///
-/// 1. [figuresProvider] — All active figures for the Figures Tab (F4.15).
+/// 1. [figuresProvider] - All active figures for the Figures Tab (F4.15).
 /// Fetches once, caches across tab switches. Supports in-tab search
 /// (150.1) via client-side name/role/category filter, favorites
 /// (150.11), and one-tap follow (150.44).
 ///
-/// 2. [figureProvider] — Single figure by ID for Figure Profile (F4.8).
+/// 2. [figureProvider] - Single figure by ID for Figure Profile (F4.8).
 /// Family provider keyed by figureId. Cache-first from figuresProvider.
 ///
-/// 3. [statementCountProvider] — Statement count for a figure (F4.8
+/// 3. [statementCountProvider] - Statement count for a figure (F4.8
 /// count badge, 150.20). Family provider keyed by figureId.
 ///
-/// DATA SOURCE: PostgREST via FiguresService (F3.5) — the ONLY
+/// DATA SOURCE: PostgREST via FiguresService (F3.5) - the ONLY
 /// PostgREST exception in the app. Public-read, RLS-gated, zero-compute.
 ///
 /// FOLLOWS PERSISTENCE:
@@ -37,17 +37,17 @@ import 'package:flutter/foundation.dart';
 // 3. Third-party
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// 4. Project — models
+// 4. Project -- models
 import 'package:baseline_app/models/figure.dart';
 import 'package:baseline_app/models/feed_statement.dart';
-// 5. Project — services
+// 5. Project -- services
 import 'package:baseline_app/services/figures_service.dart';
 import 'package:baseline_app/services/feed_service.dart';
-// 6. Project — config
+// 6. Project -- config
 import 'package:baseline_app/config/tier_feature_map.dart';
-// 7. Project — providers
+// 7. Project -- providers
 import 'package:baseline_app/providers/tier_provider.dart';
-// 8. Project — utils
+// 8. Project -- utils
 import 'package:baseline_app/utils/haptic_util.dart';
 // ══════════════════════════════════════════════════════════
 // CONSTANTS
@@ -75,7 +75,7 @@ class FollowCapException implements Exception {
       '(current: $currentCount, cap: $cap)';
 }
 // ══════════════════════════════════════════════════════════
-// STATE — FIGURES LIST
+// STATE -- FIGURES LIST
 // ══════════════════════════════════════════════════════════
 /// Complete figures list state for the Figures Tab.
 ///
@@ -98,7 +98,7 @@ this.followedIds = const {},
 this.showFavoritesOnly = false,
 });
 /// All active figures from the backend (sorted by category +
-/// activation_order — FiguresService handles the sort).
+/// activation_order - FiguresService handles the sort).
 final List<Figure> allFigures;
 /// Cached filtered view of [allFigures]. Recomputed by
 /// [_recomputeFiltered] when search, favorites, or source changes.
@@ -150,7 +150,7 @@ showFavoritesOnly: showFavoritesOnly ?? this.showFavoritesOnly,
 // FILTER HELPER
 // ══════════════════════════════════════════════════════════
 /// Recomputes the filtered figures list from source data + filters.
-/// Pure function — no side effects.
+/// Pure function - no side effects.
 List<Figure> _recomputeFiltered({
 required List<Figure> allFigures,
 required String searchQuery,
@@ -164,7 +164,7 @@ result = result
 .where((f) => followedIds.contains(f.figureId))
 .toList();
 }
-// Search filter (150.1) — case-insensitive on name, role, category.
+// Search filter (150.1) - case-insensitive on name, role, category.
 if (searchQuery.isNotEmpty) {
 final query = searchQuery.toLowerCase();
 result = result.where((f) {
@@ -177,7 +177,7 @@ return false;
 return result;
 }
 // ══════════════════════════════════════════════════════════
-// PROVIDER — FIGURES LIST
+// PROVIDER -- FIGURES LIST
 // ══════════════════════════════════════════════════════════
 /// All active figures for the Figures Tab.
 ///
@@ -217,7 +217,7 @@ final response = await _figuresService
 .getActiveFigures()
 .timeout(_kFiguresTimeout);
 if (!_isCurrent(epoch)) {
-// Stale build — newer build/refresh started. Return empty
+// Stale build - newer build/refresh started. Return empty
 // state; the newer call will set the real state.
 return const FiguresState();
 }
@@ -305,7 +305,7 @@ rethrow;
 // ── In-Tab Search (150.1) ────────────────────────────────
 /// Sets the search query for client-side filtering.
 /// Matches name, role, and category (case-insensitive).
-/// Empty string clears the filter. Instant — no network call.
+/// Empty string clears the filter. Instant - no network call.
 void setSearch(String query) {
 final current = state.valueOrNull;
 if (current == null) return;
@@ -321,7 +321,7 @@ searchQuery: query,
 filteredFigures: filtered,
 ));
 }
-/// Alias for [setSearch] — used by some screens.
+/// Alias for [setSearch] - used by some screens.
 void updateSearch(String query) => setSearch(query);
 /// Clears the search query.
 void clearSearch() => setSearch('');
@@ -385,7 +385,7 @@ filteredFigures: filtered,
 }
 }
 // ══════════════════════════════════════════════════════════
-// PROVIDER — SINGLE FIGURE (FAMILY)
+// PROVIDER -- SINGLE FIGURE (FAMILY)
 // ══════════════════════════════════════════════════════════
 /// Single figure provider keyed by figureId.
 ///
@@ -435,7 +435,7 @@ break;
 }
 if (cached != null) return cached;
 }
-// Cache miss — direct fetch (deep link, deactivated figure, etc.)
+// Cache miss - direct fetch (deep link, deactivated figure, etc.)
 // Epoch-guarded for invalidateSelf safety.
 final epoch = _bumpEpoch();
 final figure = await _figuresService
@@ -470,7 +470,7 @@ if (!_isCurrent(epoch)) return;
 }
 }
 // ══════════════════════════════════════════════════════════
-// PROVIDER — STATEMENT COUNT (FAMILY)
+// PROVIDER -- STATEMENT COUNT (FAMILY)
 // ══════════════════════════════════════════════════════════
 /// Statement count for a figure (F4.8 count badge, 150.20).
 ///
@@ -480,7 +480,7 @@ if (!_isCurrent(epoch)) return;
 /// countAsync.when(
 /// data: (count) => Text('$count statements'),
 /// loading: () => Text('...'),
-/// error: (_, __) => Text('—'),
+/// error: (_, __) => Text('--'),
 /// );
 /// ```
 final statementCountProvider =
@@ -517,7 +517,7 @@ state = AsyncData(count);
 } catch (e) {
 if (kDebugMode) debugPrint('StatementCountProvider.refresh: $e');
 if (!_isCurrent(epoch)) return;
-// Keep stale count on failure — do not overwrite.
+// Keep stale count on failure - do not overwrite.
 }
 }
 }
@@ -540,7 +540,7 @@ bool isFigureNotFound(Object error) {
 return error is FiguresServiceException && error.code == 'not_found';
 }
 // ══════════════════════════════════════════════════════════
-// PROVIDER — FIGURE PROFILE DATA (FAMILY)
+// PROVIDER -- FIGURE PROFILE DATA (FAMILY)
 // ══════════════════════════════════════════════════════════
 /// Aggregated profile analytics from get-figure-profile EF.
 ///
@@ -555,7 +555,7 @@ final figureProfileDataProvider =
       .timeout(_kFiguresTimeout);
 });
 // ══════════════════════════════════════════════════════════
-// PROVIDER — RECENT STATEMENTS (FAMILY)
+// PROVIDER -- RECENT STATEMENTS (FAMILY)
 // ══════════════════════════════════════════════════════════
 /// Recent statements for a figure's profile timeline.
 ///

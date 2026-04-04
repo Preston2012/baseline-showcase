@@ -1,18 +1,18 @@
 // ========================================================================
-// BASELINE V1.4 — GET-RECEIPT ENDPOINT
-// A14B — V1.0.1
+// BASELINE V1.4 -- GET-RECEIPT ENDPOINT
+// A14B -- V1.0.1
 //
-// FIXES APPLIED (V1.0.0 → V1.0.1 — GPT + Grok audit reconciliation):
+// FIXES APPLIED (V1.0.0 → V1.0.1 - GPT + Grok audit reconciliation):
 // FIX1: Deny-by-default limit cap. DEFAULT_LIMIT = 3 (free cap).
 // Only expands if tier config explicitly allows more. Prevents
 // free users getting 5 results on config fetch failure. [Grok C1]
 // FIX2: JWT verification via supabase.auth.getUser(). Returns clean
 // 401 if token is invalid/expired. [Grok H1]
-// FIX3: Robust config parsing — handles string or object featureConfig,
+// FIX3: Robust config parsing - handles string or object featureConfig,
 // safe Number() conversion with fallback. [Grok M1]
 // FIX4: Statement-not-found detection via empty result instead of
 // brittle string matching on error messages. [Grok M2 + GPT]
-// FIX5: Parallel RPC calls — check_feature_access and get_feature_config
+// FIX5: Parallel RPC calls - check_feature_access and get_feature_config
 // run via Promise.all to reduce latency. [GPT]
 //
 // PURPOSE:
@@ -41,7 +41,7 @@
 // - Feature-gated via check_feature_access('ENABLE_RECEIPT')
 // - Limit capped by tier config (max_results from tier_features)
 // - Deny-by-default: cap is 3 unless config explicitly grants more
-// - get_receipt() RPC is SECURITY INVOKER — RLS filters apply
+// - get_receipt() RPC is SECURITY INVOKER - RLS filters apply
 //
 // ========================================================================
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
@@ -54,7 +54,7 @@ const CORS_HEADERS = {
 };
 // ── Constants────────────────────────────────────────────────────────────────
 const FEATURE_FLAG = "ENABLE_RECEIPT";
-// V1.0.1 FIX1: Deny-by-default — free tier cap applied unless config expands
+// V1.0.1 FIX1: Deny-by-default - free tier cap applied unless config expands
 const FREE_DEFAULT_CAP = 3;
 const DEFAULT_LIMIT = FREE_DEFAULT_CAP;
 const ABSOLUTE_MAX_LIMIT = 5; // Hard cap from A1's get_receipt() RPC
@@ -216,10 +216,10 @@ return errorResponse(
 // ── V1.0.1 FIX1 + FIX3: Apply tier cap (deny-by-default) ──────────────
 const tierMax = parseMaxResults(configResult.data);
 if (tierMax !== null) {
-// Config found — cap to tier's max_results (and absolute max)
+// Config found - cap to tier's max_results (and absolute max)
 limit = Math.min(limit, Math.min(tierMax, ABSOLUTE_MAX_LIMIT));
 } else {
-// Config missing or unparseable — enforce safe free-tier cap
+// Config missing or unparseable - enforce safe free-tier cap
 limit = Math.min(limit, FREE_DEFAULT_CAP);
 }
 // ── Call get_receipt() RPC──────────────────────────────────────────────

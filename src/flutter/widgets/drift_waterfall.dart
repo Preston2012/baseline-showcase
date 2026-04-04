@@ -1,7 +1,7 @@
-/// A-10 — Drift Cascade Waterfall
+/// A-10 -- Drift Cascade Waterfall
 ///
 /// Sonar waterfall display for Provision Drift™. Each provision
-/// is a return ping against the bill's stated purpose — the
+/// is a return ping against the bill's stated purpose - the
 /// further right the bar extends, the further that provision
 /// has drifted from why the bill says it exists.
 ///
@@ -802,7 +802,7 @@ fontStyle: FontStyle.italic)),
 }
 //
 // ═══════════════════════════════════════════════════════════
-// BAR PAINTER (per bar — track, fill, glow, decay, noise)
+// BAR PAINTER (per bar - track, fill, glow, decay, noise)
 //
 // ═══════════════════════════════════════════════════════════
 class _BarPainter extends CustomPainter {
@@ -816,7 +816,7 @@ required this.settlePhase,
 final double score;
 final Color barColor;
 final double barWidth;
-final int seed; // provision.title.hashCode — stable identity.
+final int seed; // provision.title.hashCode - stable identity.
 final double settlePhase; // 0→1, bar controller value for echo ring anim.
 @override
 void paint(Canvas canvas, Size size) {
@@ -1138,7 +1138,7 @@ Paint()..color = BaselineColors.teal.atOpacity(0.12 * edgeFade));
 // ── Cascade lines + Cumulative drift spine ──
 // Uses measured Y positions from GlobalKeys (tipOffsets).
 // tipOffsets.value[i].dy = measured center Y of bar row i.
-// tipOffsets.value[i].dx = 0 (placeholder — X computed from score).
+// tipOffsets.value[i].dx = 0 (placeholder - X computed from score).
 final measuredYs = tipOffsets.value;
 if (entries.isNotEmpty && spineAnim.value > 0 && measuredYs.length == entries.length) {
 final tips = <Offset>[];

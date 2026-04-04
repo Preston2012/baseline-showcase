@@ -1,4 +1,4 @@
-/// F2.8 — Metric Bar (Precision Gauge) — LOCKED
+/// F2.8 -- Metric Bar (Precision Gauge) -- LOCKED
 ///
 /// Horizontal precision measurement gauge displaying a 0-100 metric
 /// reading with graduated hashmark ruler, animated teal fill with

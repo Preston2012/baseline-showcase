@@ -52,7 +52,7 @@ String toString() => 'StatementServiceException($code): $message';
 /// consensus). If > 0, the UI should show the partial failure banner
 /// (F2.17).
 /// [consensusParseFailed] distinguishes consensus parse failure from
-/// analysis parse failure — different banner messaging.
+/// analysis parse failure - different banner messaging.
 class StatementDetailResponse {
 const StatementDetailResponse({
 required this.statement,
@@ -169,7 +169,7 @@ throw const FormatException(
 'get-statement: response is not a JSON object',
 );
 }
-// Parse statement (required — should always be present on 200).
+// Parse statement (required - should always be present on 200).
 final rawStatement = data['statement'];
 if (rawStatement is! Map<String, dynamic>) {
 throw const FormatException(

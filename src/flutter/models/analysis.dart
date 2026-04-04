@@ -5,7 +5,7 @@
 ///
 /// Metrics are 0–100 scale. Framing is one of 5 canonical labels.
 ///
-/// Framing labels (locked — matches A7A VALID_FRAMING):
+/// Framing labels (locked - matches A7A VALID_FRAMING):
 /// - Adversarial / Oppositional
 /// - Problem Identification
 /// - Commitment / Forward-Looking

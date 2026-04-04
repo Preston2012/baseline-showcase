@@ -1,4 +1,4 @@
-/// F4.10 — Framing Radar™ Screen (Phased Array Radar Console)
+/// F4.10 -- Framing Radar™ Screen (Phased Array Radar Console)
 ///
 /// BASELINE's proprietary 5-axis framing analysis visualization.
 /// Shows how a figure frames their speech across 5 rhetorical

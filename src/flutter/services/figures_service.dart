@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// Figures service for Baseline.
 ///
-/// Stateless service reading directly from PostgREST — NOT via Edge
+/// Stateless service reading directly from PostgREST - NOT via Edge
 /// Functions. This is the ONLY PostgREST exception in the entire app.
 /// `figures` and `v_statements_public` are public-read, RLS-gated,
 /// zero-compute. This design is locked.
@@ -85,7 +85,7 @@ const _kFigureColumns = 'figure_id, name, category, is_active, '
 class FiguresService {
 const FiguresService();
 /// Request timeout for PostgREST queries.
-/// 10s (shorter than 15s Edge Function timeout — PostgREST is faster).
+/// 10s (shorter than 15s Edge Function timeout - PostgREST is faster).
 static const _requestTimeout = Duration(seconds: 10);
 // ── Helpers
 // ──────────────────────────────────────────────────────────
@@ -209,7 +209,7 @@ throw _mapException(e);
 ///
 /// Reads from v_statements_public (A9A) which already filters
 /// is_revoked = false and is_active = true. Uses PostgREST count
-/// for efficiency — minimal data transferred.
+/// for efficiency - minimal data transferred.
 ///
 /// Used by the Figure Profile "Recent Statements (N)" badge.
 ///

@@ -1,4 +1,4 @@
-/// F2.6 — Source Badge (Credential Stamp) — LOCKED
+/// F2.6 -- Source Badge (Credential Stamp) -- LOCKED
 ///
 /// Official provenance marker. FBI badge meets notary seal meets
 /// classified document provenance chain. Appears on every statement

@@ -29,19 +29,19 @@ import 'package:flutter/foundation.dart';
 enum SubscriptionStatus {
 /// No subscription row exists (free tier).
 none('none'),
-/// Current and paid — full access.
+/// Current and paid - full access.
 active('active'),
-/// Free trial period — full access.
+/// Free trial period - full access.
 trialing('trialing'),
-/// Payment failed, within grace period — full access continues.
+/// Payment failed, within grace period - full access continues.
 gracePeriod('grace_period'),
-/// Payment failed, past grace — access may be restricted.
+/// Payment failed, past grace - access may be restricted.
 billingIssue('billing_issue'),
 /// Subscription ended (renewal failed or period expired).
 expired('expired'),
-/// User cancelled — active until current_period_end.
+/// User cancelled - active until current_period_end.
 cancelled('cancelled'),
-/// Refund processed — access revoked immediately.
+/// Refund processed - access revoked immediately.
 refunded('refunded'),
 /// Play Store pause feature.
 paused('paused'),

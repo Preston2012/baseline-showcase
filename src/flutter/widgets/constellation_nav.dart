@@ -1,4 +1,4 @@
-/// FG-2 — Constellation Nav™
+/// FG-2 -- Constellation Nav™
 ///
 /// Signal intelligence star chart for figure profiles. A sensor sweep
 /// discovers data points and maps measurement activity as a constellation.

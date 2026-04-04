@@ -1,4 +1,4 @@
-/// E-1/E-3 — Export Composer
+/// E-1/E-3 -- Export Composer
 ///
 /// Classified intelligence dossier for analysis exports.
 /// Film perforations · measurement rulers · security crosshatch
@@ -186,7 +186,7 @@ ExportAspectRatio.square => _kW,
 ExportAspectRatio.wide => _kW * 9 / 16,
 };
 /// Stable seed for all deterministic visuals (ribbon, hash, spectral).
-/// Computed once per build — no DateTime.now() scatter inside painters.
+/// Computed once per build - no DateTime.now() scatter inside painters.
 int get _exportSeed =>
 (composition.analyzedAt ?? DateTime.now()).millisecondsSinceEpoch;
 @override

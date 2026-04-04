@@ -1,6 +1,6 @@
 import 'package:baseline_app/config/tier_feature_map.dart';
 import 'package:flutter/foundation.dart';
-/// F4.9 — The Receipt™ Screen (SIGINT Intercept Log)
+/// F4.9 -- The Receipt™ Screen (SIGINT Intercept Log)
 ///
 /// BASELINE's signature semantic similarity feature. Reimagined as
 /// a signals intelligence intercept station. The current statement
@@ -640,7 +640,7 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen>
     });
 
     try {
-      // BUG-3.4: The Receipt is a CORE feature — never gated.
+      // BUG-3.4: The Receipt is a CORE feature - never gated.
       // If the entitlement check fails (network error, timeout, etc.),
       // proceed without a token rather than showing "Unable to check access".
       String? entitlementToken;
@@ -652,12 +652,12 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen>
         );
         entitlementToken = entitlement.token;
       } on FeatureGatedException {
-        // Receipt is core — should never be gated. Proceed without token.
+        // Receipt is core - should never be gated. Proceed without token.
         if (kDebugMode) {
           debugPrint('Receipt: FeatureGatedException ignored (core feature)');
         }
       } on EntitlementServiceException catch (e) {
-        // Network/timeout/parse error — proceed without token.
+        // Network/timeout/parse error - proceed without token.
         if (kDebugMode) {
           debugPrint('Receipt: entitlement check failed (${e.code}), proceeding without token');
         }
@@ -727,7 +727,7 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen>
 
   Future<void> _onRefresh() async {
     try {
-      // BUG-3.4: Same pattern as _loadReceipt — Receipt is core, never gated.
+      // BUG-3.4: Same pattern as _loadReceipt - Receipt is core, never gated.
       String? entitlementToken;
       try {
         final entitlementService = const EntitlementService();
@@ -737,7 +737,7 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen>
         );
         entitlementToken = entitlement.token;
       } on FeatureGatedException {
-        // Receipt is core — proceed without token.
+        // Receipt is core - proceed without token.
       } on EntitlementServiceException catch (e) {
         if (kDebugMode) {
           debugPrint('Receipt refresh: entitlement check failed (${e.code})');
