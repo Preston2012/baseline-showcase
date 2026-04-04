@@ -1,6 +1,6 @@
 # Baseline: Political Intelligence Platform
 
-Baseline is a political intelligence platform that tracks 106 public figures using 4 independent AI providers. Each statement is analyzed separately by Claude, GPT, Gemini, and Grok, then reconciled through a consensus engine that detects and flags model disagreements. Built solo using a documented multi-model orchestration methodology across 500+ build sessions.
+Baseline is a political intelligence platform that tracks 106 public figures using 4 independent AI providers. Each statement goes through structured extraction (Gemini), then independent analysis by three providers (Claude, GPT, Grok). A consensus engine reconciles the results and flags disagreements between models. Built solo using a documented multi-model orchestration methodology across 500+ build sessions.
 
 [![Google Play](https://img.shields.io/badge/Google%20Play-Approved-green)]()
 [![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B)]()
@@ -30,7 +30,7 @@ This is a public showcase representing the majority of the production codebase. 
 - Production environment configuration (API keys, Supabase URLs)
 - Trademarked icon assets
 
-Contact [Droiddna2013@gmail.com](mailto:Droiddna2013@gmail.com) for private repo access.
+Contact [preston@baseline.marketing](mailto:preston@baseline.marketing) for private repo access.
 
 ---
 
@@ -177,7 +177,7 @@ See [ARCHITECTURE.mermaid](ARCHITECTURE.mermaid) for the full component diagram.
 
 ### Path 1: Statement analysis and consensus
 
-A statement enters the system. `analyze-statement.ts` validates the request, then calls Claude, GPT, Gemini, and Grok in parallel via `Promise.allSettled`. Each provider returns structured JSON (repetition, novelty, affective language rate, topic entropy, framing label). Responses are validated, clamped to 0-100 ranges, and normalized into a common schema. Each result is inserted into the `analyses` table with a mirror row in `analyses_audit`. Token usage and estimated USD cost are logged to `cost_log`. Then `compute-consensus.ts` loads all provider results, computes per-metric averages and standard deviations, measures inter-provider spread, detects variance (any metric stddev above threshold), identifies the outlier provider, determines framing consensus via majority vote, and upserts the result to the `consensus` table.
+A statement enters the system. `analyze-statement.ts` validates the request, then sends the extracted statement to Claude, GPT, and Grok in parallel via `Promise.allSettled`. Each provider returns structured JSON (repetition, novelty, affective language rate, topic entropy, framing label). Responses are validated, clamped to 0-100 ranges, and normalized into a common schema. Each result is inserted into the `analyses` table with a mirror row in `analyses_audit`. Token usage and estimated USD cost are logged to `cost_log`. Then `compute-consensus.ts` loads all provider results, computes per-metric averages and standard deviations, measures inter-provider spread, detects variance (any metric stddev above threshold), identifies the outlier provider, determines framing consensus via majority vote, and upserts the result to the `consensus` table.
 
 ### Path 2: Feed ranking and delivery
 
@@ -251,9 +251,21 @@ A feed request hits `get-feed.ts`. The function fetches 3x the requested limit f
 
 ---
 
+## About the Builder
+
+Built solo by Preston Winters using multi-model AI orchestration (Claude, GPT, Gemini, Grok) with 390+ documented institutional knowledge rules across 500+ build sessions.
+
+**Previously:** CEO of Cyber Hornets Colony Club (2021-2023). Built a Web3 community from zero to 40,900 followers and 10,000+ Discord members. Led product vision, creative direction, and go-to-market strategy for an 8,888-piece NFT collection that generated 7-figure primary sales revenue with 2,000+ holders. 3-person founding team.
+
+**Current portfolio:** 6 application projects. 1 published (StainSlayer AI, iOS + Android), 1 in closed testing (Baseline, Google Play), 4 in development.
+
+**Methodology:** [github.com/Preston2012/ai-council](https://github.com/Preston2012/ai-council)
+
+---
+
 ## App Access
 
-Baseline is in closed testing on Google Play. Contact [Droiddna2013@gmail.com](mailto:Droiddna2013@gmail.com) for reviewer access.
+Baseline is in closed testing on Google Play. Contact [preston@baseline.marketing](mailto:preston@baseline.marketing) for reviewer access.
 
 ---
 
@@ -265,4 +277,4 @@ Baseline is in closed testing on Google Play. Contact [Droiddna2013@gmail.com](m
 - Portfolio: [baseline.marketing/built](https://baseline.marketing/built)
 - LinkedIn: [linkedin.com/in/prestonwinters](https://linkedin.com/in/prestonwinters)
 - GitHub: [github.com/Preston2012](https://github.com/Preston2012)
-- Contact: [Droiddna2013@gmail.com](mailto:Droiddna2013@gmail.com)
+- Contact: [preston@baseline.marketing](mailto:preston@baseline.marketing)
