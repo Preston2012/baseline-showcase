@@ -1,12 +1,12 @@
 // ========================================================================
-// SUPABASE EDGE FUNCTION: backfill-baseline (A12B v1.0.2 — FINAL)
+// SUPABASE EDGE FUNCTION: backfill-baseline (A12B v1.0.2 - FINAL)
 // Path: supabase/functions/backfill-baseline/index.ts
 //
 // Admin-only endpoint to trigger baseline_delta backfill for a figure.
 // Calls A12A's backfill_baseline_delta RPC. Service-role only.
 //
 // FIXES APPLIED (V1.0.0 → V1.0.1):
-// B1: logEvent rewritten — direct PostgREST insert using A11A V1.0.2 schema
+// B1: logEvent rewritten - direct PostgREST insert using A11A V1.0.2 schema
 // B2: Added BASELINE_KILL_SWITCH check
 // B3: Env ! assertions → validated inside handler
 // B4: Stage 'EMBED' → 'EMBEDDING' (matches A11A enum)
@@ -15,7 +15,7 @@
 // H3: Error catch reuses supabase instance
 // M1: Added OPTIONS handler for robustness
 //
-// FIXES APPLIED (V1.0.1 → V1.0.2 — RECONCILED FROM GPT + GROK AUDITS):
+// FIXES APPLIED (V1.0.1 → V1.0.2 - RECONCILED FROM GPT + GROK AUDITS):
 // 1: Kill switch moved from module scope to per-request (matches A7B/A9B)
 //
 // CROSS-ARTIFACT DEPENDENCIES:
@@ -56,7 +56,7 @@ event_type: eventType,
 details: { operation: "BACKFILL_BASELINE_DELTA", figure_id: figureId, ...details },
 });
 } catch {
-// Best-effort — never block main flow
+// Best-effort - never block main flow
 }
 }
 // V1.0.1 FIX (H2): Only retry on transient errors
@@ -94,7 +94,7 @@ if (req.method !== "POST") return jsonResponse({ error: "Method not allowed" }, 
 const killSwitchRaw = (Deno.env.get("BASELINE_KILL_SWITCH") || "").trim();
 const killSwitchActive = killSwitchRaw === "TRUE" || killSwitchRaw.toLowerCase() === "true";
 if (killSwitchActive) {
-console.log("[backfill-baseline] BASELINE_KILL_SWITCH active — rejecting request");
+console.log("[backfill-baseline] BASELINE_KILL_SWITCH active - rejecting request");
 return jsonResponse(
 { error: "Service halted", reason: "BASELINE_KILL_SWITCH active" },
 503,
@@ -143,7 +143,7 @@ figure_name: figure.name,
 }
 // ── Dry run────────────────────────────────────────────────────────────
 if (dry_run) {
-// V1.0.1 FIX (H1): No statement text exposed — ID + timestamp only
+// V1.0.1 FIX (H1): No statement text exposed - ID + timestamp only
 const { data: candidates, error: candidatesErr } = await supabase
 .from("statements")
 .select("statement_id, ingestion_time")

@@ -1,20 +1,20 @@
-/// F4.13 — Trends Dashboard Screen (PRE_AUDIT)
+/// F4.13 -- Trends Dashboard Screen (PRE_AUDIT)
 ///
 /// VISUAL STORY: LONGITUDINAL SIGNAL OBSERVATORY
 /// Signal monitoring station locked onto a political figure's speech
 /// emissions over time. Precision oscilloscope trace. Instrument-grade
 /// period recalibration. Bloomberg Terminal meets classified SIGINT.
 ///
-/// 6 METRICS (from TrendMetric enum — F3.15):
+/// 6 METRICS (from TrendMetric enum - F3.15):
 ///   signalRank, repetition, novelty, affect, entropy, baselineDelta
 ///
 /// ANIMATIONS (6 controllers):
-///   _chartCtrl — chart path draw (600ms easeOutCubic)
-///   _recalCtrl — A-13 recalibration sequence (600ms)
-///   _entranceCtrl — phased screen entrance (1200ms)
-///   _countUpCtrl — numeral count-up (800ms easeOutCubic)
-///   _epicenterCtrl — tap epicenter pulse (500ms)
-///   _breathCtrl — pulsing dot + value card halo (3000ms repeat)
+///   _chartCtrl - chart path draw (600ms easeOutCubic)
+///   _recalCtrl - A-13 recalibration sequence (600ms)
+///   _entranceCtrl - phased screen entrance (1200ms)
+///   _countUpCtrl - numeral count-up (800ms easeOutCubic)
+///   _epicenterCtrl - tap epicenter pulse (500ms)
+///   _breathCtrl - pulsing dot + value card halo (3000ms repeat)
 ///
 /// ENTRANCE CHOREOGRAPHY (5 phases over 1200ms):
 ///   Phase 1 (0-200ms): Chrome draws in (brackets + rulers)
@@ -64,7 +64,7 @@ const double _kIconTouchTarget = 44.0;
 /// Accent line height (matches F4.9/F4.10/F4.11).
 const double _kAccentLineHeight = 2.0;
 
-/// Border opacity (WCAG compliant — matches F4.8+ pattern).
+/// Border opacity (WCAG compliant - matches F4.8+ pattern).
 const double _kBorderOpacity = 0.5;
 
 /// Interactive border width (hitlist: 2px on interactive/card elements).
@@ -154,7 +154,7 @@ const double _kMinLabelSpacing = 50.0;
 /// Hit test snap distance.
 const double _kHitTestThreshold = 20.0;
 
-/// Data font family — dart:ui contexts only (I-10).
+/// Data font family - dart:ui contexts only (I-10).
 const String _kDataFontFamily = 'JetBrainsMono';
 
 /// Epicenter pulse max radius.
@@ -1965,7 +1965,7 @@ class _TrendsScreenState extends State<TrendsScreen>
       );
     }
 
-    // Insufficient data: < 3 data points — show collecting placeholder.
+    // Insufficient data: < 3 data points - show collecting placeholder.
     if (timeline.dataPoints.length < 3) {
       return _CollectingTrendsPlaceholder(
         dataPointCount: timeline.dataPoints.length,

@@ -1,5 +1,5 @@
 // ========================================================================
-// sync-bill-versions — Scheduled Bill Version + Mutation Pipeline
+// sync-bill-versions -- Scheduled Bill Version + Mutation Pipeline
 //
 // Checks Congress.gov for new bill text versions, calls ingest-bill-version
 // EF for Gemini extraction, then triggers compute-bill-mutation for diffs.
@@ -50,7 +50,7 @@ serve(async (req: Request): Promise<Response> => {
     return new Response(null, { status: 204 });
   }
 
-  // Auth check — service_role JWT or matching key
+  // Auth check - service_role JWT or matching key
   const authHeader = req.headers.get("Authorization") || "";
   const token = authHeader.replace("Bearer ", "");
   if (!isServiceRole(token) && token !== SUPABASE_SERVICE_ROLE_KEY) {
@@ -68,7 +68,7 @@ serve(async (req: Request): Promise<Response> => {
 
     const billMutationEnabled = flags?.find(f => f.flag_name === "ENABLE_BILL_MUTATION")?.enabled;
     if (!billMutationEnabled) {
-      log("ENABLE_BILL_MUTATION is disabled — skipping");
+      log("ENABLE_BILL_MUTATION is disabled - skipping");
       return new Response(JSON.stringify({ skipped: true, reason: "flag_disabled" }), { status: 200 });
     }
 
@@ -91,7 +91,7 @@ serve(async (req: Request): Promise<Response> => {
       (existingVersions || []).map((v: { bill_id: string; stage: string }) => `${v.bill_id}::${v.stage}`)
     );
 
-    // Count stages per bill — skip those already at all 4 stages
+    // Count stages per bill - skip those already at all 4 stages
     const stageCount = new Map<string, number>();
     for (const v of existingVersions || []) {
       stageCount.set(v.bill_id, (stageCount.get(v.bill_id) || 0) + 1);
@@ -135,7 +135,7 @@ serve(async (req: Request): Promise<Response> => {
         const apiData = await apiResp.json();
         const billData = apiData.bill || apiData;
 
-        // textVersions is { count, url } — need to follow the URL for array
+        // textVersions is { count, url } - need to follow the URL for array
         let textVersions: { type?: string; date?: string; formats?: { type: string; url: string }[] }[] = [];
         const tvMeta = billData.textVersions;
         if (tvMeta?.url && tvMeta?.count > 0) {

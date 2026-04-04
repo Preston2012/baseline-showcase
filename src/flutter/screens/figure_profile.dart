@@ -1,4 +1,4 @@
-/// F4.8 — Figure Profile Screen (Classified Personnel Record)
+/// F4.8 -- Figure Profile Screen (Classified Personnel Record)
 ///
 /// LOCKED: 148 treatments. Dual-mode with full dossier wrapper.
 ///
@@ -677,7 +677,7 @@ class _FigureProfileScreenState extends ConsumerState<FigureProfileScreen>
       _monitorPulseCtrl.stop();
       _ambientIdle = true;
     });
-    // Don't add to _pendingTimers — _idleTimer is separately cancelled in dispose.
+    // Don't add to _pendingTimers - _idleTimer is separately cancelled in dispose.
   }
 
   @override
@@ -2044,7 +2044,7 @@ class _FigureProfileScreenState extends ConsumerState<FigureProfileScreen>
 
                 const SizedBox(height: 8),
 
-                // Radar link (Treatment 63–64). Now Core — no gate.
+                // Radar link (Treatment 63–64). Now Core - no gate.
                 Semantics(
                   button: true,
                   excludeSemantics: true,
@@ -3284,7 +3284,7 @@ class _PersonnelFilePainter extends CustomPainter {
     _paintCompoundCorner(canvas, 6, h - 6, 1, -1);
     _paintCompoundCorner(canvas, w - 6, h - 6, -1, -1);
 
-    // Layer 5: Film perforations — right edge (Treatment 5).
+    // Layer 5: Film perforations - right edge (Treatment 5).
     for (var y = 50.0; y < h - 20; y += _kPerfSpacing + _kPerfHeight) {
       canvas.drawRect(
         Rect.fromLTWH(w - _kPerfWidth - 4, y, _kPerfWidth, _kPerfHeight),
@@ -3500,7 +3500,7 @@ class _DossierChromePainter extends CustomPainter {
       );
     }
 
-    // A2-I2: Left teal border glow — solid segments instead of gradient.
+    // A2-I2: Left teal border glow - solid segments instead of gradient.
     final leftAlpha = 0.06 * opacity;
     for (final seg in [
       _PulseSegment(h * 0.2, h * 0.35, leftAlpha * 0.3),
@@ -3516,7 +3516,7 @@ class _DossierChromePainter extends CustomPainter {
       );
     }
 
-    // A2-I2: Right ambient pulse — solid segments.
+    // A2-I2: Right ambient pulse - solid segments.
     if (pulsePhase > 0.0) {
       final pulseY = h * pulsePhase;
       final peakAlpha = 0.06 * opacity;

@@ -1,5 +1,5 @@
 // ========================================================================
-// BASELINE V1.4 — Edge Function: manual-ingest-trigger (A5B FINAL v1.4.3)
+// BASELINE V1.4 -- Edge Function: manual-ingest-trigger (A5B FINAL v1.4.3)
 // Deploy to: supabase/functions/manual-ingest-trigger/index.ts
 // ========================================================================
 // Changes from v1.4.2:
@@ -19,7 +19,7 @@
 // DESIGN DECISIONS:
 // - Office accounts (@POTUS, @VP, @WhiteHouse) are separate figures in DB
 // - Statements from @POTUS stay attributed to "Office of the President" forever
-// - No remapping on administration change — immutable attribution
+// - No remapping on administration change - immutable attribution
 // - Pattern matching is case-insensitive (intentional for URL/handle matching)
 //
 // STATE MACHINE (A5A contract):

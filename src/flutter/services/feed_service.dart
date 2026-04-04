@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-/// F3.3 — Feed Service
+/// F3.3 -- Feed Service
 ///
 /// Stateless service wrapping feed data access for the Today Feed (F4.6):
 ///

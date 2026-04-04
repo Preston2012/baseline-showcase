@@ -177,7 +177,7 @@ return dominantCategory != prevMax.key;
 ///
 /// Backend returns framing labels as keys. This parser converts
 /// them to FramingCategory enums. Unknown labels are skipped to
-/// tolerate backend noise (NOT to support adding a 6th axis —
+/// tolerate backend noise (NOT to support adding a 6th axis  - 
 /// the radar is locked at 5 axes).
 ///
 /// Scale auto-detection: if any value > 1.0, assumes 0–100 scale
@@ -246,7 +246,7 @@ Map<String, dynamic> raw,
 final parsed = <FramingCategory, double>{};
 for (final entry in raw.entries) {
 final cat = FramingCategory.fromBackendLabel(entry.key);
-if (cat == null) continue; // Unknown label — skip (noise tolerance)
+if (cat == null) continue; // Unknown label - skip (noise tolerance)
 final val = entry.value;
 if (val is num && val.toDouble().isFinite) {
 parsed[cat] = val.toDouble();

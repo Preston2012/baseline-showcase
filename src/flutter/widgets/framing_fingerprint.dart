@@ -171,7 +171,7 @@ const Map<String, int> _kBackendKeyToIndex = {
 };
 
 // ═══════════════════════════════════════════════════════════
-// FRAMING VALUES — DATA MODEL
+// FRAMING VALUES -- DATA MODEL
 // ═══════════════════════════════════════════════════════════
 
 /// Immutable container for 5-axis framing proportions (0.0 to 1.0).
@@ -810,7 +810,7 @@ class _FramingFingerprintState extends State<FramingFingerprint>
         _breathCtrl != null &&
         _breathCtrl!.isAnimating;
 
-    // Chrome painter (no bezelDriftAngle — rotation is decoupled).
+    // Chrome painter (no bezelDriftAngle - rotation is decoupled).
     final chromePaint = CustomPaint(
       painter: _ChromePainter(
         chrome: _chrome,
@@ -852,7 +852,7 @@ class _FramingFingerprintState extends State<FramingFingerprint>
           // Layer 1: Chrome (adaptive bezel, reticles, acquisition sweep).
           // Bezel drift rotation decoupled via Transform.rotate so
           // shouldRepaint returns false after entrance settles.
-          // GPU composite only — zero geometry recalculation (C1 fix).
+          // GPU composite only - zero geometry recalculation (C1 fix).
           if (_chrome != _ChromeDetail.none)
             Positioned.fill(
               child: _bezelDriftCtrl != null

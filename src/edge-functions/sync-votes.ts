@@ -1,5 +1,5 @@
 // ========================================================================
-// sync-votes — Scheduled Vote Ingestion Edge Function
+// sync-votes -- Scheduled Vote Ingestion Edge Function
 //
 // Fetches recent US Congress roll-call votes, parses member positions
 // from House/Senate XML sources, maps to Baseline figures via bioguide_id,
@@ -54,7 +54,7 @@ serve(async (req: Request): Promise<Response> => {
       .single();
 
     if (!flag?.enabled) {
-      log("ENABLE_VOTE_TRACKING disabled — skipping");
+      log("ENABLE_VOTE_TRACKING disabled - skipping");
       return json({ skipped: true, reason: "flag_disabled" });
     }
 
@@ -237,7 +237,7 @@ async function fetchSenateVotes(
   const menuUrl = `https://www.senate.gov/legislative/LIS/roll_call_lists/vote_menu_${CONGRESS}_${SESSION}.xml`;
   const menuResp = await fetch(menuUrl, { signal: AbortSignal.timeout(15000) });
   if (!menuResp.ok) {
-    log(`Senate vote menu ${menuResp.status} — skipping Senate`);
+    log(`Senate vote menu ${menuResp.status} - skipping Senate`);
     return 0;
   }
 
@@ -256,7 +256,7 @@ async function fetchSenateVotes(
 
     if (!voteNum || !dateStr) continue;
 
-    // Parse date — format varies: "Month DD, YYYY" or similar
+    // Parse date - format varies: "Month DD, YYYY" or similar
     const voteDate = parseSenateDate(dateStr);
     if (!voteDate || voteDate < fromDate) continue;
 

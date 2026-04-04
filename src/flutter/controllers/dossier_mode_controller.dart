@@ -1,4 +1,4 @@
-/// FG-8b — Dossier Mode Controller
+/// FG-8b -- Dossier Mode Controller
 ///
 /// Riverpod family AsyncNotifier keyed by figure UUID. Aggregates ALL
 /// figure data into a single [DossierState] for the Declassified

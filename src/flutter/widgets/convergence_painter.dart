@@ -1,7 +1,7 @@
-/// FG-9 — Convergence Painter
+/// FG-9 -- Convergence Painter
 ///
 /// CustomPaint visualization for Narrative Sync™. Renders multi-figure
-/// framing convergence timelines — HSL-shifted teal per figure, convergence
+/// framing convergence timelines - HSL-shifted teal per figure, convergence
 /// zone detection + glow, metric proximity bands, full BASELINE chrome.
 ///
 /// B2B-exclusive. Designed for convergence_painter.dart consumption by
@@ -17,10 +17,10 @@ import 'dart:ui' as ui;
 // 2. Flutter
 import 'package:flutter/material.dart';
 
-// 3. Project — config
+// 3. Project -- config
 import 'package:baseline_app/config/theme.dart';
 
-// 4. Project — utils
+// 4. Project -- utils
 import 'package:baseline_app/utils/haptic_util.dart';
 
 // ═══════════════════════════════════════════════════════════
@@ -143,7 +143,7 @@ const int _kYGridLines = 5; // 0, 20, 40, 60, 80, 100
 
 // ── HSL palette: 10 teal-shifted hues (30° increments from teal) ──
 // Base teal: HSL(174°, 63%, 51%). Shift hue ± for each figure.
-// All stay in the cool-cyan-aqua range — brand-coherent, distinct.
+// All stay in the cool-cyan-aqua range - brand-coherent, distinct.
 const List<double> _kFigureHues = [
   174.0, // base teal
   195.0, // azure
@@ -188,13 +188,13 @@ Color _figureColor(int index) {
 ///   Convergence zone breathing (opacity oscillation)
 ///   Junction node bloom breathing
 ///
-/// [figures] — figure timelines from NarrativeSyncController
-/// [convergenceZones] — convergence events from A-17E
-/// [proximityZones] — metric proximity events from A-17E
-/// [totalBuckets] — total bucket count for x-axis
-/// [bucketLabels] — formatted date labels for x-axis ticks
-/// [activeFigureId] — optional: highlight one figure, dim others
-/// [onZoneTap] — callback when user taps a convergence zone
+/// [figures] - figure timelines from NarrativeSyncController
+/// [convergenceZones] - convergence events from A-17E
+/// [proximityZones] - metric proximity events from A-17E
+/// [totalBuckets] - total bucket count for x-axis
+/// [bucketLabels] - formatted date labels for x-axis ticks
+/// [activeFigureId] - optional: highlight one figure, dim others
+/// [onZoneTap] - callback when user taps a convergence zone
 class ConvergencePainter extends StatefulWidget {
   const ConvergencePainter({
     super.key,
@@ -252,7 +252,7 @@ class _ConvergencePainterState extends State<ConvergencePainter>
     );
 
     // Ambient loop: drives particle flow + convergence zone breathing.
-    // 6s cycle — slow, meditative, instrument-like.
+    // 6s cycle - slow, meditative, instrument-like.
     _ambientCtrl = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 6000),
@@ -511,7 +511,7 @@ class _ConvergenceTimelinePainter extends CustomPainter {
         (bucketIndex / (totalBuckets - 1)) * plot.width;
   }
 
-  /// Maps a signal_rank value (0–100) to y pixel (inverted — higher = up).
+  /// Maps a signal_rank value (0–100) to y pixel (inverted - higher = up).
   double _rankToY(Rect plot, double rank) {
     final clamped = rank.clamp(_kYMin, _kYMax);
     final normalized = (clamped - _kYMin) / (_kYMax - _kYMin);
@@ -630,7 +630,7 @@ class _ConvergenceTimelinePainter extends CustomPainter {
         ? plot.width / (totalBuckets - 1)
         : plot.width;
 
-    // Breathing pulse — subtle opacity oscillation driven by ambient.
+    // Breathing pulse - subtle opacity oscillation driven by ambient.
     final breathe = ambientPhase > 0
         ? 0.7 + 0.3 * math.sin(ambientPhase * math.pi * 2)
         : 1.0;
@@ -963,7 +963,7 @@ class _ConvergenceTimelinePainter extends CustomPainter {
   }
 
   // ═══════════════════════════════════════════════════════
-  // LAYER 5: CHROME — RETICLE CORNERS + HASHMARKS
+  // LAYER 5: CHROME -- RETICLE CORNERS + HASHMARKS
   // ═══════════════════════════════════════════════════════
 
   void _paintReticleCorners(Canvas canvas, Rect plot, double alpha) {
@@ -1200,7 +1200,7 @@ class _ConvergenceTimelinePainter extends CustomPainter {
 
   // ═══════════════════════════════════════════════════════
   // LAYER 4b: CONVERGENCE JUNCTION NODES
-  // Where 2+ figure paths share framing in the same bucket —
+  // Where 2+ figure paths share framing in the same bucket  - 
   // bright teal bloom marks with concentric rings.
   // ═══════════════════════════════════════════════════════
 
@@ -1253,7 +1253,7 @@ class _ConvergenceTimelinePainter extends CustomPainter {
   // ═══════════════════════════════════════════════════════
   // LAYER 5: PARTICLE FLOW (active figure path)
   // Data-flow particles traveling along the active figure's
-  // bezier path — ambient chrome that says "live instrument."
+  // bezier path - ambient chrome that says "live instrument."
   // Uses textSecondary, not teal (decorative, not data).
   // ═══════════════════════════════════════════════════════
 

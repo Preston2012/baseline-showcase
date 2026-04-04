@@ -1,4 +1,4 @@
-/// FG-8a — Dossier Plate (LOCKED, 200%)
+/// FG-8a -- Dossier Plate (LOCKED, 200%)
 ///
 /// Declassified Dossier™ exhibit plate. Expandable classified
 /// intelligence briefing for a single figure. Every measurement

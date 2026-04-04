@@ -1,4 +1,4 @@
-/// F4.12 — Vote Record Screen (Congressional Roll Call Terminal)
+/// F4.12 -- Vote Record Screen (Congressional Roll Call Terminal)
 ///
 /// Full congressional vote history for a specific figure: searchable,
 /// chamber-filtered, vote-type-filtered, paginated docket with expandable
@@ -2440,7 +2440,7 @@ class _BillOverviewContent extends StatelessWidget {
   void _openMiscatReport(String billId) {
     launchUrl(Uri(
       scheme: 'mailto',
-      path: 'feedback@getbaseline.app',
+      path: 'support@baseline.marketing',
       queryParameters: {
         'subject': 'Provision Miscategorization Report: $billId',
         'body': 'Bill ID: $billId\n\nProvision title:\n\nExpected category:\n\nNotes:\n',

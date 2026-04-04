@@ -1,12 +1,12 @@
-/// F3.3 — FeedStatement model
+/// F3.3 -- FeedStatement model
 ///
 /// Represents a single statement as returned by get-feed (A9B v2.0.0).
-/// This is the FLAT feed shape with inline consensus metrics — distinct
+/// This is the FLAT feed shape with inline consensus metrics - distinct
 /// from the full Statement model (F3M.1) used by get-statement (A9C)
 /// which has nested analyses[] and consensus{} objects.
 ///
 /// source_type is nullable (removed from view in A9A V1.0.2).
-/// If null, UI hides the source type row — does NOT render "Unknown".
+/// If null, UI hides the source type row - does NOT render "Unknown".
 ///
 /// Assumes backend timestamps are UTC ISO 8601 (confirmed in A9A/A9B).
 ///

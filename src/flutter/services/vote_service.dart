@@ -3,9 +3,9 @@
 /// Calls the get-votes Edge Function (A16C V1.0.1) for congressional
 /// vote data. Three query routes, all via GET:
 ///
-/// 1. getVotesForFigure — paginated vote list for a figure
-/// 2. getVoteSummary — aggregated counts (YEA/NAY/etc.)
-/// 3. getVotesForBill — cross-figure lookup by bill_id
+/// 1. getVotesForFigure - paginated vote list for a figure
+/// 2. getVoteSummary - aggregated counts (YEA/NAY/etc.)
+/// 3. getVotesForBill - cross-figure lookup by bill_id
 ///
 /// CRITICAL: get-votes is a GET endpoint.
 /// Uses invoke('get-votes', method: HttpMethod.get, queryParameters: {...}).
@@ -30,13 +30,13 @@ import 'package:baseline_app/services/supabase_client.dart';
 /// Typed exception for vote operations.
 ///
 /// Special codes:
-/// 'feature_disabled' — vote tracking feature flag is off (503)
-/// 'not_found' — figure or bill not found (404)
-/// 'bad_request' — invalid query params (400)
-/// 'auth_required' — JWT invalid or expired (401)
-/// 'access_denied' — insufficient permissions (403)
-/// 'rate_limited' — rate limit exceeded (429)
-/// 'timeout' — request timed out
+/// 'feature_disabled' - vote tracking feature flag is off (503)
+/// 'not_found' - figure or bill not found (404)
+/// 'bad_request' - invalid query params (400)
+/// 'auth_required' - JWT invalid or expired (401)
+/// 'access_denied' - insufficient permissions (403)
+/// 'rate_limited' - rate limit exceeded (429)
+/// 'timeout' - request timed out
 class VoteServiceException implements Exception {
 const VoteServiceException(this.message, {this.code});
 final String message;
@@ -131,7 +131,7 @@ throw const VoteServiceException(
 code: 'rate_limited',
 );
 }
-// 503 — feature flag disabled
+// 503 - feature flag disabled
 if (status == 503) {
 throw VoteServiceException(
 err.message ?? 'Vote tracking is temporarily unavailable.',
@@ -146,13 +146,13 @@ code: err.code,
 // ── Route 1: Paginated votes for a figure ───────────────────────────
 /// Fetches paginated votes for a specific figure.
 ///
-/// [figureId] — UUID of the figure.
-/// [chamber] — optional chamber filter (Chamber.house or Chamber.senate).
-/// [congressSession] — optional congress session number filter.
-/// [fromDate] — optional start date filter (YYYY-MM-DD).
-/// [toDate] — optional end date filter (YYYY-MM-DD).
-/// [limit] — page size (default 50, max 500 per A16C).
-/// [offset] — pagination offset (default 0).
+/// [figureId] - UUID of the figure.
+/// [chamber] - optional chamber filter (Chamber.house or Chamber.senate).
+/// [congressSession] - optional congress session number filter.
+/// [fromDate] - optional start date filter (YYYY-MM-DD).
+/// [toDate] - optional end date filter (YYYY-MM-DD).
+/// [limit] - page size (default 50, max 500 per A16C).
+/// [offset] - pagination offset (default 0).
 ///
 /// Returns a [VotePage] with vote records and pagination metadata.
 ///
@@ -251,9 +251,9 @@ throw _mapException(e);
 /// Returns summary rows: each with a vote type and count.
 /// Used for the header bar: "Total: 47 YEA: 32 NAY: 12"
 ///
-/// [figureId] — UUID of the figure.
-/// [chamber] — optional chamber filter.
-/// [congressSession] — optional congress session filter.
+/// [figureId] - UUID of the figure.
+/// [chamber] - optional chamber filter.
+/// [congressSession] - optional congress session filter.
 ///
 /// Returns a list of [VoteSummary] objects.
 ///
@@ -309,7 +309,7 @@ throw _mapException(e);
 /// Used when navigating to a bill from a vote card to see how
 /// all tracked figures voted on the same legislation.
 ///
-/// [billId] — bill identifier (e.g., "H.R. 1234").
+/// [billId] - bill identifier (e.g., "H.R. 1234").
 ///
 /// Returns a list of [Vote] objects (all figures who voted).
 /// With 44 tracked figures max, result set is inherently bounded.

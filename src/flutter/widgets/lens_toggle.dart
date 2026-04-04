@@ -1,4 +1,4 @@
-/// F2.4 — Lens Toggle (ALL/GP/CL/GR) — LOCKED
+/// F2.4 -- Lens Toggle (ALL/GP/CL/GR) -- LOCKED
 ///
 /// 4-segment classified filter wheel for switching between
 /// consensus (ALL) and individual model wavelengths (GP/CL/GR).

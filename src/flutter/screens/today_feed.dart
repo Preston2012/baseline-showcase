@@ -1,18 +1,18 @@
-/// F4.6 — Today Feed (Intelligence Stream Terminal) — LOCKED
+/// F4.6 -- Today Feed (Intelligence Stream Terminal) -- LOCKED
 ///
 /// THE SCREEN USERS LIVE IN. Primary home screen, first screen after
 /// onboarding/auth. Mixed-content intelligence feed with nine distinct
 /// content types:
 ///
-/// 1. TRENDING TOPICS STRIP — horizontal topic chips from P5 RPC
-/// 2. DAILY DIGEST CARD — activity summary intel briefing
-/// 3. BASELINE™ SPIKE CARDS — figure score volatility alerts (Core)
-/// 4. PROVISION DRIFT™ ALERTS — high-drift bill cards (Pro only)
-/// 5. MUTATION TIMELINE™ ALERTS — bill version change cards (Pro+)
-/// 6. SPENDING SCOPE™ ALERTS — fiscal impact cards (Pro+)
-/// 7. STATEMENT CARDS — individual statement briefings (F2.9)
-/// 8. CROSSFIRE™ TEASERS — figure comparison entry points (Pro)
-/// 9. VOTE ALERT CARDS — roll call vote notifications (Core)
+/// 1. TRENDING TOPICS STRIP - horizontal topic chips from P5 RPC
+/// 2. DAILY DIGEST CARD - activity summary intel briefing
+/// 3. BASELINE™ SPIKE CARDS - figure score volatility alerts (Core)
+/// 4. PROVISION DRIFT™ ALERTS - high-drift bill cards (Pro only)
+/// 5. MUTATION TIMELINE™ ALERTS - bill version change cards (Pro+)
+/// 6. SPENDING SCOPE™ ALERTS - fiscal impact cards (Pro+)
+/// 7. STATEMENT CARDS - individual statement briefings (F2.9)
+/// 8. CROSSFIRE™ TEASERS - figure comparison entry points (Pro)
+/// 9. VOTE ALERT CARDS - roll call vote notifications (Core)
 ///
 /// Visual story: Live intelligence stream terminal. Incoming briefings
 /// decoded in real-time. The header is a command center status bar
@@ -1677,7 +1677,7 @@ class _FeedHeader extends StatelessWidget {
 }
 
 // ═══════════════════════════════════════════════════════════
-// FEED HEADER PAINTERS (static/dynamic split — I-20/I-73)
+// FEED HEADER PAINTERS (static/dynamic split - I-20/I-73)
 // ═══════════════════════════════════════════════════════════
 
 /// Static chrome: corner dots + measurement ticks. Never repaints.

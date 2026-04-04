@@ -1,4 +1,4 @@
-/// FG-3 — Topic Heatmap
+/// FG-3 -- Topic Heatmap
 ///
 /// Single-canvas thermal intelligence grid. Figures x topics where the
 /// entire data matrix is painted in one CustomPaint pass. Visible scanline
@@ -839,7 +839,7 @@ class _TopicHeatmapState extends State<TopicHeatmap>
 }
 
 // ═══════════════════════════════════════════════════════════
-// GRID PAINTER — single canvas for entire data matrix
+// GRID PAINTER -- single canvas for entire data matrix
 // ═══════════════════════════════════════════════════════════
 
 class _GridPainter extends CustomPainter {
