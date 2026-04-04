@@ -1,8 +1,8 @@
 // ========================================================================
-// BASELINE V1.4 — REVENUECAT WEBHOOK ENDPOINT
-// A17B — V1.0.1
+// BASELINE V1.4 -- REVENUECAT WEBHOOK ENDPOINT
+// A17B -- V1.0.1
 //
-// FIXES APPLIED (V1.0.0 → V1.0.1 — dual audit reconciliation):
+// FIXES APPLIED (V1.0.0 → V1.0.1 - dual audit reconciliation):
 // FIX1: Idempotency / replay protection. Extracts rc_event_id from
 // payload (event.id) and checks subscription_events before
 // processing. Duplicates return 200 + already_processed. Prevents
@@ -24,13 +24,13 @@
 // FIX6: PII sanitization switched from blocklist to allowlist. Only
 // explicitly safe fields are persisted in raw_event JSONB.
 // [Audit 2 High #6]
-// FIX7: Supabase client hardened — autoRefreshToken and persistSession
+// FIX7: Supabase client hardened - autoRefreshToken and persistSession
 // disabled. Service-role client doesn't need session management.
 // [Audit 2 Medium #7]
 // FIX8: Store mapping defaults to 'promotional' (not 'app_store') for
 // unknown stores. DB CHECK constraint catches truly invalid values.
 // [Audit 2 Medium #8]
-// FIX9: Console log messages sanitized — no user_id or PII in error logs.
+// FIX9: Console log messages sanitized - no user_id or PII in error logs.
 // [Audit 1 Security note]
 //
 // PURPOSE:
@@ -42,7 +42,7 @@
 // - A17A V1.0.1 deployed (subscriptions, subscription_events,
 // upsert_subscription(), map_product_to_tier())
 // - A13A V1.0.2 deployed (user_profiles, protect_user_tier)
-// - A13B V1.0.1 deployed (tier_features — A13B owns, not A17A)
+// - A13B V1.0.1 deployed (tier_features - A13B owns, not A17A)
 // - Supabase Edge Functions runtime (Deno)
 //
 // WHAT THIS DOES NOT DO:
@@ -56,7 +56,7 @@
 // POST /revenuecat-webhook
 // Body: RevenueCat webhook payload (v4 API)
 // Auth: Authorization: Bearer <REVENUECAT_WEBHOOK_SECRET>
-// No CORS — server-to-server only.
+// No CORS - server-to-server only.
 //
 // REVENUECAT EVENT → BASELINE EVENT MAPPING:
 // INITIAL_PURCHASE → INITIAL_PURCHASE
@@ -67,8 +67,8 @@
 // PRODUCT_CHANGE → PRODUCT_CHANGE
 // EXPIRATION → EXPIRATION
 // TRANSFER → TRANSFER
-// SUBSCRIBER_ALIAS → (ignored — alias management)
-// TEST → (ignored — test ping)
+// SUBSCRIBER_ALIAS → (ignored - alias management)
+// TEST → (ignored - test ping)
 //
 // IDEMPOTENCY:
 // RevenueCat retries on 5xx and may send duplicates. We extract
@@ -122,7 +122,7 @@ EXPIRATION: "expired",
 TRANSFER: "active",
 };
 // RevenueCat store → Baseline store
-// FIX8: No default fallback here — handled explicitly below
+// FIX8: No default fallback here - handled explicitly below
 const STORE_MAP: Record<string, string> = {
 APP_STORE: "app_store",
 PLAY_STORE: "play_store",
@@ -152,7 +152,7 @@ async function constantTimeEqual(a: string, b: string): Promise<boolean> {
 const encoder = new TextEncoder();
 const aBuf = encoder.encode(a);
 const bBuf = encoder.encode(b);
-// HMAC both with same key — output is always 32 bytes regardless of input
+// HMAC both with same key - output is always 32 bytes regardless of input
 // This makes the comparison constant-time even if input lengths differ
 const keyMaterial = await crypto.subtle.importKey(
 "raw",
@@ -167,7 +167,7 @@ await crypto.subtle.sign("HMAC", keyMaterial, aBuf)
 const sigB = new Uint8Array(
 await crypto.subtle.sign("HMAC", keyMaterial, bBuf)
 );
-// Fixed-length 32-byte comparison — always runs full loop
+// Fixed-length 32-byte comparison - always runs full loop
 if (sigA.byteLength !== sigB.byteLength) return false;
 let result = 0;
 for (let i = 0; i < sigA.byteLength; i++) {
@@ -261,13 +261,13 @@ return sanitized;
 }
 // ── Main Handler─────────────────────────────────────────────────────────
 serve(async (req: Request) => {
-// FIX3: No OPTIONS/CORS — server-to-server only. POST required.
+// FIX3: No OPTIONS/CORS - server-to-server only. POST required.
 if (req.method !== "POST") {
 return jsonResponse({ error: "Method not allowed" }, 405);
 }
 // KILLSWITCH
 if (parseKillswitch()) {
-console.log("[revenuecat-webhook] BASELINE_KILL_SWITCH active — rejecting");
+console.log("[revenuecat-webhook] BASELINE_KILL_SWITCH active - rejecting");
 return jsonResponse(
 { error: "Service halted", reason: "BASELINE_KILL_SWITCH active" },
 503
@@ -370,7 +370,7 @@ userId = originalAppUserId;
 console.warn("A17B: app_user_id not UUID, falling back to original");
 } else {
 // FIX9: No PII in logs
-console.error("A17B: Cannot resolve user_id from event — neither field is UUID");
+console.error("A17B: Cannot resolve user_id from event - neither field is UUID");
 return jsonResponse({
 received: true,
 skipped: true,
@@ -392,7 +392,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
 auth: { autoRefreshToken: false, persistSession: false },
 });
 try {
-// ── FIX1: Idempotency check — skip if rc_event_id already processed ─
+// ── FIX1: Idempotency check - skip if rc_event_id already processed ─
 // Queries raw_event JSONB for the dedupe key. If found, short-circuit.
 // This prevents duplicate subscription_events rows and redundant tier syncs.
 if (rcEventId) {
@@ -402,7 +402,7 @@ const { data: existing, error: dedupeErr } = await supabase
 .eq("raw_event->>rc_event_id", rcEventId)
 .limit(1);
 if (!dedupeErr && existing && existing.length > 0) {
-console.log(`A17B: Duplicate rc_event_id detected — skipping`);
+console.log(`A17B: Duplicate rc_event_id detected - skipping`);
 return jsonResponse({
 received: true,
 already_processed: true,
@@ -410,7 +410,7 @@ rc_event_id: rcEventId,
 });
 }
 // If dedupeErr: log but proceed (fail-open on dedupe, fail-closed would
-// drop events on transient DB issues — worse outcome)
+// drop events on transient DB issues - worse outcome)
 if (dedupeErr) {
 console.warn("A17B: Dedupe check failed, proceeding:", dedupeErr.message);
 }
@@ -443,7 +443,7 @@ if (
 error.message.includes("violates foreign key") ||
 error.message.includes("not found")
 ) {
-console.warn("A17B: User not found in auth.users — skipping event");
+console.warn("A17B: User not found in auth.users - skipping event");
 return jsonResponse({
 received: true,
 skipped: true,

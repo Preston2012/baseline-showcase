@@ -1,12 +1,12 @@
 -- ========================================================================
--- MIGRATION: Statement Quality Gate — A17 V1.0.0
+-- MIGRATION: Statement Quality Gate  - A17 V1.0.0
 -- File: A17_statement_quality.sql
 -- ========================================================================
 --
 -- Creates:
---   1. sanitize_statement_text()  — IMMUTABLE text cleaner for views
---   2. statement_quality_score()  — returns quality score 0-100
---   3. revoke_low_quality_statements() — batch auto-revoke
+--   1. sanitize_statement_text()   - IMMUTABLE text cleaner for views
+--   2. statement_quality_score()   - returns quality score 0-100
+--   3. revoke_low_quality_statements()  - batch auto-revoke
 --   4. Updated v_statements_public / v_feed_ranked with sanitizer
 --
 -- The statements table is IMMUTABLE (A12A trigger). We cannot modify text
@@ -16,7 +16,7 @@
 --   - Future: sanitize BEFORE INSERT in pipeline code
 --
 -- Safety:
---   CREATE OR REPLACE — idempotent
+--   CREATE OR REPLACE  - idempotent
 --   Only modifies views (no table schema changes)
 --   revoke function requires explicit call (not a trigger)
 -- ========================================================================
@@ -42,7 +42,7 @@ BEGIN
   t := REPLACE(t, E'\u00E2\u0080\u0098', E'\u2018');  -- ' left single quote
   t := REPLACE(t, E'\u00E2\u0080\u009C', E'\u201C');  -- " left double quote
   t := REPLACE(t, E'\u00E2\u0080\u009D', E'\u201D');  -- " right double quote
-  t := REPLACE(t, E'\u00E2\u0080\u0094', E'\u2014');  -- — em dash
+  t := REPLACE(t, E'\u00E2\u0080\u0094', E'\u2014');  --  - em dash
   t := REPLACE(t, E'\u00E2\u0080\u0093', E'\u2013');  -- – en dash
   t := REPLACE(t, E'\u00E2\u0080\u00A6', E'\u2026');  -- … ellipsis
   t := REPLACE(t, E'\u00C2\u00A0', ' ');               -- non-breaking space artifact
@@ -60,7 +60,7 @@ BEGIN
   t := REPLACE(t, '&#8220;', E'\u201C');  -- "
   t := REPLACE(t, '&#8221;', E'\u201D');  -- "
   t := REPLACE(t, '&#8211;', E'\u2013');  -- –
-  t := REPLACE(t, '&#8212;', E'\u2014');  -- —
+  t := REPLACE(t, '&#8212;', E'\u2014');  --  -
   t := REPLACE(t, '&#8230;', E'\u2026');  -- …
 
   -- ── Phase 3: Normalize smart punctuation to ASCII ───────────────────
@@ -70,7 +70,7 @@ BEGIN
   t := REPLACE(t, E'\u201C', '"');    -- " → "
   t := REPLACE(t, E'\u201D', '"');    -- " → "
   t := REPLACE(t, E'\u2013', '-');    -- – → -
-  t := REPLACE(t, E'\u2014', ' - '); -- — → -
+  t := REPLACE(t, E'\u2014', ' - '); --  - → -
   t := REPLACE(t, E'\u2026', '...');  -- … → ...
   t := REPLACE(t, E'\u00A0', ' ');    -- non-breaking space → space
 
@@ -138,7 +138,7 @@ BEGIN
   IF total_len < 30 THEN score := score - 40; END IF;
   IF total_len < 50 THEN score := score - 20; END IF;
 
-  -- Suspiciously long (possible scraping artifact — full article dumped)
+  -- Suspiciously long (possible scraping artifact  - full article dumped)
   IF total_len > 1800 THEN score := score - 10; END IF;
 
   -- ── Word count ─────────────────────────────────────────────────────
@@ -303,7 +303,7 @@ COMMENT ON VIEW v_statement_quality_report IS
 -- 5. UPDATE PUBLIC VIEWS WITH SANITIZER
 -- ════════════════════════════════════════════════════════════════════════
 -- Wraps statement_text, context_before, context_after with sanitizer.
--- This is the final safety net — no matter what's in the DB, the user
+-- This is the final safety net  - no matter what's in the DB, the user
 -- sees clean text.
 
 CREATE OR REPLACE VIEW v_statements_public
@@ -383,5 +383,5 @@ GRANT SELECT ON v_feed_ranked TO anon, authenticated;
 GRANT SELECT ON v_statement_quality_report TO service_role;
 
 -- ════════════════════════════════════════════════════════════════════════
--- END A17 — V1.0.0
+-- END A17  - V1.0.0
 -- ════════════════════════════════════════════════════════════════════════

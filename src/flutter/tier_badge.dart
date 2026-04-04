@@ -1,4 +1,4 @@
-/// F2.7 — Tier Badge (Clearance Level Pill) — LOCKED
+/// F2.7 - Tier Badge (Clearance Level Pill) - LOCKED
 ///
 /// Your building ID. Security clearance badge that appears on profiles,
 /// paywalls, feature gates, popups. One of the most visible widgets in

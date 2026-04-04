@@ -1,5 +1,5 @@
 --═══════════════════════════════════════════════════════════════════════
--- P5 — TRENDING TOPICS RPC (FINAL)
+-- P5  - TRENDING TOPICS RPC (FINAL)
 -- Supabase migration: p5_trending_topics.sql
 --
 -- Aggregates topic frequency from statements.topics[] over a
@@ -8,7 +8,7 @@
 -- equivalent period).
 --
 -- Post-A17 auxiliary. Read-only on statements table.
--- Anon-callable via SECURITY INVOKER — A1's statements_public_read
+-- Anon-callable via SECURITY INVOKER  - A1's statements_public_read
 -- RLS policy auto-filters to active figures.
 --
 -- DEPENDS ON:
@@ -20,7 +20,7 @@
 -- F7.5: search_provider.dart (replaces hardcoded fallback)
 -- F4.14: search screen (topic chips)
 --
--- CANONICAL TOPIC ENUM (A2/A5A — 11 values):
+-- CANONICAL TOPIC ENUM (A2/A5A  - 11 values):
 -- ECONOMY, IMMIGRATION, AI_TECHNOLOGY, FOREIGN_POLICY,
 -- HEALTHCARE, CLIMATE_ENVIRONMENT, CRIME_JUSTICE, ELECTIONS,
 -- MILITARY_DEFENSE, CULTURE_SOCIETY, OTHER
@@ -37,8 +37,8 @@ ON statements USING gin (topics);
 -- Returns a JSONB array of trending topics sorted by frequency.
 --
 -- Parameters:
--- p_days (INT, default 7) — Time window in days. Clamped 1-90.
--- p_limit (INT, default 10) — Max topics returned. Clamped 1-11.
+-- p_days (INT, default 7)  - Time window in days. Clamped 1-90.
+-- p_limit (INT, default 10)  - Max topics returned. Clamped 1-11.
 --
 -- Response shape (JSONB array):
 -- [
@@ -58,10 +58,10 @@ ON statements USING gin (topics);
 -- previous = 0 AND current > 0 → "rising"
 -- both = 0 → excluded (no statements mentioning topic)
 --
--- "OTHER" is excluded — it's a catch-all with no trending signal.
+-- "OTHER" is excluded  - it's a catch-all with no trending signal.
 --
 -- SECURITY: INVOKER (anon-callable via A1 statements_public_read RLS).
--- RLS auto-filters to active figures — trending counts only include
+-- RLS auto-filters to active figures  - trending counts only include
 -- statements from public, active figures. is_revoked filtered explicitly
 -- because RLS does not check revocation status.
 -- VOLATILITY: STABLE (pure read, no side effects).

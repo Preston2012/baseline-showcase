@@ -1,5 +1,5 @@
 // ========================================================================
-// A16C — get-votes Edge Function
+// A16C -- get-votes Edge Function
 // Version: V1.0.1
 // Depends on: A1 V8.0 (votes, figures, feature_flags)
 // A16A V1.0.2 (get_votes_for_figure, get_vote_summary_for_figure,
@@ -135,7 +135,7 @@ const limitParam = params.get("limit");
 const offsetParam = params.get("offset");
 // Normalize chamber once
 const chamber = chamberRaw ? chamberRaw.toUpperCase() : null;
-// Log request (sanitized — no values, just param presence)
+// Log request (sanitized - no values, just param presence)
 console.log(
 `[A16C] [${correlationId}] GET /get-votes ` +
 `figure_id=${!!figureId} bill_id=${!!billId} summary=${summary} ` +
@@ -178,7 +178,7 @@ db: {
 schema: "public",
 },
 });
-// ── Feature flag check (explicit — RPCs return empty when off) ───────
+// ── Feature flag check (explicit - RPCs return empty when off) ───────
 const flagEnabled = await isVoteTrackingEnabled(supabase);
 if (!flagEnabled) {
 console.log(`[A16C] [${correlationId}] ENABLE_VOTE_TRACKING is disabled`);
@@ -340,5 +340,5 @@ return errorResponse("Internal server error", 500, "INTERNAL_ERROR");
 }
 });
 // ========================================================================
-// END A16C — get-votes Edge Function V1.0.1
+// END A16C -- get-votes Edge Function V1.0.1
 // ========================================================================

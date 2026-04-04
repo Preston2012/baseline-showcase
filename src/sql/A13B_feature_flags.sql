@@ -1,9 +1,9 @@
 -- ========================================================================
--- BASELINE V1.4 — FEATURE FLAGS TIER GATING
--- A13B — V1.0.1
+-- BASELINE V1.4  - FEATURE FLAGS TIER GATING
+-- A13B  - V1.0.1
 --
--- FIXES APPLIED (V1.0.0 → V1.0.1 — GPT + Grok audit reconciliation):
--- FIX1: Seed comment corrected — tier entitlements are pre-enabled;
+-- FIXES APPLIED (V1.0.0 → V1.0.1  - GPT + Grok audit reconciliation):
+-- FIX1: Seed comment corrected  - tier entitlements are pre-enabled;
 -- global flags remain OFF until launch (was "all disabled") [Grok C1]
 -- FIX2: RLS policy renamed tier_features_authenticated_read + comment
 -- corrected (was labeled "public read" but is authenticated) [Grok C2+H2]
@@ -16,8 +16,8 @@
 -- PURPOSE:
 -- Creates tier_features mapping table and access-check RPCs.
 -- Implements the two-layer feature gating model:
--- Layer 1: feature_flags (A1 V8.0) — global kill switches
--- Layer 2: tier_features (this artifact) — per-tier entitlements
+-- Layer 1: feature_flags (A1 V8.0)  - global kill switches
+-- Layer 2: tier_features (this artifact)  - per-tier entitlements
 -- A feature is accessible only when BOTH layers are enabled.
 --
 -- DEPENDENCIES:
@@ -43,10 +43,10 @@
 -- Stored in tier_features.config for A18C/A18D to consume.
 --
 -- Safety:
--- CREATE TABLE IF NOT EXISTS — idempotent
--- CREATE OR REPLACE FUNCTION — idempotent
--- DROP TRIGGER IF EXISTS — idempotent
--- INSERT ... ON CONFLICT DO NOTHING — idempotent seed data
+-- CREATE TABLE IF NOT EXISTS  - idempotent
+-- CREATE OR REPLACE FUNCTION  - idempotent
+-- DROP TRIGGER IF EXISTS  - idempotent
+-- INSERT ... ON CONFLICT DO NOTHING  - idempotent seed data
 -- ========================================================================
 -- ========================================================================
 -- TIER FEATURES MAPPING TABLE
@@ -90,9 +90,9 @@ EXECUTE FUNCTION update_tier_features_timestamp();
 -- ROW-LEVEL SECURITY
 -- ========================================================================
 ALTER TABLE tier_features ENABLE ROW LEVEL SECURITY;
--- V1.0.1 FIX2: Renamed from "public_read" — policy is authenticated, not public.
+-- V1.0.1 FIX2: Renamed from "public_read"  - policy is authenticated, not public.
 -- Authenticated read: clients need to know what tiers unlock (for UI upgrade prompts)
--- No PII exposed — just tier+feature mappings.
+-- No PII exposed  - just tier+feature mappings.
 DROP POLICY IF EXISTS tier_features_public_read ON tier_features;
 DROP POLICY IF EXISTS tier_features_authenticated_read ON tier_features;
 CREATE POLICY tier_features_authenticated_read ON tier_features
@@ -104,7 +104,7 @@ CREATE POLICY tier_features_service_all ON tier_features
 FOR ALL TO service_role
 USING (true)
 WITH CHECK (true);
--- No INSERT/UPDATE/DELETE for authenticated — service_role only
+-- No INSERT/UPDATE/DELETE for authenticated  - service_role only
 -- ========================================================================
 -- TABLE-LEVEL GRANTS
 -- ========================================================================
@@ -240,9 +240,9 @@ INSERT INTO tier_features (tier, flag_name, enabled, config) VALUES
 ('b2b', 'ENABLE_HISTORICAL_TRENDS', true, '{}')
 ON CONFLICT (tier, flag_name) DO NOTHING;
 -- ========================================================================
--- FUNCTION GRANTS (trigger function — no public access)
+-- FUNCTION GRANTS (trigger function  - no public access)
 -- ========================================================================
 REVOKE ALL ON FUNCTION update_tier_features_timestamp() FROM PUBLIC;
 -- ========================================================================
--- END A13B — V1.0.1
+-- END A13B  - V1.0.1
 -- ========================================================================

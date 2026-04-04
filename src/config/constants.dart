@@ -1,4 +1,4 @@
-/// F1.10 — App-wide constants for Baseline.
+/// F1.10 - App-wide constants for Baseline.
 ///
 /// Single source of truth for: disclaimer text, methodology URL,
 /// tier configuration, brand strings, feature flags, ad placement,
@@ -22,7 +22,7 @@ const String kTagline = 'Language You Can Measure.';
 
 /// Morph words for the hero tagline cycler (F4.1 splash, F4.2 brand).
 /// Teal-colored cycling word + white static " You Can Measure."
-/// Order matters: cycle proceeds top→bottom, loops.
+/// Order matters: cycle proceeds top to bottom, loops.
 const List<String> kTaglineWords = [
   'Speech',
   'Patterns',
@@ -41,8 +41,8 @@ const String kWordmarkAsset = 'assets/images/baseline_wordmark.png';
 const String kShareAppText =
     'Check out BASELINE: Language You Can Measure.';
 
-/// App Store / Play Store URLs. TODO: Replace with real URLs after listing.
-const String kAppStoreUrl = 'https://apps.apple.com/app/baseline/idXXXXXXXXXX';
+/// App Store / Play Store URLs.
+const String kAppStoreUrl = 'https://apps.apple.com/app/baseline/[STORE_ID_REDACTED]';
 const String kPlayStoreUrl =
     'https://play.google.com/store/apps/details?id=co.baselineapp';
 
@@ -56,7 +56,7 @@ const String kSupportPhone = '541-551-0731';
 const String kWebsiteUrl = 'https://baseline.marketing';
 
 // ═══════════════════════════════════════════
-// LEGAL — DISCLAIMER (locked text, do not modify)
+// LEGAL -- DISCLAIMER (locked text, do not modify)
 // ═══════════════════════════════════════════
 
 /// Appears on: Receipt™, Statement Detail ONLY (subtle).
@@ -71,8 +71,7 @@ const String kBillDisclaimerText =
     'Review original bill text for full context.';
 
 // ═══════════════════════════════════════════
-// LEGAL — URLS
-// TODO: Replace with real URLs before App Store submission.
+// LEGAL -- URLS
 // These MUST resolve or "Learn more" / Settings links will 404.
 // ═══════════════════════════════════════════
 
@@ -82,7 +81,7 @@ const String kTermsUrl = 'https://baseline.marketing/terms';
 const String kSupportUrl = 'https://baseline.marketing/support';
 
 // ═══════════════════════════════════════════
-// "MISCAT? REPORT" (F4.12 — bill provision reporting)
+// "MISCAT? REPORT" (F4.12 - bill provision reporting)
 // ═══════════════════════════════════════════
 
 const String kMiscatReportEmail = 'support@baseline.app';
@@ -93,7 +92,7 @@ const String kMiscatReportSubject = 'Baseline: Provision Categorization Report';
 // ═══════════════════════════════════════════
 
 /// Short labels used in Lens Toggle, metric bars, and Lens Lab.
-/// NEVER say "OpenAI thinks..." — say "GP analysis:" or just show "GP".
+/// NEVER say "OpenAI thinks..." - say "GP analysis:" or just show "GP".
 const String kLabelGP = 'GP';
 const String kLabelCL = 'CL';
 const String kLabelGR = 'GR';
@@ -118,7 +117,7 @@ const Map<String, String> kTierDisplayNames = {
 };
 
 // ═══════════════════════════════════════════
-// PRICING — shown on paywall screen (F4.16)
+// PRICING -- shown on paywall screen (F4.16)
 // Patched per Expansion Plan §7 pricing update.
 // ═══════════════════════════════════════════
 
@@ -136,7 +135,7 @@ const String kLaunchWindow = '60 days';
 const String kProPlusTagline = 'More signal. Less noise.';
 
 // ═══════════════════════════════════════════
-// TOPICS (UPPERCASE — must match A1 + A9B)
+// TOPICS (UPPERCASE -- must match A1 + A9B)
 // ═══════════════════════════════════════════
 
 const List<String> kTopics = [
@@ -182,7 +181,7 @@ const List<String> kFramingLabels = [
 ];
 
 // ═══════════════════════════════════════════
-// PROVISION DRIFT™ — THRESHOLD LABELS
+// PROVISION DRIFT™ -- THRESHOLD LABELS
 // ═══════════════════════════════════════════
 //
 // Client-side quartile thresholds for drift score display.
@@ -306,7 +305,7 @@ const bool kDefaultEnableVoteTracking = true;
 const int kRateAppViewThreshold = 5;
 
 // ═══════════════════════════════════════════
-// ROUTES — FIGURE PROFILE / DOSSIER / NARRATIVE SYNC
+// ROUTES -- FIGURE PROFILE / DOSSIER / NARRATIVE SYNC
 // ═══════════════════════════════════════════
 
 /// Route path segments for Figure Profile and Dossier screens.
@@ -316,7 +315,7 @@ const String kDossierPath = '/dossier';
 const String kNarrativeSyncPath = '/narrative-sync';
 
 // ═══════════════════════════════════════════
-// CHANGELOG — "WHAT'S NEW" (150.22)
+// CHANGELOG -- "WHAT'S NEW" (150.22)
 // ═══════════════════════════════════════════
 //
 // Keyed by version string. Shown in Settings via modal bottom sheet.
@@ -337,7 +336,7 @@ const Map<String, List<String>> kChangelog = {
 };
 
 // ═══════════════════════════════════════════
-// INFO SHEET COPY — TAP-TO-EXPLAIN (CANONICAL)
+// INFO SHEET COPY -- TAP-TO-EXPLAIN (CANONICAL)
 // ═══════════════════════════════════════════
 //
 // Used by InfoBottomSheet (F2.18). Keyed by surface identifier.
@@ -671,6 +670,6 @@ const double kTabBarBottomPadding = 100.0;
 const String kHapticPrefKey = 'haptic_enabled';
 const String kChangelogLastSeenKey = 'changelog_last_seen';
 
-const String kAppStoreId = ''; // TODO: Set App Store ID
+const String kAppStoreId = '[STORE_ID_REDACTED]';
 const String kShareText = kShareAppText;
 const String kProLaunchMonthly = kProIntroMonthly;

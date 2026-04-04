@@ -1,5 +1,5 @@
 -- ========================================================================
--- A18 — Statement Content Dedup Index
+-- A18  - Statement Content Dedup Index
 -- ========================================================================
 -- Defense-in-depth: prevents inserting the same verbatim statement text
 -- for the same figure from different source URL variants.
@@ -9,7 +9,7 @@
 -- Uses md5(text) to keep the index compact. Collision probability is
 -- negligible for our scale (<1M statements).
 --
--- Only applies to non-revoked statements — revoked rows are kept for
+-- Only applies to non-revoked statements  - revoked rows are kept for
 -- audit trail and don't affect the active dataset.
 -- ========================================================================
 

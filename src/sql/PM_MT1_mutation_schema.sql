@@ -1,5 +1,5 @@
 -- ========================================================================
--- PM-MT.1 — Bill Mutation Timeline™ SQL Schema — LOCKED
+-- PM-MT.1  - Bill Mutation Timeline™ SQL Schema  - LOCKED
 --
 -- Three tables powering Mutation Timeline™:
 --   1. bill_versions: Snapshot of a bill at each legislative stage

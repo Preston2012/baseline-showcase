@@ -1,5 +1,5 @@
 -- ========================================================================
--- A16A — Votes SQL Extension
+-- A16A  - Votes SQL Extension
 -- Version: V1.0.2
 -- Depends on: A1 V8.0 (votes table, figures table, feature_flags table)
 --
@@ -26,7 +26,7 @@
 -- ── insert_vote()──────────────────────────────────────────────────────────
 -- Service-role only. Inserts a single vote record.
 -- Returns the vote_id (new or existing if duplicate).
--- IDEMPOTENT: ON CONFLICT DO NOTHING — safe for pipeline replays.
+-- IDEMPOTENT: ON CONFLICT DO NOTHING  - safe for pipeline replays.
 --
 -- Validates:
 -- 1. Feature flag ENABLE_VOTE_TRACKING is enabled
@@ -97,7 +97,7 @@ END IF;
 IF p_congress_session IS NULL OR p_congress_session < 1 THEN
 RAISE EXCEPTION '[insert_vote] congress_session must be a positive integer';
 END IF;
--- ── Insert (idempotent — skip if duplicate) ────────────────────────────
+-- ── Insert (idempotent  - skip if duplicate) ────────────────────────────
 INSERT INTO votes (
 figure_id,
 bill_id,
@@ -125,7 +125,7 @@ SELECT v.vote_id INTO v_vote_id
 FROM votes v
 WHERE v.figure_id = p_figure_id
 AND v.bill_id = trim(p_bill_id);
-RAISE LOG '[insert_vote] Duplicate skipped — existing vote_id=% for figure=% bill=%',
+RAISE LOG '[insert_vote] Duplicate skipped  - existing vote_id=% for figure=% bill=%',
 v_vote_id, p_figure_id, p_bill_id;
 ELSE
 RAISE LOG '[insert_vote] Inserted vote_id=% for figure=% bill=%',
@@ -152,7 +152,7 @@ INTEGER, TEXT) TO service_role;
 -- Service-role only. Inserts multiple votes in a single transaction.
 -- Accepts a JSONB array of vote objects.
 -- Returns count of newly inserted rows (excludes duplicates).
--- Skips duplicates (ON CONFLICT DO NOTHING) — idempotent for re-runs.
+-- Skips duplicates (ON CONFLICT DO NOTHING)  - idempotent for re-runs.
 --
 -- Expected JSONB shape per element:
 -- {
@@ -292,7 +292,7 @@ GRANT EXECUTE ON FUNCTION insert_votes_batch(JSONB) TO service_role;
 -- ############################################################################
 -- ── get_votes_for_figure()─────────────────────────────────────────────────
 -- Public read. Returns votes for a specific figure.
--- SECURITY INVOKER — relies on A1 RLS policies for access control.
+-- SECURITY INVOKER  - relies on A1 RLS policies for access control.
 -- Feature-flag-gated: returns empty if ENABLE_VOTE_TRACKING is off.
 -- Supports optional filters: chamber, congress_session, date range.
 -- Ordered by vote_date DESC (most recent first).
@@ -333,7 +333,7 @@ SELECT enabled INTO v_flag_enabled
 FROM feature_flags
 WHERE flag_name = 'ENABLE_VOTE_TRACKING';
 IF v_flag_enabled IS NOT TRUE THEN
--- Return empty result set — feature not enabled
+-- Return empty result set  - feature not enabled
 RETURN;
 END IF;
 -- ── Guard: chamber validation (if provided) ───────────────────────────
@@ -377,7 +377,7 @@ GRANT EXECUTE ON FUNCTION get_votes_for_figure(UUID, TEXT, INTEGER, DATE, DATE,
 INTEGER, INTEGER) TO service_role;
 -- ── get_vote_summary_for_figure()──────────────────────────────────────────
 -- Public read. Returns aggregated vote counts per figure.
--- SECURITY INVOKER — relies on A1 RLS policies.
+-- SECURITY INVOKER  - relies on A1 RLS policies.
 -- Grouped by chamber + congress_session.
 -- Feature-flag-gated.
 -- ========================================================================
@@ -447,7 +447,7 @@ service_role;
 -- ############################################################################
 -- ── get_votes_for_bill()───────────────────────────────────────────────────
 -- Public read. Returns all tracked figures' votes on a specific bill.
--- SECURITY INVOKER — relies on A1 RLS policies.
+-- SECURITY INVOKER  - relies on A1 RLS policies.
 -- Useful for "how did everyone vote on X" queries.
 -- Feature-flag-gated.
 -- ========================================================================
@@ -514,5 +514,5 @@ ON votes(figure_id, vote_date DESC, chamber);
 CREATE INDEX IF NOT EXISTS idx_votes_figure_session
 ON votes(figure_id, congress_session DESC);
 -- ========================================================================
--- END A16A — Votes SQL Extension V1.0.2
+-- END A16A  - Votes SQL Extension V1.0.2
 -- ========================================================================

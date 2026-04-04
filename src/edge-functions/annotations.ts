@@ -1,8 +1,8 @@
 // ========================================================================
-// BASELINE V1.4 — ANNOTATIONS CRUD ENDPOINT
-// A15B — V1.0.1
+// BASELINE V1.4 -- ANNOTATIONS CRUD ENDPOINT
+// A15B -- V1.0.1
 //
-// FIXES APPLIED (V1.0.0 → V1.0.1 — GPT + Grok audit reconciliation):
+// FIXES APPLIED (V1.0.0 → V1.0.1 - GPT + Grok audit reconciliation):
 // FIX1: Log config fetch errors before falling back to default quota.
 // Aids diagnosis when paid users are stuck at free quota. [Grok M1]
 //
@@ -45,7 +45,7 @@
 // - JWT verified via supabase.auth.getUser()
 // - Feature-gated via check_feature_access('ENABLE_ANNOTATIONS')
 // - Quota enforced on create: current count vs max_annotations config
-// - All A15A RPCs are SECURITY INVOKER — RLS filters apply
+// - All A15A RPCs are SECURITY INVOKER - RLS filters apply
 //
 // QUOTA MODEL (deny-by-default):
 // - Default quota: 5 (free tier, from A13B seed)

@@ -1,15 +1,15 @@
 -- ========================================================================
--- BASELINE V1.4 — SUBSCRIPTION TRACKING + LIFECYCLE
--- A17A — V1.0.1
+-- BASELINE V1.4  - SUBSCRIPTION TRACKING + LIFECYCLE
+-- A17A  - V1.0.1
 --
--- FIXES APPLIED (V1.0.0 → V1.0.1 — dual audit reconciliation):
+-- FIXES APPLIED (V1.0.0 → V1.0.1  - dual audit reconciliation):
 -- FIX1: Removed tier_features table, feature access RPCs, and seed data.
 -- A13B V1.0.1 is canonical owner of tier_features,
 -- check_feature_access(), get_feature_config(). No double-owner.
 -- FIX2: map_product_to_tier() now recognizes *_admin and *_promotional
 -- product IDs. Prevents admin_set_tier()-granted users from being
 -- silently downgraded to 'free' on next sync_subscription_tier().
--- [Audit 2 Critical Blocker #2 — hard correctness bug]
+-- [Audit 2 Critical Blocker #2  - hard correctness bug]
 -- FIX3: get_my_subscription() now always returns 'tier' field by calling
 -- get_my_tier(). Consistent response shape. [Audit 2 High Issue]
 -- FIX4: tier_features anon read removed (was in V1.0.0). A13B uses
@@ -20,12 +20,12 @@
 -- Subscription lifecycle data layer:
 -- 1. subscriptions table (RevenueCat state per user, one row per user)
 -- 2. subscription_events table (immutable audit log)
--- 3. map_product_to_tier() — RevenueCat product → Baseline tier mapping
--- 4. sync_subscription_tier() — sync user_profiles.tier from sub state
--- 5. upsert_subscription() — insert/update sub + log event + sync tier
--- 6. get_my_subscription() — authenticated user reads own sub
--- 7. expire_lapsed_subscriptions() — cron safety net for missed webhooks
--- 8. admin_set_tier() — manual tier override for B2B/support/promos
+-- 3. map_product_to_tier()  - RevenueCat product → Baseline tier mapping
+-- 4. sync_subscription_tier()  - sync user_profiles.tier from sub state
+-- 5. upsert_subscription()  - insert/update sub + log event + sync tier
+-- 6. get_my_subscription()  - authenticated user reads own sub
+-- 7. expire_lapsed_subscriptions()  - cron safety net for missed webhooks
+-- 8. admin_set_tier()  - manual tier override for B2B/support/promos
 --
 -- DEPENDENCIES:
 -- - A1 V8.0 deployed (feature_flags table)
@@ -47,15 +47,15 @@
 -- - Does not write to pipeline_events (avoids stage enum coupling)
 --
 -- SUBSCRIPTION STATUSES:
--- 'active' — Current and paid
--- 'trialing' — Free trial period
--- 'grace_period' — Payment failed, within grace
--- 'billing_issue' — Payment failed, past grace
--- 'expired' — Ended (renewal failed or cancelled)
--- 'cancelled' — User cancelled, active until period_end
--- 'refunded' — Refund processed, access revoked
--- 'paused' — Play Store pause feature
--- 'promotional' — Admin/promo grant
+-- 'active'  - Current and paid
+-- 'trialing'  - Free trial period
+-- 'grace_period'  - Payment failed, within grace
+-- 'billing_issue'  - Payment failed, past grace
+-- 'expired'  - Ended (renewal failed or cancelled)
+-- 'cancelled'  - User cancelled, active until period_end
+-- 'refunded'  - Refund processed, access revoked
+-- 'paused'  - Play Store pause feature
+-- 'promotional'  - Admin/promo grant
 --
 -- STORE VALUES: 'app_store', 'play_store', 'stripe', 'promotional'
 --
@@ -657,7 +657,7 @@ GRANT ALL ON TABLE subscription_events TO service_role;
 -- ########################################################################
 -- SECTION 7: FUNCTION GRANTS
 -- ########################################################################
--- map_product_to_tier (service_role only — internal mapping)
+-- map_product_to_tier (service_role only  - internal mapping)
 REVOKE ALL ON FUNCTION map_product_to_tier(TEXT) FROM PUBLIC;
 REVOKE ALL ON FUNCTION map_product_to_tier(TEXT) FROM anon;
 REVOKE ALL ON FUNCTION map_product_to_tier(TEXT) FROM authenticated;
@@ -687,7 +687,7 @@ REVOKE ALL ON FUNCTION get_my_subscription() FROM PUBLIC;
 REVOKE ALL ON FUNCTION get_my_subscription() FROM anon;
 GRANT EXECUTE ON FUNCTION get_my_subscription() TO authenticated;
 GRANT EXECUTE ON FUNCTION get_my_subscription() TO service_role;
--- expire_lapsed_subscriptions (service_role only — cron)
+-- expire_lapsed_subscriptions (service_role only  - cron)
 REVOKE ALL ON FUNCTION expire_lapsed_subscriptions(INTEGER) FROM PUBLIC;
 REVOKE ALL ON FUNCTION expire_lapsed_subscriptions(INTEGER) FROM anon;
 REVOKE ALL ON FUNCTION expire_lapsed_subscriptions(INTEGER) FROM authenticated;
@@ -705,5 +705,5 @@ REVOKE ALL ON FUNCTION prevent_sub_event_mutation() FROM PUBLIC;
 REVOKE ALL ON FUNCTION prevent_sub_event_mutation() FROM anon;
 REVOKE ALL ON FUNCTION prevent_sub_event_mutation() FROM authenticated;
 -- ========================================================================
--- END A17A — V1.0.1
+-- END A17A  - V1.0.1
 -- ========================================================================

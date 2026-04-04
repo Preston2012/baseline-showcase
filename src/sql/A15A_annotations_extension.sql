@@ -1,8 +1,8 @@
 -- ========================================================================
--- BASELINE V1.4 — ANNOTATIONS SQL EXTENSION
--- A15A — V1.0.1
+-- BASELINE V1.4  - ANNOTATIONS SQL EXTENSION
+-- A15A  - V1.0.1
 --
--- FIXES APPLIED (V1.0.0 → V1.0.1 — GPT + Grok audit reconciliation):
+-- FIXES APPLIED (V1.0.0 → V1.0.1  - GPT + Grok audit reconciliation):
 -- FIX1: Schema-qualify indexes and trigger target (public.annotations)
 -- for consistency with project standards [Grok L1]
 -- FIX2: Explicit updated_at = now() in delete_annotation. Trigger handles
@@ -33,19 +33,19 @@
 -- the unique constraint while allowing re-annotation after delete.
 --
 -- Safety:
--- CREATE OR REPLACE FUNCTION — idempotent
--- CREATE INDEX IF NOT EXISTS — idempotent
--- DROP TRIGGER IF EXISTS — idempotent
+-- CREATE OR REPLACE FUNCTION  - idempotent
+-- CREATE INDEX IF NOT EXISTS  - idempotent
+-- DROP TRIGGER IF EXISTS  - idempotent
 -- ========================================================================
 -- ========================================================================
 -- INDEXES (beyond what A1 defines)
 -- ========================================================================
 -- V1.0.1 FIX1: Schema-qualified
--- Fast lookup: "my annotations" — filtered to active only
+-- Fast lookup: "my annotations"  - filtered to active only
 CREATE INDEX IF NOT EXISTS idx_annotations_user_active
 ON public.annotations(user_id, created_at DESC)
 WHERE is_deleted = false;
--- Fast lookup: "annotations for this statement" — filtered to active only
+-- Fast lookup: "annotations for this statement"  - filtered to active only
 CREATE INDEX IF NOT EXISTS idx_annotations_statement_active
 ON public.annotations(statement_id, created_at DESC)
 WHERE is_deleted = false;
@@ -337,8 +337,8 @@ service_role;
 REVOKE ALL ON FUNCTION get_my_annotation_count() FROM PUBLIC;
 GRANT EXECUTE ON FUNCTION get_my_annotation_count() TO authenticated;
 GRANT EXECUTE ON FUNCTION get_my_annotation_count() TO service_role;
--- Trigger function — no public access
+-- Trigger function  - no public access
 REVOKE ALL ON FUNCTION update_annotation_timestamp() FROM PUBLIC;
 -- ========================================================================
--- END A15A — V1.0.1
+-- END A15A  - V1.0.1
 -- ========================================================================

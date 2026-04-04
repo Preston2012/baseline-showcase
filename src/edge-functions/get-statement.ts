@@ -1,5 +1,5 @@
 // ========================================================================
-// SUPABASE EDGE FUNCTION: get-statement (A9C v1.0.2 — FINAL)
+// SUPABASE EDGE FUNCTION: get-statement (A9C v1.0.2 - FINAL)
 // Path: supabase/functions/get-statement/index.ts
 //
 // Fetch a single statement with its analyses and consensus.
@@ -7,19 +7,19 @@
 // Revoked statements return 404. Inactive figures return 404.
 //
 // FIXES APPLIED (V1.0.0 → V1.0.1):
-// B1: Explicit column lists instead of select("*") — prevents leaking internals
+// B1: Explicit column lists instead of select("*") - prevents leaking internals
 // B2: Cache-Control removed (POST responses not cacheable per HTTP spec)
 // H1: Added figures.is_active filter via view or explicit check
 // H3: Env validation inside handler with JSON error responses
-// H4: is_revoked defense-in-depth added (later removed in V1.0.2 — view is the guard)
+// H4: is_revoked defense-in-depth added (later removed in V1.0.2 - view is the guard)
 // M1: Consolidated CORS into single withCors helper
 //
-// FIXES APPLIED (V1.0.1 → V1.0.2 — RECONCILED FROM GPT + GROK AUDITS):
+// FIXES APPLIED (V1.0.1 → V1.0.2 - RECONCILED FROM GPT + GROK AUDITS):
 // H4: Removed dead is_revoked check (column not in SELECT; view is the guard)
 //
 // CROSS-ARTIFACT DEPENDENCIES:
 // A1: v_statements_public, v_statement_analysis, v_statement_consensus views
-// (must exist — confirm against A1 schema)
+// (must exist - confirm against A1 schema)
 // A7A: analyses rows
 // A7B: consensus rows
 //
@@ -100,7 +100,7 @@ h.set(
 return new Response(resp.body, { status: resp.status, headers: h });
 }
 function jsonResponse(payload: unknown, status = 200): Response {
-// V1.0.1 FIX (B2): No Cache-Control — POST responses are not cacheable per HTTP spec
+// V1.0.1 FIX (B2): No Cache-Control - POST responses are not cacheable per HTTP spec
 return new Response(JSON.stringify(payload), {
 status,
 headers: { "Content-Type": "application/json" },
@@ -142,9 +142,9 @@ const { data: statement, error: stmtErr } = await supabase
 if (stmtErr) throw new Error(`Statement fetch failed: ${stmtErr.message}`);
 if (!statement) return withCors(jsonResponse({ error: "Statement not found" }, 404));
 // Note: is_revoked + is_active filtering handled by v_statements_public view (A9A V1.0.1).
-// No defense-in-depth check needed — column not selected, view is the guard.
+// No defense-in-depth check needed - column not selected, view is the guard.
 // ── Fetch analyses───────────────────────────────────────────────────
-// V1.0.1 FIX (B1): Explicit columns — no raw_response, no internal fields
+// V1.0.1 FIX (B1): Explicit columns - no raw_response, no internal fields
 const { data: analyses, error: analysesErr } = await supabase
 .from("v_statement_analysis")
 .select(ANALYSIS_COLUMNS)

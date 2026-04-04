@@ -1,7 +1,7 @@
 /// Figure model for Baseline.
 ///
 /// Represents a public figure tracked by the app. Parsed from the
-/// `figures` table via PostgREST (not an Edge Function — see Data
+/// `figures` table via PostgREST (not an Edge Function - see Data
 /// Access Doctrine).
 ///
 /// Role, party, state, and photoUrl are extracted from the `metadata`
@@ -14,7 +14,7 @@
 /// URL construction, caching, and fallback silhouette. This model just
 /// stores the raw URL if present in metadata.
 ///
-/// Categories (locked — matches A1 CHECK constraint):
+/// Categories (locked - matches A1 CHECK constraint):
 /// - US_POLITICS
 /// - GLOBAL_POLITICS
 /// - AI_TECH
@@ -119,7 +119,7 @@ final v = metadata?['photo_url'];
 return v is String ? v : null;
 }
 /// Formatted role + party string for display (e.g., "U.S. Senator · D-CA").
-/// Uses middle dot (·) separator — matches F2.10 FigureRow visual pattern.
+/// Uses middle dot (·) separator, matches F2.10 FigureRow visual pattern.
 /// Returns just role if no party, or null if neither.
 String? get rolePartyLabel {
 final r = role;
@@ -172,7 +172,7 @@ throw FormatException(
 'Figure.fromJson: created_at unparseable: $createdAtRaw',
 );
 }
-// Parse metadata JSONB defensively — Supabase decoder may return
+// Parse metadata JSONB defensively - Supabase decoder may return
 // Map<String, Object?> instead of Map<String, dynamic>.
 final rawMetadata = json['metadata'];
 final Map<String, dynamic> metadata = rawMetadata is Map

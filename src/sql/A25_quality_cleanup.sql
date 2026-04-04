@@ -1,12 +1,12 @@
 -- ========================================================================
--- MIGRATION: Statement Quality Cleanup — A25 V1.0.0
+-- MIGRATION: Statement Quality Cleanup  - A25 V1.0.0
 -- File: A25_quality_cleanup.sql
 -- ========================================================================
 --
 -- Fixes:
 --   1. Revoke 450 exact-text duplicates (keep earliest per figure+text)
 --   2. Fix HTML entities & mojibake in statement text (in-place)
---   3. Tighten quality scorer — penalize fragments, trailing commas
+--   3. Tighten quality scorer  - penalize fragments, trailing commas
 --   4. Revoke low-quality statements at threshold 45
 --
 -- Safety:
@@ -74,7 +74,7 @@ BEGIN
   IF OLD.baseline_delta IS NULL AND NEW.baseline_delta IS NOT NULL
      AND OLD.text = NEW.text AND OLD.figure_id = NEW.figure_id THEN RETURN NEW; END IF;
 
-  -- Path 5 (TEMPORARY): Text sanitization — only allow if text changes and nothing else
+  -- Path 5 (TEMPORARY): Text sanitization  - only allow if text changes and nothing else
   IF OLD.text IS DISTINCT FROM NEW.text
      AND OLD.figure_id = NEW.figure_id
      AND OLD.is_revoked = NEW.is_revoked
@@ -297,5 +297,5 @@ $$;
 SELECT * FROM revoke_low_quality_statements(p_threshold := 45, p_dry_run := false);
 
 -- ════════════════════════════════════════════════════════════════════════
--- END A25 — V1.0.0
+-- END A25  - V1.0.0
 -- ════════════════════════════════════════════════════════════════════════

@@ -1,8 +1,8 @@
 -- ========================================================================
--- A11A v1.0.2: pipeline_events (Baseline V1.4) — FINAL
+-- A11A v1.0.2: pipeline_events (Baseline V1.4)  - FINAL
 -- File: migrations/create_pipeline_events.sql
 --
--- Observability table for pipeline activity. Best-effort logging —
+-- Observability table for pipeline activity. Best-effort logging  -
 -- failures never block pipeline execution.
 --
 -- FIXES APPLIED (V1.0.0 → V1.0.1):
@@ -15,7 +15,7 @@
 -- M1: FK actions ON DELETE CASCADE → SET NULL (preserve events for debugging)
 -- M2: Added FORCE ROW LEVEL SECURITY
 --
--- FIXES APPLIED (V1.0.1 → V1.0.2 — RECONCILED FROM GPT + GROK AUDITS):
+-- FIXES APPLIED (V1.0.1 → V1.0.2  - RECONCILED FROM GPT + GROK AUDITS):
 -- 1: Expanded event_type CHECK to cover all values artifacts emit
 -- 2: Removed RPC entirely (artifacts use direct insert via service_role)
 --
@@ -68,7 +68,7 @@ ON pipeline_events (stage, event_type, created_at DESC);
 ALTER TABLE pipeline_events ENABLE ROW LEVEL SECURITY;
 ALTER TABLE pipeline_events FORCE ROW LEVEL SECURITY;
 -- V1.0.1 FIX (B3): Service_role bypasses RLS entirely in Supabase.
--- No write policy needed — Edge Functions use service_role key for inserts.
+-- No write policy needed  - Edge Functions use service_role key for inserts.
 -- Public read for MVP observability:
 DROP POLICY IF EXISTS pipeline_events_public_read ON pipeline_events;
 CREATE POLICY pipeline_events_public_read

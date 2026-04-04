@@ -1,5 +1,5 @@
 -- ========================================================================
--- BASELINE V1.4 — A5A MANUAL POC INGESTION LAYER (FINAL / DEPLOY-READY v1.4.4)
+-- BASELINE V1.4  - A5A MANUAL POC INGESTION LAYER (FINAL / DEPLOY-READY v1.4.4)
 --
 -- Changes from v1.4.3:
 -- - TOPICS SUPPORT: Extract topics TEXT[] from A2 output per statement
@@ -409,7 +409,7 @@ RAISE EXCEPTION 'source_url failed sanity check';
 END IF;
 IF v_row.source_timestamp IS NULL THEN
 PERFORM pg_advisory_unlock(v_lock_id);
-RAISE EXCEPTION 'source_timestamp is NULL — cannot persist statements';
+RAISE EXCEPTION 'source_timestamp is NULL  - cannot persist statements';
 END IF;
 IF v_row.source_timestamp > now() + interval '1 day' THEN
 PERFORM pg_advisory_unlock(v_lock_id);
@@ -593,5 +593,5 @@ GRANT EXECUTE ON FUNCTION validate_topics_jsonb(JSONB) TO service_role;
 REVOKE ALL ON FUNCTION jsonb_array_to_text_array(JSONB) FROM PUBLIC;
 GRANT EXECUTE ON FUNCTION jsonb_array_to_text_array(JSONB) TO service_role;
 -- ========================================================================
--- END A5A — V1.4.4
+-- END A5A  - V1.4.4
 -- ========================================================================

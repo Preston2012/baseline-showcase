@@ -1,5 +1,5 @@
 -- ========================================================================
--- A19 — Constraint Fixes for Workflow Compatibility
+-- A19  - Constraint Fixes for Workflow Compatibility
 -- ========================================================================
 -- Fixes CHECK constraints that reject valid values written by n8n workflows:
 --
