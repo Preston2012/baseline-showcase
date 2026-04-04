@@ -1,1 +1,2 @@
-src/sql/** linguist-generated=true
+# No linguist overrides: show natural language distribution
+# Dart ~77%, TypeScript ~11%, PLpgSQL ~11%
