@@ -44,7 +44,7 @@ Single-model AI analysis has known failure modes: hallucination, political bias,
 ## Pipeline Architecture
 
 ### Stage 1: Ingestion
-Statements are ingested from official sources via automated workflows (Make.com) and on-demand triggers. Each source is hashed to prevent duplicate processing. Raw ingestion jobs are logged (20,921 processed). Five dedup layers catch different failure modes: same URL re-crawled, same text from different sources, same statement re-triggered, same analysis re-run.
+Statements are ingested from official sources via automated workflows (n8n) and on-demand triggers. Each source is hashed to prevent duplicate processing. Raw ingestion jobs are logged (20,921 processed). Five dedup layers catch different failure modes: same URL re-crawled, same text from different sources, same statement re-triggered, same analysis re-run.
 
 ### Stage 2: Extraction
 Gemini handles structured extraction. It parses raw statement text into structured fields (figure attribution, date, context, topics) using JSON-mode output. This is separated from analysis because extraction requires structured output fidelity, not reasoning depth.

@@ -14,7 +14,7 @@ graph TB
     end
 
     subgraph Ingestion["Ingestion Pipeline"]
-        Make[Make.com Workflows]
+        n8n[n8n Workflows]
         MIT[manual-ingest-trigger]
         SH[Source Hashing + Dedup]
         BB[backfill-baseline]

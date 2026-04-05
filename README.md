@@ -46,7 +46,7 @@ Political discourse analysis is dominated by single-model tools with no bias cor
 Official Sources
     |
     v
-Ingestion Pipeline (Make.com workflows, source hashing, dedup)
+Ingestion Pipeline (n8n workflows, source hashing, dedup)
     |
     v
 Extraction (Gemini structured output)
@@ -89,7 +89,7 @@ See [ARCHITECTURE.mermaid](ARCHITECTURE.mermaid) for the full component diagram.
 
 **Why:** Serverless, TypeScript-native, globally distributed, scales to zero. No server management for a solo developer.
 
-**Tradeoff:** Cold start latency on infrequently-called functions. No long-running processes, so the analysis pipeline is event-driven rather than streaming. Functions that need to orchestrate multiple steps (like the full ingestion pipeline) rely on Make.com workflows to chain calls.
+**Tradeoff:** Cold start latency on infrequently-called functions. No long-running processes, so the analysis pipeline is event-driven rather than streaming. Functions that need to orchestrate multiple steps (like the full ingestion pipeline) rely on n8n workflows to chain calls.
 
 ### Why Flutter over React Native
 
@@ -236,6 +236,7 @@ A feed request hits `get-feed.ts`. The function fetches 3x the requested limit f
 | Database tables (all RLS) | 30 |
 | Flutter screens | 28 |
 | PostgreSQL version | 17 |
+| n8n workflows (724 executions) | 10 |
 
 ---
 
