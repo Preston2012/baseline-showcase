@@ -279,3 +279,14 @@ Baseline is in closed testing on Google Play. Contact [preston@baseline.marketin
 - LinkedIn: [linkedin.com/in/prestonwinters](https://linkedin.com/in/prestonwinters)
 - GitHub: [github.com/Preston2012](https://github.com/Preston2012)
 - Contact: [preston@baseline.marketing](mailto:preston@baseline.marketing)
+
+
+---
+
+## Other work
+
+- **[Demiurge](https://github.com/Preston2012/demi).** Open-source memory engine for AI agents. Separate project, same engineer.
+- **[Ouroboros](https://github.com/Preston2012/ouroboros).** Governance architecture for the AI era.
+- **[AI Council](https://github.com/Preston2012/ai-council).** The multi-model orchestration methodology used to build this platform.
+
+[Preston Winters](https://github.com/Preston2012) · [preston@baseline.marketing](mailto:preston@baseline.marketing)
