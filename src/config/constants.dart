@@ -435,7 +435,7 @@ const Map<String, Map<String, String>> kInfoSheetCopy = {
   'dossier': {
     'title': 'Declassified Dossier™',
     'body':
-        'A comprehensive intelligence profile consolidating all available '
+        'A complete intelligence profile consolidating all available '
         'measurement data for a single figure. Eight exhibit folders cover '
         'framing, activity, trends, votes, and shift detection.',
   },
