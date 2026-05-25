@@ -6,6 +6,10 @@ Baseline is a political intelligence platform that tracks 106 public figures usi
 [![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B)]()
 [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL%2017-3ECF8E)]()
 
+<p align="center">
+  <img src="docs/screenshots/baseline-app-today.jpg" alt="Baseline mobile app - Today feed with daily briefing" width="320" />
+</p>
+
 ---
 
 ## What This Repo Contains
@@ -30,7 +34,7 @@ This is a public showcase representing the majority of the production codebase. 
 - Production environment configuration (API keys, Supabase URLs)
 - Trademarked icon assets
 
-Contact [preston@baseline.marketing](mailto:preston@baseline.marketing) for private repo access.
+Contact [preston@winterscode.com](mailto:preston@winterscode.com) for private repo access.
 
 ---
 
@@ -266,7 +270,7 @@ Built solo by Preston Winters using multi-model AI orchestration (Claude, GPT, G
 
 ## App Access
 
-Baseline is in closed testing on Google Play. Contact [preston@baseline.marketing](mailto:preston@baseline.marketing) for reviewer access.
+Baseline is in closed testing on Google Play. Contact [preston@winterscode.com](mailto:preston@winterscode.com) for reviewer access.
 
 ---
 
@@ -278,7 +282,7 @@ Baseline is in closed testing on Google Play. Contact [preston@baseline.marketin
 - Portfolio: [baseline.marketing/built](https://baseline.marketing/built)
 - LinkedIn: [linkedin.com/in/prestonwinters](https://linkedin.com/in/prestonwinters)
 - GitHub: [github.com/Preston2012](https://github.com/Preston2012)
-- Contact: [preston@baseline.marketing](mailto:preston@baseline.marketing)
+- Contact: [preston@winterscode.com](mailto:preston@winterscode.com)
 
 
 ---
@@ -289,4 +293,4 @@ Baseline is in closed testing on Google Play. Contact [preston@baseline.marketin
 - **[Ouroboros](https://github.com/Preston2012/ouroboros).** Governance architecture for the AI era.
 - **[AI Council](https://github.com/Preston2012/ai-council).** The multi-model orchestration methodology used to build this platform.
 
-[Preston Winters](https://github.com/Preston2012) · [preston@baseline.marketing](mailto:preston@baseline.marketing)
+[Preston Winters](https://github.com/Preston2012) · [preston@winterscode.com](mailto:preston@winterscode.com)
