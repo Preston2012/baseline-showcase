@@ -2,7 +2,7 @@
 
 Baseline is a political intelligence platform that tracks 106 public figures using 4 independent AI providers. Each statement goes through structured extraction (Gemini), then independent analysis by three providers (Claude, GPT, Grok). A consensus engine reconciles the results and flags disagreements between models. Built solo using a documented multi-model orchestration methodology across 500+ build sessions.
 
-[![Google Play](https://img.shields.io/badge/Google%20Play-Approved-green)]()
+[![Free](https://img.shields.io/badge/Baseline-Free%2C%20not%20in%20stores%20yet-green)]()
 [![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B)]()
 [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL%2017-3ECF8E)]()
 
@@ -24,13 +24,13 @@ Baseline is a political intelligence platform that tracks 106 public figures usi
 - 30 PostgreSQL migrations showing schema evolution from MVP to production ([src/sql/](src/sql/))
 - App configuration: constants, routing, theme tokens ([src/config/](src/config/))
 
-This is a public showcase representing the majority of the production codebase. Remaining private code is available for hiring review.
+This is a public showcase representing the majority of the production codebase. Baseline's backend is now self-hosted; the Supabase-based code in this showcase is the architecture as published here. Remaining private code is available for hiring review.
 
 ## What Is Intentionally Not Public
 
 - AI prompt text sent to each provider (redacted in-place, control flow visible)
 - Consensus scoring weights and threshold values (redacted as constants)
-- 18 additional Flutter screens (settings, onboarding, auth, paywall)
+- 22 additional Flutter screens (settings, onboarding, auth)
 - Production environment configuration (API keys, Supabase URLs)
 - Trademarked icon assets
 
@@ -101,7 +101,7 @@ See [ARCHITECTURE.mermaid](ARCHITECTURE.mermaid) for the full component diagram.
 
 **Why:** Dart's type safety caught schema mismatches at compile time during rapid iteration. Custom painting (CustomPainter) was essential for the consensus badge: 37 visual treatments based on agreement level, model count, and variance. React Native would have required a bridge to native canvas.
 
-**Tradeoff:** Smaller ecosystem, fewer third-party packages. Hiring pool is smaller for Flutter than React Native.
+**Tradeoff:** Fewer third-party packages, and a smaller hiring pool for Flutter than for React Native.
 
 ### Why RLS on every table
 
@@ -225,7 +225,7 @@ A feed request hits `get-feed.ts`. The function fetches 3x the requested limit f
 
 ---
 
-## Production Stats
+## Production Stats (Supabase era snapshot)
 
 | Metric | Count |
 |--------|-------|
@@ -262,7 +262,7 @@ Built solo by Preston Winters using multi-model AI orchestration (Claude, GPT, G
 
 **Previously:** CEO of Cyber Hornets Colony Club (2021-2023). Built a Web3 community from zero to 40,900 followers and 10,000+ Discord members. Led product vision, creative direction, and go-to-market strategy for an 8,888-piece NFT collection that generated 7-figure primary sales revenue with 2,000+ holders. 3-person founding team.
 
-**Current portfolio:** 6 application projects. 1 published (StainSlayer AI, iOS + Android), 1 in closed testing (Baseline, Google Play), 4 in development.
+**Current portfolio:** I am a landscape contractor and I build software as Winters Code in Bandon, Oregon (a DBA). Baseline is free, with no ads, no subscriptions and no purchases, and is coming to Google Play and the App Store; it is not in either store yet. Gauge is a free weather app, in a test build only. Chere' is my contractor back-office app, in beta. StainSlayer ran on Google Play and the App Store for most of 2026 and was retired on 2026-11-07.
 
 **Methodology:** [github.com/Preston2012/ai-council](https://github.com/Preston2012/ai-council)
 
@@ -270,7 +270,7 @@ Built solo by Preston Winters using multi-model AI orchestration (Claude, GPT, G
 
 ## App Access
 
-Baseline is in closed testing on Google Play. Contact [preston@winterscode.com](mailto:preston@winterscode.com) for reviewer access.
+Baseline is free and is coming to Google Play and the App Store. It is not in either store yet. Questions: [preston@winterscode.com](mailto:preston@winterscode.com).
 
 ---
 
