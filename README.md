@@ -262,7 +262,7 @@ Built solo by Preston Winters using multi-model AI orchestration (Claude, GPT, G
 
 **Previously:** CEO of Cyber Hornets Colony Club (2021-2023). Built a Web3 community from zero to 40,900 followers and 10,000+ Discord members. Led product vision, creative direction, and go-to-market strategy for an 8,888-piece NFT collection that generated 7-figure primary sales revenue with 2,000+ holders. 3-person founding team.
 
-**Current portfolio:** I am a landscape contractor and I build software as Winters Code in Bandon, Oregon (a DBA). Baseline is free, with no ads, no subscriptions and no purchases, and is coming to Google Play and the App Store; it is not in either store yet. Gauge is a free weather app, in a test build only. Chere' is my contractor back-office app, in beta. StainSlayer ran on Google Play and the App Store for most of 2026 and was retired on 2026-11-07.
+**Current portfolio:** I am a landscape contractor and I build software as Winters Code in Bandon, Oregon (a DBA). Baseline is free, with no ads, no subscriptions and no purchases, and is coming to Google Play and the App Store; it is not in either store yet. Chere' is my contractor back-office app, in beta. StainSlayer ran on Google Play and the App Store for most of 2026 and was retired on 2026-11-07.
 
 **Methodology:** [github.com/Preston2012/ai-council](https://github.com/Preston2012/ai-council)
 
